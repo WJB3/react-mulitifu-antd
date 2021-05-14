@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "./static/css/main.504262dc.css",
+    "main.js": "./static/js/main.89d0e921.js",
+    "vendors~main.css": "./static/css/vendors~main.6eab225b.chunk.css",
+    "vendors~main.js": "./static/js/vendors~main.569defb6.chunk.js",
+    "index.html": "./index.html",
+    "precache-manifest.bb4d11ac1569ddc7c2b63cf1b9f659f2.js": "./precache-manifest.bb4d11ac1569ddc7c2b63cf1b9f659f2.js",
+    "service-worker.js": "./service-worker.js",
+    "service-worker.js.gz": "./service-worker.js.gz",
+    "static/css/main.504262dc.css.gz": "./static/css/main.504262dc.css.gz",
+    "static/css/vendors~main.6eab225b.chunk.css.gz": "./static/css/vendors~main.6eab225b.chunk.css.gz",
+    "static/js/main.89d0e921.js.gz": "./static/js/main.89d0e921.js.gz",
+    "static/js/vendors~main.569defb6.chunk.js.gz": "./static/js/vendors~main.569defb6.chunk.js.gz",
+    "static/media/login.less": "./static/media/login-bg.5825f033.svg",
+    "static/media/newlogo.png": "./static/media/newlogo.4f91ce71.png"
+  },
+  "entrypoints": [
+    "static/css/vendors~main.6eab225b.chunk.css",
+    "static/js/vendors~main.569defb6.chunk.js",
+    "static/css/main.504262dc.css",
+    "static/js/main.89d0e921.js"
+  ]
+}
