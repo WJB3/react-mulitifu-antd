@@ -5,6 +5,7 @@ import CustomModal from '@/components/CustomModal';
 import PermissionTree from '@/components/PermissionTree';
 import roleApi from '@/api/resource/index'
 import { Space, Form, Input, Button, Modal, DatePicker } from 'antd';
+import { useHistory } from 'react-router-dom'
 import { layout, tailLayout } from '@/utils/layout'
 import TagSelectModal from '@/components/TagSelectModal';
 import FileTypeImage from '@/components/FileTypeImage';
@@ -21,6 +22,15 @@ const Index = (props) => {
     const [form] = Form.useForm();
     const [form2] = Form.useForm();
 
+    const history = useHistory()  
+
+    const handleShowFile=(record)=>(e)=>{
+        console.log("handleShowFile",record);
+        history.push({
+            pathname:`/fileDetail?fileId=${record.id}&fileName=${record.fileName}`,  
+        })
+    }
+
     const columns = [
 
         {
@@ -29,7 +39,7 @@ const Index = (props) => {
             key: 'fileName',
             render: (current, record) => {
                 return (
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', alignItems: 'center' }} onClick={handleShowFile(record)}>
                         <FileTypeImage fileType={record.fileType} />
                         <span>{current}</span>
                     </div>
@@ -47,7 +57,7 @@ const Index = (props) => {
             key: 'fileSize',
             render: (current, record) => {
                 return (
-                    <span>{current}MB</span>
+                    <span>{(current/1000).toFixed(2)}MB</span>
                 )
             }
         },
@@ -64,11 +74,8 @@ const Index = (props) => {
         {
             title: '上传日期',
             dataIndex: 'createTimeStr',
-            key: 'createTimeStr',
-
-        },
-        
-        
+            key: 'createTimeStr', 
+        } 
     ];
 
     const [pagination, setPagination] = useState({
@@ -133,8 +140,7 @@ const Index = (props) => {
         setModalType('add')
     }
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const onFinish = (values: any) => { 
         let newObj: any = {};
         if (values.title) {
             newObj.title = values.title
@@ -188,8 +194,7 @@ const Index = (props) => {
 
     };
 
-    const onFinish2 = (values: any) => {
-        console.log('Success:', values);
+    const onFinish2 = (values: any) => { 
         roleApi.move({
             folderId:values.targetFolder,
             ids:shearIds.join(",")

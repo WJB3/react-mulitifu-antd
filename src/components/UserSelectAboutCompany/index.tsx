@@ -35,8 +35,7 @@ const UserSelectAboutCompany = React.forwardRef((props: any, ref: any) => {
     }
 
     const handleChangeSelect=(value,label,extra)=>{  
-
-        console.log('value',value,label,extra) 
+ 
         // setValue(value)
         // const item=findItemById(value) 
 

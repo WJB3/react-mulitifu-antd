@@ -1,3 +1,10 @@
+.sider--CLc6s .ant-layout-sider-children {
+  background: #001529;
+}
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+
 .customTable--2ov7U .ant-table-title {
   background: #fafafa;
 }
@@ -118,6 +125,8 @@
   height: 30px;
   display: inline-block;
   cursor: pointer;
+  -webkit-flex-shrink: 0;
+          flex-shrink: 0;
 }
 .fileTypeImage--1uIse img {
   width: 100%;
@@ -326,16 +335,6 @@
 /* stylelint-disable */
 /* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
 
-.noselect--1EVpv {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-/* stylelint-disable no-duplicate-selectors */
-/* stylelint-disable */
-/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
-
 .header--3fj2h {
   width: 100%;
   background: #141414;
@@ -480,7 +479,10 @@
           flex-direction: column;
   height: 100vh;
   overflow: auto;
-  background: url(../../static/media/login-bg.5825f033.svg) #141414 no-repeat center 110px;
+  background-image: url(../../static/media/bg-login.85b2cead.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
   background-size: 100%;
   overflow: hidden;
   min-width: 380px;

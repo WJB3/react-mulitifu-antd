@@ -54,8 +54,7 @@ const MyUpload: FC<Props> = (props) => {
         })
         .catch(onError)
       return {
-        abort() {
-          // console.log('upload progress is aborted.')
+        abort() { 
         }
       }
     }

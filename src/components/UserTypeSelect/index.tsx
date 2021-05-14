@@ -20,13 +20,11 @@ const TagSelect = React.forwardRef((props: any, ref: any) => {
 
   
 
-    useEffect(()=>{
-        console.log("props.value",props.value)
+    useEffect(()=>{ 
         setValue(props.value)
     },[props.value])
 
-    const handleChangeSelect = (value) => {
-        console.log('value',value)
+    const handleChangeSelect = (value) => { 
         setValue(value);
         onChange?.(value)
     }

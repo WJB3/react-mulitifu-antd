@@ -11,9 +11,7 @@ export default async function AliDownload(
 
     const aliOssClient = await AliOss(); 
     
-    const filename=await API.download({id:file.id})
-
-    // console.log(filename,'filename')
+    const filename=await API.download({id:file.id}) 
 
     const response = {
         'content-disposition': `attachment; filename=${encodeURIComponent(filename)}`

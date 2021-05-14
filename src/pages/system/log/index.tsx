@@ -17,8 +17,7 @@ const Index = () => {
 
     const [tableLoading, setTableLoading] = useState(false);
 
-    const handleChangeState = (e, current) => {
-        console.log("current", e, current);
+    const handleChangeState = (e, current) => { 
         roleApi.edit({
             ...current,
             id: (current as any).id,
@@ -103,8 +102,7 @@ const Index = () => {
         let newObj: any = {}
         if (searchKeys.searchAccount) {
             newObj.searchAccount = searchKeys.searchAccount
-        }
-        console.log(".searchDate", searchKeys.searchDate)
+        } 
         if (searchKeys.searchDate) {
             newObj.searchDate = `${searchKeys.searchDate[0].format(dateFormat)}-${searchKeys.searchDate[1].format(dateFormat)}`
         }
@@ -114,8 +112,7 @@ const Index = () => {
             size: pagination.pageSize,
             ...newObj
         }).then((res: any) => {
-            setTableLoading(false)
-            console.log("res", res)
+            setTableLoading(false) 
             const { records, total } = res;
             setDataSource(records)
             setPagination({
@@ -136,8 +133,7 @@ const Index = () => {
         setModalType('add')
     }
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const onFinish = (values: any) => { 
         if (values.roleNames && values.roleNames.length) {
             values.roleNames = values.roleNames.join(",")
         }
@@ -177,8 +173,7 @@ const Index = () => {
         })
     }
     //删除单个
-    const onDeleteItem = (current) => {
-        console.log(current)
+    const onDeleteItem = (current) => { 
         Modal.confirm({
             title: '信息',
             icon: <ExclamationCircleOutlined />,
@@ -214,8 +209,7 @@ const Index = () => {
                 ...searchKeys,
                 searchAccount: e.target.value
             })
-        } else if (key === 'Ranger') {
-            console.log(e)
+        } else if (key === 'Ranger') { 
             setSearchKeys({
                 ...searchKeys,
                 searchDate: e

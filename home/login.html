@@ -3,11 +3,16 @@
 
 <head>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+    <link rel="icon" href="./bitbug_favicon.ico" />
+    <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
     <!-- `width=device-width` 会导致 iPhone 5 添加到主屏后以 WebApp 全屏模式打开页面时出现黑边 http://bigc.at/ios-webapp-viewport-meta.orz -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/ant-design-vue@1.7.5/dist/antd.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
+    <meta name="description" content="东风标致MEC素材广场" />
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/ant-design-vue@1.7.5/dist/antd.min.css">
+    <title>东风标致MEC素材广场</title>
     <style>
         html,
         body,
@@ -152,17 +157,8 @@
         </div>
         <div class="container">
             <a-carousel effect="fade">
-                <div class="container_item">
-                    <img src="http://mec.peugeot.com.cn/upload/20210407/9de1afd63f21759bd9f68276dc15d983.jpg" />
-                </div>
-                <div class="container_item">
-                    <img src="http://mec.peugeot.com.cn/upload/20200923/bc0804db6575dd40c7746f54d11bc67c.jpg" />
-                </div>
-                <div class="container_item">
-                    <img src="http://mec.peugeot.com.cn/upload/file_material/20200512/1589274406aa9bb04ff22d3a8a.jpg" />
-                </div>
-                <div class="container_item">
-                    <img src="http://mec.peugeot.com.cn/upload/file_material/20200512/1589274434338ba97f8ee88224.jpg" />
+                <div class="container_item" v-for="(advert,index) in advertList">
+                    <img :src="ImgBase+advert.image" />
                 </div>
             </a-carousel>
 
@@ -175,24 +171,24 @@
                     <a-form-item>
                         <a-input v-decorator="[
           'userName',
-          { rules: [{ required: true, message: 'Please input your username!' }] },
-        ]" placeholder="Username">
+          { rules: [{ required: true, message: '手机号必填！' }] },
+        ]" placeholder="请输入登录手机号">
                             <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
                         </a-input>
                     </a-form-item>
                     <a-form-item>
                         <a-input v-decorator="[
           'password',
-          { rules: [{ required: true, message: 'Please input your Password!' }] },
-        ]" type="password" placeholder="Password">
+          { rules: [{ required: true, message: '密码必填！' }] },
+        ]" type="password" placeholder="请输入登录密码">
                             <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
                         </a-input>
                     </a-form-item>
-                    <a-button type="primary" block>
+                    <a-button type="primary" block @click="handleSubmit">
                         登陆
                     </a-button>
                     <div style="height:20px;"></div>
-                    <a-button type="primary" block>
+                    <a-button type="primary" @click="handleRegister" block>
                         注册
                     </a-button>
                 </a-form>
@@ -205,45 +201,9 @@
                         <span slot="title">通知公告
                             <a-icon type="alert" />
                         </span>
-                        <div class="Item">
-                            <div class="Item_title">【5月终端新媒体营销指导手册】已经上传到网盘，请有需要的人员尽快下载。</div>
-                            <div class="Item_date">2021-04-30 12:51:58</div>
-                        </div>
-                        <div class="Item">
-                            <div class="Item_title">【5月终端新媒体营销指导手册】已经上传到网盘，请有需要的人员尽快下载。</div>
-                            <div class="Item_date">2021-04-30 12:51:58</div>
-                        </div>
-                        <div class="Item">
-                            <div class="Item_title">【5月终端新媒体营销指导手册】已经上传到网盘，请有需要的人员尽快下载。</div>
-                            <div class="Item_date">2021-04-30 12:51:58</div>
-                        </div>
-                        <div class="Item">
-                            <div class="Item_title">【5月终端新媒体营销指导手册】已经上传到网盘，请有需要的人员尽快下载。</div>
-                            <div class="Item_date">2021-04-30 12:51:58</div>
-                        </div>
-                        <div class="Item">
-                            <div class="Item_title">【5月终端新媒体营销指导手册】已经上传到网盘，请有需要的人员尽快下载。</div>
-                            <div class="Item_date">2021-04-30 12:51:58</div>
-                        </div>
-                        <div class="Item">
-                            <div class="Item_title">【5月终端新媒体营销指导手册】已经上传到网盘，请有需要的人员尽快下载。</div>
-                            <div class="Item_date">2021-04-30 12:51:58</div>
-                        </div>
-                        <div class="Item">
-                            <div class="Item_title">【5月终端新媒体营销指导手册】已经上传到网盘，请有需要的人员尽快下载。</div>
-                            <div class="Item_date">2021-04-30 12:51:58</div>
-                        </div>
-                        <div class="Item">
-                            <div class="Item_title">【5月终端新媒体营销指导手册】已经上传到网盘，请有需要的人员尽快下载。</div>
-                            <div class="Item_date">2021-04-30 12:51:58</div>
-                        </div>
-                        <div class="Item">
-                            <div class="Item_title">【5月终端新媒体营销指导手册】已经上传到网盘，请有需要的人员尽快下载。</div>
-                            <div class="Item_date">2021-04-30 12:51:58</div>
-                        </div>
-                        <div class="Item">
-                            <div class="Item_title">【5月终端新媒体营销指导手册】已经上传到网盘，请有需要的人员尽快下载。</div>
-                            <div class="Item_date">2021-04-30 12:51:58</div>
+                        <div class="Item" v-for="(notice,index) in noticeList">
+                            <div class="Item_title">{{notice.title}}</div>
+                            <div class="Item_date">{{notice.createTimeStr}}</div>
                         </div>
                     </a-card>
                 </a-col>
@@ -280,6 +240,7 @@
 </body>
 <script>
     Vue.use(antd)
+    let ImgBase = "http://mec.hml-media.net/"
     var vm = new Vue({
         el: '#app',
         beforeCreate() {
@@ -287,7 +248,8 @@
         },
         data() {
             return {
-
+                advertList: [],
+                noticeList: []
             }
         },
         methods: {
@@ -296,18 +258,55 @@
                 this.form.validateFields((err, values) => {
                     if (!err) {
                         console.log('Received values of form: ', values);
+                        axios({
+                            method: 'post',
+                            url: `http://8.131.234.186:8200/res/login?username=${values.userName}&password=${values.password}`
+                        }).then(res => {
+                            console.log(res);
+                            const { data: { code, t, msg } } = res;
+                            if (code !== 1200) {
+                                this.$message.error(msg)
+                            } else {
+                                this.$message.success("您的账号已验证成功，即将登陆");
+
+                                localStorage.setItem('USERNAME', t.username);
+                                localStorage.setItem('TOKEN', t.token);
+
+                                axios({
+                                    url: `http://8.131.234.186:8200/res/role/user`,
+                                    headers: {
+                                        'Token': t.token
+                                    },
+                                    methods: 'GET'
+                                }).then(resA => {
+                                    const { data: { code, t, msg } } = res;
+                                    if (code !== 1200) {
+                                        this.$message.error(msg)
+                                    } else {
+                                        location.href="http://www.hml-media.net/reso/#/"
+                                    }
+                                })
+
+                            }
+                        })
                     }
                 });
             },
+            handleRegister(e) {
+                console.log("handleRegister")
+                this.$message.warning("该功能暂未开放")
+            }
         },
         mounted() {
-            // axios({
-            //     url:`http://8.131.234.186:8200/res/role/user`,
-            //     headers:{
-            //         'Token':'eyJhbGciOiJIUzUxMiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAKtWKi5NUrJSSkzJzcxT0lFKrShQsjI0MzIwMzIyMjCtBQANhIXfIAAAAA.PnyZ44L7XppRTCa-rYFP1gaC2eTQdTTfzCO2Q-6jgxuM0UhTa1GmiCRt0PQZRzCly_Y_Mdx-FivQifo2W80kqg'
-            //     },
-            //     methods:'GET'
-            // })
+            axios({
+                url: `http://8.131.234.186:8200/res/index/info`,
+                methods: 'GET'
+            }).then(res => {
+                const { data: { t } } = res;
+                console.log("Get", t)
+                this.advertList = t.advertList;
+                this.noticeList = t.noticeList;
+            })
         }
     })
 </script>

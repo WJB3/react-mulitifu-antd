@@ -20,8 +20,7 @@ const CustomImage = React.forwardRef((props: any, ref: any) => {
         
     }, [visible])
 
-    const handleVisibleChange = (...args) => {
-        console.log('args', args);
+    const handleVisibleChange = (...args) => { 
     }
 
     return (

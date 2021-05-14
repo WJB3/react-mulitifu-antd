@@ -9,6 +9,9 @@ export default {
   getAllList(){
     return $axios.get(`/resource/list`)
   },
+  getDetail(id){
+    return $axios.get(`/resource/${id}`)
+  },
   add(params){
     return $axios.post(`/resource/?${qs.stringify(params)}`)
   },

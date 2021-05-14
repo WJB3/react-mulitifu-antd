@@ -7,6 +7,15 @@ const OSS_IMAGE_BASE_URL="http://mec.hml-media.net/";
 
 const OSS_FILE_BASE_URL="http://mec.hml-media.net/"
 
+export function whereType(file){
+    //当识别不出filetype时
+    if(file.type==="" && file.name){
+        let arr=file.name.split('.');
+        let type=arr.slice(arr.length-1)[0];
+        return type
+    }
+}
+
 export function isImage(file){
     return !!['jpg', 'jpeg', 'png', 'gif'].some((item: string) => file.type.includes(item))
 }
@@ -21,6 +30,10 @@ export function getUrl(file,url){
 }
 
 export function getImageUrl(file,url){   
+
+    if(file===null){
+        return OSS_IMAGE_BASE_URL+url;
+    }
     if(isImage(file)){//是图片
         return OSS_IMAGE_BASE_URL+url
     } else{

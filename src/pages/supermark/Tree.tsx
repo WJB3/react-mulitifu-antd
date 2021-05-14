@@ -17,8 +17,7 @@ const TreePage=(props)=>{
     const [form] = Form.useForm();
 
     const getList=()=>{
-        Api.tree().then(res=>{
-            console.log('res',res)
+        Api.tree().then(res=>{ 
             setTreeList(res)
         });
     }
@@ -63,8 +62,7 @@ const TreePage=(props)=>{
         });
     }
 
-    const onClickExpand=(expandedKeys,{expanded:expand,node:current})=>{ 
-        console.log("onClickExpand",expand,current)
+    const onClickExpand=(expandedKeys,{expanded:expand,node:current})=>{  
         const newExpandedKeys=[...expandedKeys];
         const index=expandedKeys.indexOf(current.id);
         if(!expand){
@@ -81,8 +79,7 @@ const TreePage=(props)=>{
 
     const [addLoading, setAddLoading] = useState(false);
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const onFinish = (values: any) => { 
         if (values.roleNames && values.roleNames.length) {
             values.roleNames = values.roleNames.join(",")
         }

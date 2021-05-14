@@ -1,6 +1,8 @@
+//@ts-nocheck
 import React, { FC, useState, useEffect, useRef, Component } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import MenuView from '@/components/common/menu'
+import MenuCustom from '@/components/Menu'
 import classNames from 'classnames'
 import { Layout, BackTop } from 'antd'
 import { getKeyName, isAuthorized } from '@/assets/js/publicFunc'
@@ -36,20 +38,14 @@ const Home: FC<Props> = (props) => {
 
   const history = useHistory()
   const { pathname, search } = useLocation() 
-
-  const {
-    storeData: { collapsed, userInfo },
-    setStoreData
-  } = props
-  const { token } = userInfo
+ 
 
   useEffect(() => { 
-    
-    setStoreData('SET_COLLAPSED', document.body.clientWidth <= 1366)
 
+    localStorage.setItem('COLLAPSED',document.body.clientWidth <= 1366?'TRUE':'FALSE')
+     
     // 未登录
     if (!localStorage.getItem('TOKEN') && pathname !== '/login') {
-   
       history.replace({ pathname: '/login' })
       return
     }
@@ -66,23 +62,31 @@ const Home: FC<Props> = (props) => {
       return
     }
 
+   
+
     // 记录新的路径，用于下次更新比较
     const newPath = search ? pathname + search : pathname
     pathRef.current = newPath
+
+    console.log('getKeyName',getKeyName(pathname),tabKey)
+
     setPanesItem({
-      title,
+      title:title==='文件详情'?pathRef?.current?.match(/fileName=([a-zA-Z0-9\-\.]*)/)?.[1]:title,
       content: Content,
-      key: tabKey,
+      key: title==='文件详情'?pathRef?.current:tabKey,
       closable: tabKey !== 'home',
       path: newPath
     })
-    setTabActiveKey(tabKey)
-  }, [history, pathname, search, setStoreData, token])
+    setTabActiveKey(title==='文件详情'?pathRef?.current:tabKey)
+  }, [history, pathname, search])
+ 
+  const collapsed=localStorage.getItem('COLLAPSED')=='TRUE';
 
-  useEffect(()=>{
-    console.log("collapsed",collapsed)
+  const [data,forceUpdate]=useState([]);
 
-  },[collapsed])
+  const forceUpdateFunc=()=>{
+    forceUpdate([])
+  }
 
   return (
     <Layout
@@ -90,14 +94,14 @@ const Home: FC<Props> = (props) => {
       onContextMenu={(e) => e.preventDefault()}
       style={{ display: (pathname.includes('/login') || pathname.includes('/print')) ? 'none' : 'flex' }}
     >
-      <MenuView />
+      <MenuCustom data={data}/>
       <Layout
         className={classNames(styles.content, {
           [styles.collapsed]: collapsed
         })}
         style={collapsed?{width:`calc(100% - 80px)`}:{width:`calc(100% - 240px)`}}
       >
-        <Header />
+        <Header forceUpdate={forceUpdateFunc}/>
         <Layout.Content >
           <TabPanes
             defaultActiveKey="home"

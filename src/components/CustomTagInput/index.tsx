@@ -13,8 +13,7 @@ const CustomTagInput = React.forwardRef((props: any, ref: any) => {
         setValue(e.target.value);
     }
 
-    const handleKeyDown=(e)=>{
-        console.log(e.keyCode===13)
+    const handleKeyDown=(e)=>{ 
         if(e.keyCode===13){
             setTags([...tags,value])
             props?.onChange([...tags,value])
@@ -26,11 +25,9 @@ const CustomTagInput = React.forwardRef((props: any, ref: any) => {
 
     const handleCloseTag=(tagName)=>(e)=>{
         e.preventDefault();
-        let index=tags.indexOf(tagName)>-1;
-        console.log("handleCloseTag",index,tagName,tags)
+        let index=tags.indexOf(tagName)>-1; 
         if(index){
-            tags.splice(tags.indexOf(tagName),1);
-            console.log("tags",tags)
+            tags.splice(tags.indexOf(tagName),1); 
         }
         setTags([...tags]);
         props?.onChange([...tags])

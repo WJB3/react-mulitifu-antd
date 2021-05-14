@@ -121,8 +121,7 @@ const Index = () => {
         //     }
         // }
 
-        roleApi.tree(newObj).then((res: any) => {
-            console.log("res", res)
+        roleApi.tree(newObj).then((res: any) => { 
             setDataSource(res)
 
         })
@@ -138,8 +137,7 @@ const Index = () => {
         form.resetFields();
     }
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const onFinish = (values: any) => { 
         if (values.roleNames && values.roleNames.length) {
             values.roleNames = values.roleNames.join(",")
         }
@@ -179,8 +177,7 @@ const Index = () => {
         })
     }
     //删除单个
-    const onDeleteItem = (current) => {
-        console.log(current)
+    const onDeleteItem = (current) => { 
         Modal.confirm({
             title: '信息',
             icon: <ExclamationCircleOutlined />,
@@ -193,8 +190,7 @@ const Index = () => {
         });
     }
 
-    const onEditItem = (current) => {
-        console.log("current", current)
+    const onEditItem = (current) => { 
         setVisible(true);
         setModalType('edit')
         setCurrent(current)

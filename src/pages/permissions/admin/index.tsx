@@ -15,8 +15,7 @@ const Index = () => {
 
     const [form] = Form.useForm();
 
-    const handleChangeState = (e, current) => {
-        console.log("current", e, current);
+    const handleChangeState = (e, current) => { 
         roleApi.edit({ 
             id: (current as any).id,
             state: e ? 0 : 1
@@ -27,8 +26,7 @@ const Index = () => {
         })
     }
 
-    const onResetPassword = (current) => {
-        console.log("current", current)
+    const onResetPassword = (current) => { 
         Modal.confirm({
             title: '信息',
             icon: <ExclamationCircleOutlined />,
@@ -139,8 +137,7 @@ const Index = () => {
             page: pagination.current,
             size: pagination.pageSize,
             ...newObj
-        }).then((res: any) => {
-            console.log("res", res)
+        }).then((res: any) => { 
             const { records, total } = res;
             setDataSource(records)
             setPagination({
@@ -159,8 +156,7 @@ const Index = () => {
         setModalType('add')
     }
 
-    const onFinish = (values: any) => {
-        console.log('Success:onFinish', values); 
+    const onFinish = (values: any) => { 
       
         if (values.roles && values.roles.length) {
             // values.roleIds = values.roles.map(item => item.id).join(',')
@@ -203,8 +199,7 @@ const Index = () => {
         })
     }
     //删除单个
-    const onDeleteItem = (current) => {
-        console.log(current)
+    const onDeleteItem = (current) => { 
         Modal.confirm({
             title: '信息',
             icon: <ExclamationCircleOutlined />,
@@ -344,6 +339,7 @@ const Index = () => {
                         <Form.Item
                             label="密码"
                             name="password"
+                            rules={[{ required: true, message: '密码必填!' }]}
                         >
                             <Input />
                         </Form.Item>

@@ -33,6 +33,10 @@ const Action = (props) => {
   const printButtonRef = useRef(null);
 
   const clickScreen = (e) => {
+
+    if(!filterButtonRef || !filterButtonRef.current){
+      return ;
+    }
     //是否是点击filter按钮
     const isInFilterButton = filterButtonRef.current.contains(e.target);
     const isInExportButton = exportButtonRef.current.contains(e.target);
@@ -96,9 +100,7 @@ const Action = (props) => {
     let entozh = {}
     filterColumns2.forEach(item => {
       entozh[item.key] = item['title']
-    })
-    console.log("filterData",filterData);
-    console.log("entozh",entozh);
+    }) 
     exportExcel(filterData, entozh, type === 'excel' ? 'xlsx' : 'csv')
   }
 

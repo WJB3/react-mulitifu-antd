@@ -17,8 +17,7 @@ const Index = () => {
     const [form] = Form.useForm();
 
 
-    const handleChangeState = (e, current) => {
-        console.log("current", e, current);
+    const handleChangeState = (e, current) => { 
         roleApi.edit({
             ...current,
             id: (current as any).id,
@@ -104,8 +103,7 @@ const Index = () => {
         setModalType('add')
     }
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const onFinish = (values: any) => { 
         if(values.image){
             values.image=values.image.successUrl
         }
@@ -145,8 +143,7 @@ const Index = () => {
         })
     }
     //删除单个
-    const onDeleteItem = (current) => {
-        console.log(current)
+    const onDeleteItem = (current) => { 
         Modal.confirm({
             title: '信息',
             icon: <ExclamationCircleOutlined />,
@@ -174,13 +171,9 @@ const Index = () => {
 
     const [currentIndex,setCurrentIndex]=useState(0);
 
-    const handleVisibleChange=(value,prevValue)=>{
-        console.log("value",value,prevValue)
-        console.log("value")
+    const handleVisibleChange=(value,prevValue)=>{ 
         setImgVisible(value)
-    }
-
-    console.log('dataSource',dataSource);
+    } 
 
     return (
         <div>

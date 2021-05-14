@@ -9,7 +9,7 @@ import {
     DeleteOutlined
 } from '@ant-design/icons';
 import AliUpload from '@/hooks/AliUpload';
-import { isImage,getUrl,getImageUrl } from '@/utils/getSuccessUrl'
+import { isImage,getUrl,getImageUrl,whereType } from '@/utils/getSuccessUrl'
 
 const { Dragger } = Upload;
 const { Text } = Typography;
@@ -29,6 +29,8 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
         extraAccept=[]
     } = props;
 
+    const [checkpoint,setCheckPoint]=useState();
+
     const [fileList, setFileList] = useState([]);
 
     React.useImperativeHandle(ref,()=>({
@@ -36,11 +38,13 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
     }),[fileList]);
 
     const handleRequest = async ({ file, filename }) => { 
-      
+        console.log("file",'filename',filename,file)
+   
+        const type=whereType(file);
+
         const isType = accept.concat(extraAccept).some((item: string) => file.type.includes(item)||file.name.includes(item))
        
-        const isSize = file.size / 1024 / 1024 < size 
-        console.log(accept.concat(extraAccept),file,isSize)
+        const isSize = file.size / 1024 / 1024 < size  
         if (!isType || !isSize) {
             message.error('请上传正确文件')
             return false
@@ -67,7 +71,7 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
                         base64Url,
                         file: file,
                         size: file.size / 1024,
-                        type:file.type,
+                        type:file.type||type,
                         uploadProgress: 0
                     }
                 ]
@@ -107,11 +111,19 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
         message.success({ content: '上传成功!', key: 'updatable', duration: 2 }) 
     }
 
+    const isAllSuccess=fileList.every(item=>item.uploadProgress===100)
+
     const handleUpload = () => {
+
+        if(isAllSuccess){
+            message.warning("已经上传成功,无法继续上传！")
+            return ;
+        }
         // 上传中
-        const progressFn = (current)=>(p: number) => {
-            // 上传进度发生变化时调用param.progress
-            console.log("p",p)
+        const progressFn = (current)=>(p: number,checkpoint:any) => {
+         
+            
+            // 上传进度发生变化时调用param.progress 
             setFileList((oldFileList) => { 
                 let newFileList=JSON.parse(JSON.stringify(oldFileList));
                 let newIndex=oldFileList.findIndex(item=>item.name===current.name);
@@ -125,12 +137,15 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
         
         try{
             fileList.filter(item=>item.uploadProgress!==100).forEach(async item => {
-                const res = await AliUpload(progressFn(item), item.file,isImage(item)?item.type:`file/${item.type}`)
+                const res = await AliUpload(
+                    progressFn(item), 
+                    item.file,
+                    isImage(item)?item.type:`file/${item.type}`,
+                    item.type)
                 await successFn(res,res.customUrl,item)
                 successUploader()
             })
-        }catch(e){
-            console.log("e",e)
+        }catch(e){ 
             message.destroy()
             message.success({ content: '您的网络有异常，上传失败!', key: 'updatable', duration: 2 }) 
         }   
@@ -148,9 +163,7 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
         }
     },0);
 
-    const handleMouseEnter=(fileName)=>(e)=>{
-        console.log("fileName",fileName)
-        console.log("fileList",fileList)
+    const handleMouseEnter=(fileName)=>(e)=>{ 
         const currentIndex=fileList.findIndex(item=>item.name===fileName);
         if(currentIndex>-1){
             fileList.splice(currentIndex,1,{...fileList[currentIndex],isHover:true});
@@ -164,9 +177,11 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
             fileList.splice(currentIndex,1,{...fileList[currentIndex],isHover:false});
             setFileList([...fileList])
         }
-    }
+    } 
+
+    console.log("fileList",fileList)
+
  
-    console.log("--fileList--",fileList)
 
     return (
         <Modal title="上传" visible={visible}   footer={null} width={800} className={style.cardStyle} onCancel={onCancel}>
@@ -226,7 +241,7 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
                                 <Upload {...uploadProps}>
                                     {fileList.length<max && <Button>继续添加</Button>}
                                 </Upload>
-                                <Button type="primary" onClick={handleUpload}>开始上传</Button>
+                                <Button type="primary" onClick={handleUpload}>{isAllSuccess?"上传成功":"开始上传"}</Button>
                             </Space>
                         </div>
                     </div>

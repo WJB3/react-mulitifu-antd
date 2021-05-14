@@ -210,6 +210,7 @@ const menus = [
     path: '/fileDetail',
     name: '文件详情',
     exact: true, 
+    key:'fileDetail',
     component: FileDetail
   },
   {

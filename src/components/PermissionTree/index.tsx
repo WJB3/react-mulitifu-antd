@@ -9,7 +9,7 @@ const PermissionTree = React.forwardRef((props: any, ref: any) => {
 
     const [treeData, setTreeData] = useState([]);
 
-    const [value,setValue]=useState([]);
+    const [value, setValue] = useState([]);
 
     const [loading, setLoading] = useState(false);
 
@@ -19,39 +19,34 @@ const PermissionTree = React.forwardRef((props: any, ref: any) => {
                 setTreeData(res);
             }).catch(e => {
                 message.error("权限树获取失败")
-            }) 
-        } 
+            })
+        }
     }, [visible])
 
-    useEffect(()=>{
+    useEffect(() => {
         if (roleId) {
-            roleApi.getCurrentRoleList({roleId}).then(res => {
-                console.log("res",res);
+            roleApi.getCurrentRoleList({ roleId }).then(res => {
                 setValue(res)
             }).catch(e => {
                 message.error("权限树获取失败")
-            }) 
+            })
         }
-    },[roleId]) 
+    }, [roleId])
 
-    const handleChangeCheck=(checkedKeys,e)=>{
-        // console.log("handleChangeCheck",checkedKeys,e)
-        const { node:{children} }=e;
-        if(!children){
-            setValue(checkedKeys);
-        }
+    const handleChangeCheck = (checkedKeys, e) => {
+        setValue(checkedKeys);
     }
- 
-    const handleSave=()=>{
+
+    const handleSave = () => {
         setLoading(true);
-        const functionIds=value.filter(item=>item.includes("f_")).map(item=>item.replace("f_","")).join(",")
+        const functionIds = value.filter(item => item.includes("f_")).map(item => item.replace("f_", "")).join(",")
         roleApi.editRole({
             roleId,
             functionIds
-        }).then(res=>{
+        }).then(res => {
             setLoading(false);
             clickCancel()
-        }).catch(err=>{
+        }).catch(err => {
             setLoading(false);
         })
     }
@@ -71,7 +66,7 @@ const PermissionTree = React.forwardRef((props: any, ref: any) => {
                     checkedKeys={value}
                     onCheck={handleChangeCheck}
                 />
-                <div style={{justifyContent:'flex-end',display:'flex',marginTop:20}}>
+                <div style={{ justifyContent: 'flex-end', display: 'flex', marginTop: 20 }}>
                     <Space align="end">
                         <Button type="primary" loading={loading} onClick={handleSave} >
                             保存

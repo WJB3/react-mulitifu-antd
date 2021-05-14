@@ -48,8 +48,7 @@ const UploadPage: FC<Props> = ({ storeData: { userInfo }, setStoreData }) => {
 
 
         AliUpload(progressFn, param.file,param.file.type)
-            .then((res: CommonObjectType) => {  
-                console.log("resSuccess",res)
+            .then((res: CommonObjectType) => {   
                 successFn(res,res.customUrl)
             })
             .catch(errorFn)

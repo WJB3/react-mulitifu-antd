@@ -44,8 +44,7 @@ const MenuView: FC<Props> = ({ storeData: { theme, userInfo, collapsed } }) => {
   const [current, setCurrent] = useState(curKey) 
  
   useEffect(() => {
-    const { tabKey } = getKeyName(pathname) 
-    console.log('tabKey',tabKey)
+    const { tabKey } = getKeyName(pathname)  
     setCurrent(tabKey)
   }, [pathname])
 
@@ -101,8 +100,7 @@ const MenuView: FC<Props> = ({ storeData: { theme, userInfo, collapsed } }) => {
   function renderMenu(item: MenuType) { 
     return item.type === 'subMenu' ? creatSubMenu(item) : createMenuItem(item)
   }
- 
- 
+  
 
   const transformMenu=useMemo(()=>{
     const localMenu=JSON.parse(localStorage.getItem("MENU"));  
@@ -121,9 +119,7 @@ const MenuView: FC<Props> = ({ storeData: { theme, userInfo, collapsed } }) => {
       })
     })
     return newMenu||[];
-  },[localStorage.getItem("MENU")])
- 
-  console.log("current",current)
+  },[localStorage.getItem("MENU")]) 
   
   return (
     <Layout.Sider

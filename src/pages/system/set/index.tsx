@@ -78,8 +78,7 @@ const Index = () => {
     }
 
 
-    const handleSubmit2 = (values) => {
-        console.log('Success:', values);
+    const handleSubmit2 = (values) => { 
 
         Api2.reset(values).then(res => {
             message.success("密码重置成功")

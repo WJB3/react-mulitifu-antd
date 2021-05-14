@@ -6,19 +6,12 @@ import resourceApi from '@/api/resource';
 export default function Print() {
 
     const history = useHistory();
-    const location = useLocation();
-    console.log("history", history, location)
+    const location = useLocation(); 
 
     const [data,setData]=useState([]);
     const [columns,setColumns]=useState([]);
 
-    useEffect(() => {
-        // console.log("")
-        // window.print(); 
-
-        // window.addEventListener('afterprint', () => { 
-        //     window.close();
-        // }); 
+    useEffect(() => {  
         const module=localStorage.getItem('PRINTMODULE');
         const columns=JSON.parse(localStorage.getItem('PRINTCOLUMNS'));
         const pageCurrent=localStorage.getItem('PRINTCURRENT');
@@ -41,9 +34,7 @@ export default function Print() {
         if(data && data.length){
             window.print(); 
         }
-    },[data])
-
-    console.log("columns",columns)
+    },[data]) 
 
     return <div className={styles.container}>
         <div className={styles.wrapper}>

@@ -26,8 +26,7 @@ const Index = () => {
         })
     }
 
-    const onResetPassword = (current) => {
-        console.log("current", current)
+    const onResetPassword = (current) => { 
         Modal.confirm({
             title: '信息',
             icon: <ExclamationCircleOutlined />,
@@ -147,8 +146,7 @@ const Index = () => {
             page: pagination.current,
             size: pagination.pageSize,
             ...newObj
-        }).then((res: any) => {
-            console.log("res", res)
+        }).then((res: any) => { 
             const { records, total } = res;
             setDataSource(records)
             setPagination({
@@ -168,8 +166,7 @@ const Index = () => {
         setModalType('add')
     }
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const onFinish = (values: any) => { 
         if (!values?.userTypeId?.isLevelOne) {
             values.company = values?.userTypeId?.company
         }
@@ -213,8 +210,7 @@ const Index = () => {
         })
     }
     //删除单个
-    const onDeleteItem = (current) => {
-        console.log(current)
+    const onDeleteItem = (current) => { 
         Modal.confirm({
             title: '信息',
             icon: <ExclamationCircleOutlined />,
@@ -302,8 +298,7 @@ const Index = () => {
 
     const [isVisibleCode, setVisibleCode] = useState(false);
 
-    const handleValueChange = (value, record) => {
-        console.log("value", value, record);
+    const handleValueChange = (value, record) => { 
         if (record?.userTypeId?.isLevelOne) {
             setVisibleCode(true)
         } else if (!record?.userTypeId?.isLevelOne) {

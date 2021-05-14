@@ -115,8 +115,7 @@ const Index = () => {
 
         let newObj: any = {} 
 
-        roleApi.tree(newObj).then((res: any) => {
-            console.log("res", res)
+        roleApi.tree(newObj).then((res: any) => { 
             setDataSource(res)
 
         })
@@ -132,8 +131,7 @@ const Index = () => {
         form.resetFields();
     }
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const onFinish = (values: any) => { 
         if (values.roles && values.roles.length) {
             values.roleIds = values.roles.map(item => item.id).join(',')
             values.roleNames = values.roles.map(item => item.name).join(",")
@@ -178,8 +176,7 @@ const Index = () => {
         })
     }
     //删除单个
-    const onDeleteItem = (current) => {
-        console.log(current)
+    const onDeleteItem = (current) => { 
         Modal.confirm({
             title: '信息',
             icon: <ExclamationCircleOutlined />,
@@ -214,10 +211,7 @@ const Index = () => {
         }
     }
 
-    const handleSearchKeys = () => { 
-        const searchKeyName=searchKeys.name;
-        console.log("dateSources",dataSource)
-        // getList();
+    const handleSearchKeys = () => {  
 
     }
 

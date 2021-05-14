@@ -8,8 +8,7 @@ export default function useWindowResize(height){
 
     useEffect(()=>{
         setCustomHeight(window.innerHeight-height)
-        let resizeCall=(...args)=>{
-            console.log('args',args,window.innerHeight)
+        let resizeCall=(...args)=>{ 
             setCustomHeight(window.innerHeight-height)
         }
         window.addEventListener('resize',resizeCall);

@@ -45,8 +45,7 @@ const UserTypeTreeSelect = React.forwardRef((props: any, ref: any) => {
     }
 
     useEffect(()=>{
-        if(typeof props.value==="number" && roleList.length){
-            console.log("我进来了")
+        if(typeof props.value==="number" && roleList.length){ 
             setValue(props.value)
             const item=findItemById(props.value)
             onChange?.({

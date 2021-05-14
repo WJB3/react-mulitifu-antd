@@ -20,8 +20,7 @@ const TagSelectModal = React.forwardRef((props: any, ref: any) => {
  
 
     useEffect(() => {
-        roleApi.tree().then(res => {
-            console.log("res", res);
+        roleApi.tree().then(res => { 
             setList(res)
         })
     }, [])

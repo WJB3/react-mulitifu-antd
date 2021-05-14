@@ -25,7 +25,8 @@ const Index = () => {
             key: 'fileName',
             render: (current, record) => {
                 return (
-                    <div style={{ display: 'flex', alignItems: 'center' }} onClick={() => history.push({ pathname: '/fileDetail' })}>
+                    <div style={{ display: 'flex', alignItems: 'center' }} onClick={() => 
+                    history.replace({ pathname: '/fileDetail' })}>
                         <FileTypeImage fileType={record.fileType} />
                         <span>{current}</span>
                     </div>
@@ -63,24 +64,7 @@ const Index = () => {
             key: 'createTimeStr',
 
         },
-        {
-            title: '下载',
-            dataIndex: 'download',
-            key: 'download',
-            align: 'center',
-            render: () => {
-                return <ActionButton />
-            }
-        },
-        {
-            title: '分享',
-            dataIndex: 'share',
-            key: 'share',
-            align: 'center',
-            render: () => {
-                return <ActionButton type="copy" />
-            }
-        },
+       
     ];
 
     const [pagination, setPagination] = useState({
@@ -114,8 +98,7 @@ const Index = () => {
             page: pagination.current,
             size: pagination.pageSize, 
             ...newObj
-        }).then((res: any) => {
-            console.log("res", res)
+        }).then((res: any) => { 
             const { records, total } = res;
             setDataSource(records)
             setPagination({
@@ -134,8 +117,7 @@ const Index = () => {
         setModalType('add')
     }
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const onFinish = (values: any) => { 
         setAddLoading(true);
         if (modalType === 'add') {
             roleApi.add(values).then(res => {
@@ -170,36 +152,7 @@ const Index = () => {
         roleApi.delete(deleteIds).then(res => {
             getList();
         })
-    }
-     const onDeleteItem = (current) => {
-        console.log(current)
-        Modal.confirm({
-            title: '信息',
-            icon: <ExclamationCircleOutlined />,
-            content: '确定要删除选中数据吗？',
-            okText: '确认',
-            cancelText: '取消',
-            onOk: () => roleApi.delete([current.id]).then(res => {
-                getList();
-            })
-        });
-    }
-
-    const onEditItem = (current) => {
-        setVisible(true);
-        setModalType('edit')
-        setCurrent(current)
-        form.setFieldsValue({
-            name: current.name,
-            des: current.des
-        })
-    }
-
-    const onOpenPermission = (current) => {
-        setPermissionVisible(true);
-        setCurrent(current);
-    }
-
+    }  
     const handleChange = (key) => (e) => {
         if (key === 'name') {
             setSearchKeys({
@@ -243,6 +196,7 @@ const Index = () => {
                             {tableTopComponent}
                         </>
                     }}
+                    fileTypeTable
                 >
 
                 </CustomTable>

@@ -4,8 +4,7 @@ import Container from '@/pages/container'
 import Login from '@/pages/login'
 import Print from '@/pages/print'
 
-const App: FC = (props) => {
-  console.log("APP",props)
+const App: FC = (props) => { 
   return (
     <Router>
       <Route exact path="/login" component={Login} />

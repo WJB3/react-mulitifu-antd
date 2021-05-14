@@ -15,8 +15,7 @@ const Index = () => {
 
     const [form] = Form.useForm();
 
-    const handleChangeState = (e, current) => {
-        console.log("current", e, current);
+    const handleChangeState = (e, current) => { 
         roleApi.edit({
             ...current,
             id: (current as any).id,
@@ -28,8 +27,7 @@ const Index = () => {
         })
     }
 
-    const onResetPassword = (current) => {
-        console.log("current", current)
+    const onResetPassword = (current) => { 
         Modal.confirm({
             title: '信息',
             icon: <ExclamationCircleOutlined />,
@@ -127,8 +125,7 @@ const Index = () => {
             page: pagination.current,
             size: pagination.pageSize,
             searchKey: searchKeys.name
-        }).then((res: any) => {
-            console.log("res", res)
+        }).then((res: any) => { 
             const { records, total } = res;
             setDataSource(records)
             setPagination({
@@ -147,8 +144,7 @@ const Index = () => {
         setModalType('add')
     }
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const onFinish = (values: any) => { 
         if(values.roleNames && values.roleNames.length){
             values.roleNames=values.roleNames.join(",")
         }
@@ -188,8 +184,7 @@ const Index = () => {
         })
     }
     //删除单个
-    const onDeleteItem = (current) => {
-        console.log(current)
+    const onDeleteItem = (current) => { 
         Modal.confirm({
             title: '信息',
             icon: <ExclamationCircleOutlined />,

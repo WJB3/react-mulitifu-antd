@@ -26,15 +26,13 @@ const Home: FC = () => {
   }, []); 
 
   useEffect(()=>{
-    NoticeApi.getList({page:1,size:15}).then(res=>{
-      console.log('res', res)
+    NoticeApi.getList({page:1,size:15}).then(res=>{ 
       setData1(res.records);
     })
   },[]);
 
   useEffect(()=>{
-    EmailApi.getReceive({page:1,size:15}).then(res=>{
-      console.log('res', res)
+    EmailApi.getReceive({page:1,size:15}).then(res=>{ 
       setData2(res.records);
     })
   },[]);

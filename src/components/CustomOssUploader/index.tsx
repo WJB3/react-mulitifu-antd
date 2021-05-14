@@ -13,8 +13,7 @@ import {
 
 
 const CustomOssUploader = React.forwardRef((props: any, ref: any) => {
-
-    const { visible } = props;
+ 
 
     const [imgVisible,setImgVisible]=useState(false);
 

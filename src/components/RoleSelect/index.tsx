@@ -41,15 +41,11 @@ const RoleSelect = React.forwardRef((props: any, ref: any) => {
                     id:item,
                     name:roleList.find(itemA=>itemA.id===item)?.name
                 }
-            })
-            console.log("--我进来了--",roles )
+            }) 
             onChange?.(roles);
         }
         
-    },[props.value,roleList])
-
-    // console.log("--roleList-",roleList)
-    // console.log("--value-",value)
+    },[props.value,roleList]) 
 
     return (
         <>
