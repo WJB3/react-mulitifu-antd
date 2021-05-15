@@ -24,10 +24,10 @@ const Index = (props) => {
 
     const history = useHistory()  
 
-    const handleShowFile=(record)=>(e)=>{
-        console.log("handleShowFile",record);
+    const handleShowFile=(record)=>(e)=>{ 
         history.push({
-            pathname:`/fileDetail?fileId=${record.id}&fileName=${record.fileName}`,  
+            pathname:`/fileDetail`,  
+            search:`fileId=${record.id}&fileName=${record.fileName}`
         })
     }
 
@@ -311,6 +311,7 @@ const Index = (props) => {
                 onShear={handleShowShear}
                 hasShearButton
                 hasSearchButton
+                permissonModule={'Resource'}
                 fileTypeTable
                 onLeftSearch={()=>setSelectVisible(true)}
                 tableTopProps={{

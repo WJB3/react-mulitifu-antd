@@ -42,7 +42,7 @@ const FileTypeImage=(props)=>{
 
     return (
         <div className={style.fileTypeImage} >
-            <img src={mapImageUrl[fileType]} />
+            {/* <img src={mapImageUrl[fileType]} /> */}
         </div>
     )
 }

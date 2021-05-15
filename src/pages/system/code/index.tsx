@@ -7,6 +7,7 @@ import roleApi from '@/api/system/code'
 import { Space, Form, Card, Input, Button, Modal, Switch, InputNumber, message, Select } from 'antd';
 import { layout, tailLayout } from '@/utils/layout'
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import PermissionsButton from '@/components/PermissionsButton';
 const { Option } = Select;
 
 
@@ -82,8 +83,12 @@ const Index = () => {
             render: (_: any, record: any) => {
                 return (
                     <Space>
-                        <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton>
-                        <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton>
+                        <PermissionsButton permission={"Code:Update"}>
+                            <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton>
+                        </PermissionsButton>
+                        <PermissionsButton permission={"Code:Delete"}>
+                            <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton>
+                        </PermissionsButton>
                     </Space>
                 )
             }
@@ -302,6 +307,7 @@ const Index = () => {
                             {tableTopComponent}
                         </>
                     }}
+                    permissonModule={'Code'}
                 >
 
                 </CustomTable>

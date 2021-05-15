@@ -5,6 +5,7 @@ import CustomModal from '@/components/CustomModal';
 import roleApi from '@/api/notice'
 import { Space, Card, Form, Input, Modal, InputNumber  } from 'antd';
 import { layout } from '@/utils/layout'
+import PermissionsButton from '@/components/PermissionsButton';
 import { ExclamationCircleOutlined } from '@ant-design/icons'; 
 
 const Index = () => {
@@ -33,8 +34,9 @@ const Index = () => {
                     <Space>
                         {/* <CustomButton type='default' onClick={() => onViewItem(record)} >查看</CustomButton> */}
                         {/* <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton> */}
-                        <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton>
-
+                        <PermissionsButton permission={`Notice:Delete`}>
+                            <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton>
+                        </PermissionsButton>
                     </Space>
                 )
             }
@@ -208,6 +210,7 @@ const Index = () => {
                             {tableTopComponent}
                         </>
                     }}
+                    permissonModule={`Notice`}
                 >
 
                 </CustomTable>

@@ -9,6 +9,7 @@ import roleApi from '@/api/user/manager'
 import { Space, Card, Form, Input, Button, Modal, Switch, InputNumber, message, Select } from 'antd';
 import { layout, tailLayout } from '@/utils/layout'
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import PermissionsButton from '@/components/PermissionsButton';
 const { Option } = Select;
 
 
@@ -72,8 +73,8 @@ const Index = () => {
         },
         {
             title: '创建时间',
-            dataIndex: 'create_time',
-            key: 'create_time',
+            dataIndex: 'createTimeStr',
+            key: 'createTimeStr',
         },
         {
             title: '状态',
@@ -93,9 +94,15 @@ const Index = () => {
             render: (_: any, record: any) => {
                 return (
                     <Space>
-                        <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton>
+                        <PermissionsButton permission={"User:Update"}>
+                            <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton>
+                        </PermissionsButton>
+                        <PermissionsButton permission={"User:Delete"}>
                         <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton>
+                        </PermissionsButton>
+                        <PermissionsButton permission={"User:Reset"}>
                         <CustomButton type='warning' onClick={() => onResetPassword(record)}>重置密码</CustomButton>
+                        </PermissionsButton>
                     </Space>
                 )
             }
@@ -330,6 +337,7 @@ const Index = () => {
                             {tableTopComponent}
                         </>
                     }}
+                    permissonModule={"User"}
                 >
 
                 </CustomTable>

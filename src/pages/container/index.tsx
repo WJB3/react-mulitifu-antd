@@ -42,10 +42,9 @@ const Home: FC<Props> = (props) => {
 
   useEffect(() => { 
 
-    localStorage.setItem('COLLAPSED',document.body.clientWidth <= 1366?'TRUE':'FALSE')
-     
+    localStorage.setItem('COLLAPSED',document.body.clientWidth <= 1366?'TRUE':'FALSE') 
     // 未登录
-    if (!localStorage.getItem('TOKEN') && pathname !== '/login') {
+    if (!localStorage.getItem('TOKEN') && pathname !== '/login') { 
       history.replace({ pathname: '/login' })
       return
     }
@@ -65,19 +64,20 @@ const Home: FC<Props> = (props) => {
    
 
     // 记录新的路径，用于下次更新比较
-    const newPath = search ? pathname + search : pathname
+    const newPath = search ? pathname + decodeURIComponent(search) : pathname
     pathRef.current = newPath
-
-    console.log('getKeyName',getKeyName(pathname),tabKey)
+ 
 
     setPanesItem({
-      title:title==='文件详情'?pathRef?.current?.match(/fileName=([a-zA-Z0-9\-\.]*)/)?.[1]:title,
+      title:title==='文件详情'?pathRef?.current?.match(/fileName=([a-zA-Z0-9\-\.\u4e00-\u9fa5\_]*)/)?.[1]:title,
       content: Content,
       key: title==='文件详情'?pathRef?.current:tabKey,
       closable: tabKey !== 'home',
       path: newPath
     })
+
     setTabActiveKey(title==='文件详情'?pathRef?.current:tabKey)
+
   }, [history, pathname, search])
  
   const collapsed=localStorage.getItem('COLLAPSED')=='TRUE';

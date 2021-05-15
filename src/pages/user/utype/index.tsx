@@ -9,6 +9,7 @@ import roleApi from '@/api/user/utype'
 import { Space, Form, Card, Input, Tag, Button, Modal, Switch, InputNumber, message, Select } from 'antd';
 import { layout, tailLayout } from '@/utils/layout'
 import { ExclamationCircleOutlined, FolderOutlined, FileOutlined } from '@ant-design/icons';
+import PermissionsButton from '@/components/PermissionsButton';
 import useExpandedKeys from '@/hooks/useExpandedKeys';
 const { Option } = Select;
 
@@ -79,8 +80,12 @@ const Index = () => {
             render: (_: any, record: any) => {
                 return (
                     <Space>
-                        <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton>
-                        <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton>
+                        <PermissionsButton permission={"UType:Update"}>
+                            <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton>
+                        </PermissionsButton>
+                        <PermissionsButton permission={"UType:Delete"}>
+                            <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton>
+                        </PermissionsButton>
                     </Space>
                 )
             }
@@ -306,6 +311,7 @@ const Index = () => {
                             {tableTopComponent}
                         </>
                     }}
+                    permissonModule={"UType"}
                 >
 
                 </CustomTable>

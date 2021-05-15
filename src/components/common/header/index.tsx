@@ -11,11 +11,13 @@ const Header = (props) => {
   const history = useHistory()  
   const [fullscreen, setFullscreen] = useState(false) 
 
+  const [userName,setUserName]=useState('Admin');
+
   const logout = async () => {
-    localStorage.setItem("MENU",null);
-    localStorage.setItem("TOKEN",null);
-    localStorage.setItem("USERNAME",null);
-    localStorage.setItem("CURTAB","[]");
+    localStorage.removeItem("MENU");
+    localStorage.removeItem("TOKEN");
+    localStorage.removeItem("USERNAME");
+    localStorage.removeItem("CURTAB");
     history.replace({ pathname: '/login' })
   } 
 
@@ -26,6 +28,13 @@ const Header = (props) => {
       </Menu.Item>
     </Menu>
   )
+
+  useEffect(()=>{
+    if(localStorage.getItem('USERNAME')){
+      setUserName(localStorage.getItem('USERNAME'))
+    }
+    
+  },[localStorage.getItem('USERNAME')]);
  
 
   const toggle = (): void => {
@@ -88,8 +97,8 @@ const Header = (props) => {
  
         <Dropdown className={`fr ${style.content}`} overlay={menu}>
           <span className={style.user}> 
-            <span className="avart">{'A'}</span>
-            <span>{'Admin'}</span>
+            <span className="avart">{userName.substr(0,1).toUpperCase()}</span>
+            <span>{userName}</span>
           </span>
         </Dropdown>
       </div>

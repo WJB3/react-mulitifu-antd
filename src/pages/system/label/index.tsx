@@ -9,6 +9,7 @@ import { Space, Card, Form, Input, Button, Modal, Switch, InputNumber, message, 
 import { layout, tailLayout } from '@/utils/layout'
 import { ExclamationCircleOutlined, FolderOutlined, FileOutlined } from '@ant-design/icons';
 import useExpandedKeys from '@/hooks/useExpandedKeys';
+import PermissionsButton from '@/components/PermissionsButton';
 const { Option } = Select;
 
 
@@ -70,8 +71,12 @@ const Index = () => {
             render: (_: any, record: any) => {
                 return (
                     <Space>
-                        <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton>
-                        <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton>
+                        <PermissionsButton permission={"Label:Update"}>
+                            <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton>
+                        </PermissionsButton>
+                        <PermissionsButton permission={"Label:Delete"}>
+                            <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton>
+                        </PermissionsButton>
                     </Space>
                 )
             }
@@ -305,6 +310,7 @@ const Index = () => {
                             {tableTopComponent}
                         </>
                     }}
+                    permissonModule={'Label'}
                 >
 
                 </CustomTable>

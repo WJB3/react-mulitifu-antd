@@ -8,7 +8,7 @@ import roleApi from '@/api/email/index'
 import { Space, Form, Card, Input, Button,DatePicker, Modal, Select } from 'antd';
 import { layout, tailLayout } from '@/utils/layout'
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-
+import PermissionsButton from '@/components/PermissionsButton';
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 const dateFormat = 'YYYY-MM-DD';
@@ -45,7 +45,9 @@ const Index = () => {
                 return (
                     <Space>
                         {/* <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton> */}
-                        <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton>
+                        <PermissionsButton permission={"SEmail:Delete"}>
+                            <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton>
+                        </PermissionsButton>
                     </Space>
                 )
             }
@@ -71,9 +73,7 @@ const Index = () => {
 
     const [modalType, setModalType] = useState('add');
 
-    const [permissionVisible, setPermissionVisible] = useState(false);
-
-    const [current, setCurrent] = useState({});
+    const [permissionVisible, setPermissionVisible] = useState(false); 
 
     const getList = () => {
         let newObj: any = {}
@@ -158,18 +158,7 @@ const Index = () => {
                 getList();
             })
         });
-    }
-
-    const onEditItem = (current) => {
-        setVisible(true);
-        setModalType('edit')
-        setCurrent(current)
-        form.setFieldsValue({
-            name: current.name,
-            des: current.des
-        })
-    }
-
+    } 
 
     const handleChange = (key) => (e) => {
         if (key === 'title') {
@@ -229,6 +218,7 @@ const Index = () => {
                             {tableTopComponent}
                         </>
                     }}
+                    permissonModule={'SEmail'}
                 >
 
                 </CustomTable>

@@ -1,6 +1,12 @@
 .sider--CLc6s .ant-layout-sider-children {
   background: #001529;
 }
+.sider--CLc6s .text--2gICQ {
+  color: white;
+  position: absolute;
+  left: 78px;
+  font-size: 15px;
+}
 /* stylelint-disable no-duplicate-selectors */
 /* stylelint-disable */
 /* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
@@ -121,8 +127,6 @@
 /* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
 
 .fileTypeImage--1uIse {
-  width: 30px;
-  height: 30px;
   display: inline-block;
   cursor: pointer;
   -webkit-flex-shrink: 0;
@@ -330,6 +334,27 @@
 }
 .wrapper--NNkMU .ant-tabs {
   height: 100%!important;
+}
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+
+.card--1jYDO .CardItem--1ugRG {
+  min-height: 38px;
+  padding: 10px 0;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.card--1jYDO .CardItem--1ugRG div:nth-child(1) {
+  width: 100px;
+  text-align: right;
+  -webkit-flex-shrink: 0;
+          flex-shrink: 0;
+}
+.card--1jYDO .CardItem--1ugRG div:nth-child(2) {
+  color: grey;
 }
 /* stylelint-disable no-duplicate-selectors */
 /* stylelint-disable */

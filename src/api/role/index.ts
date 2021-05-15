@@ -6,5 +6,7 @@ export default {
   getCurrentPermission(params?:Object){
     return $axios.get(`/role/user`)
   },
- 
+  getCurrentFunctionPermission(params?:Object){
+    return $axios.get(`/role/user/functions`)
+  },
 }

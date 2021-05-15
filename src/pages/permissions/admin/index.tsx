@@ -8,6 +8,7 @@ import roleApi from '@/api/permissions/admin'
 import { Space, Card, Form, Input, Button, Modal, Switch, InputNumber, message, Select } from 'antd';
 import { layout, tailLayout } from '@/utils/layout'
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import PermissionsButton from '@/components/PermissionsButton';
 const { Option } = Select;
 
 
@@ -15,8 +16,8 @@ const Index = () => {
 
     const [form] = Form.useForm();
 
-    const handleChangeState = (e, current) => { 
-        roleApi.edit({ 
+    const handleChangeState = (e, current) => {
+        roleApi.edit({
             id: (current as any).id,
             state: e ? 0 : 1
         }).then(res => {
@@ -26,7 +27,7 @@ const Index = () => {
         })
     }
 
-    const onResetPassword = (current) => { 
+    const onResetPassword = (current) => {
         Modal.confirm({
             title: '信息',
             icon: <ExclamationCircleOutlined />,
@@ -39,7 +40,7 @@ const Index = () => {
         });
     }
 
-   
+
 
     const columns = [
         {
@@ -88,9 +89,15 @@ const Index = () => {
             render: (_: any, record: any) => {
                 return (
                     <Space>
-                        <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton>
-                        <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton>
-                        <CustomButton type='warning' onClick={() => onResetPassword(record)}>重置密码</CustomButton>
+                        <PermissionsButton permission={"Account:Update"}>
+                            <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton>
+                        </PermissionsButton>
+                        <PermissionsButton permission={"Account:Delete"}>
+                            <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton>
+                        </PermissionsButton>
+                        <PermissionsButton permission={"Account:Reset"}>
+                            <CustomButton type='warning' onClick={() => onResetPassword(record)}>重置密码</CustomButton>
+                        </PermissionsButton>
                     </Space>
                 )
             }
@@ -123,21 +130,21 @@ const Index = () => {
 
     const getList = () => {
 
-        let newObj:any={}
+        let newObj: any = {}
 
-        if(searchKeys.key && searchKeys.name){
-            newObj[searchKeys.key]=searchKeys.name
+        if (searchKeys.key && searchKeys.name) {
+            newObj[searchKeys.key] = searchKeys.name
         }
 
-        if(searchKeys.state && searchKeys.state!==-1){
-            newObj.state=searchKeys.state
+        if (searchKeys.state && searchKeys.state !== -1) {
+            newObj.state = searchKeys.state
         }
 
         roleApi.getList({
             page: pagination.current,
             size: pagination.pageSize,
             ...newObj
-        }).then((res: any) => { 
+        }).then((res: any) => {
             const { records, total } = res;
             setDataSource(records)
             setPagination({
@@ -156,8 +163,8 @@ const Index = () => {
         setModalType('add')
     }
 
-    const onFinish = (values: any) => { 
-      
+    const onFinish = (values: any) => {
+
         if (values.roles && values.roles.length) {
             // values.roleIds = values.roles.map(item => item.id).join(',')
             values.roleIds = values.roles.map(item => item.id).join(",")
@@ -199,7 +206,7 @@ const Index = () => {
         })
     }
     //删除单个
-    const onDeleteItem = (current) => { 
+    const onDeleteItem = (current) => {
         Modal.confirm({
             title: '信息',
             icon: <ExclamationCircleOutlined />,
@@ -212,7 +219,7 @@ const Index = () => {
         });
     }
 
-   
+
 
 
     const handleChange = (key) => (e) => {
@@ -278,8 +285,8 @@ const Index = () => {
         form.setFieldsValue({
             username: current.username,
             account: current.account,
-            password: current.password, 
-            phone:current.phone,
+            password: current.password,
+            phone: current.phone,
             email: current.email,
             roles: current.roleIds?.split(',').map(item => Number(item))
         })
@@ -310,6 +317,7 @@ const Index = () => {
                             {tableTopComponent}
                         </>
                     }}
+                    permissonModule={"Account"}
                 >
 
                 </CustomTable>
@@ -320,7 +328,7 @@ const Index = () => {
                     type={modalType}
                     size="small"
                     clickCancel={() => setVisible(false)}
-                    afterClose={()=>form.resetFields()}
+                    afterClose={() => form.resetFields()}
                 >
                     <Form
                         name="basic"

@@ -10,20 +10,18 @@ const FileDetail = (props) => {
     const location = useLocation();
 
     const fileId = useMemo(() => {
-        const { pathname } = location;
-
-        console.log("search",pathname)
+        const { pathname,search } = location;  
 
         if (!pathname) {
             message.error("无法解析对应文件！")
         }
 
         try {
-            return pathname.match(/fileId=([\d]*)/)[1]
+            return (pathname+decodeURIComponent(search)).match(/fileId=([\d]*)/)[1]
         } catch (e) { 
             return undefined; 
         }
-    }, [location.pathname])
+    }, [location.pathname,location.search])
 
     console.log("fileId",fileId)
 
@@ -42,8 +40,7 @@ const FileDetail = (props) => {
 
     useEffect(() => {
         if (fileId) {
-            API.getDetail(fileId).then(res => {
-                console.log("  setDetail(res)",res)
+            API.getDetail(fileId).then(res => { 
                 setDetail(res)
             })
         }  

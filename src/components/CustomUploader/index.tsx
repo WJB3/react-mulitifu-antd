@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { useState } from 'react';
 import { Modal, Upload, message, Button, Image, Space,Progress,Typography } from 'antd';
-
+import { kbToMd } from '@/utils/tranformSize';
 import style from "./index.module.less";
 import fileToBase64 from '@/utils/fileToBase64'
 import {
@@ -38,7 +38,6 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
     }),[fileList]);
 
     const handleRequest = async ({ file, filename }) => { 
-        console.log("file",'filename',filename,file)
    
         const type=whereType(file);
 
@@ -86,7 +85,7 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
         showUploadList: false,
     }
 
-    const totalSize = fileList.reduce((total, current) => total + current.size, 0).toFixed(2);
+    const totalSize = fileList.reduce((total, current) => total + current.size, 0);
 
     const handleClickDelete = (e, current) => {
         e.preventDefault();
@@ -180,7 +179,6 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
     } 
 
     console.log("fileList",fileList)
-
  
 
     return (
@@ -217,7 +215,7 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
                                     ),
                                 }}
                             />
-                            {!!item.uploadProgress && <Progress percent={item.uploadProgress} size="small" className={style.progress} />}
+                            {!!item.uploadProgress && <Progress percent={item.uploadProgress.toFixed(0)} size="small" className={style.progress} />}
                         </div> : <div  className={style.fileWrap} onMouseEnter={handleMouseEnter(item.name)} onMouseLeave={handleMouseLeave(item.name)} >
                             <div>{item.name}</div>
                             <div>此类型无法预览</div>
@@ -227,13 +225,13 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
                                     <div onClick={(e) => handleClickDelete(e, item)}><DeleteOutlined style={{color:'white',cursor:'pointer'}} /></div>
                                 </div>
                             }
-                            {!!item.uploadProgress && <Progress percent={item.uploadProgress} size="small" className={style.progress} />}
+                            {!!item.uploadProgress && <Progress percent={item.uploadProgress.toFixed(0)} size="small" className={style.progress} />}
                         </div>
                             })}
                     </div>
                     <div className={style.bottomContainer}>
                         <div className={style.text}>
-                            <div>选中<Text type="warning">{fileList.length}</Text>个文件，共{totalSize}K。</div>
+                            <div>选中<Text type="warning">{fileList.length}</Text>个文件，共{kbToMd(totalSize)}。</div>
                             {!!isUpload && <div>已上传<Text type="success">{hasUploadLength}</Text>个文件。</div>}
                         </div>
                         <div className={style.action}>

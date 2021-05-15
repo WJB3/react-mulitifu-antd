@@ -9,6 +9,7 @@ import ResourceTreeSelect from '@/components/ResourceTreeSelect';
 import { Space, Radio,Form, Input, Button, Modal, Switch, InputNumber, message, Select } from 'antd';
 import { layout, tailLayout } from '@/utils/layout'
 import UserTypeSelect from '@/components/UserTypeSelect';
+import PermissionsButton from '@/components/PermissionsButton';
 
 const TreePage=(props)=>{
 
@@ -114,7 +115,9 @@ const TreePage=(props)=>{
     return (
         <div className={styles.treeList}>
             <div className={styles.header}>
-                <CustomButton type="add"   addText={'新建文件夹'} onClick={()=>handleShowVisible()}></CustomButton>
+                <PermissionsButton permission="Folder:Save">
+                    <CustomButton type="add"   addText={'新建文件夹'} onClick={()=>handleShowVisible()}></CustomButton>
+                </PermissionsButton>
             </div>
             <div className={styles.cotent}>
                 <Tree
@@ -134,6 +137,7 @@ const TreePage=(props)=>{
                 type={modalType}
                 size="default"
                 clickCancel={() => setVisible(false)}
+               
             >
                 <Form
                     name="basic"

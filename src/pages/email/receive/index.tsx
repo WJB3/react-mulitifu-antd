@@ -4,10 +4,11 @@ import CustomButton from '@/components/CustomButton';
 import CustomModal from '@/components/CustomModal';
 import PermissionTree from '@/components/PermissionTree';
 import RoleSelect from '@/components/RoleSelect';
-import roleApi from '@/api/permissions/admin'
+import roleApi from '@/api/email/index'
 import { Space, Card, Form, Input, Button,DatePicker, Modal, Switch, InputNumber, message, Select } from 'antd';
 import { layout, tailLayout } from '@/utils/layout'
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import PermissionsButton from '@/components/PermissionsButton';
 const { Option } = Select;
 const dateFormat = 'YYYY-MM-DD';
 
@@ -18,68 +19,32 @@ const Index = () => {
     const [form] = Form.useForm();
 
     const handleChangeState = (e, current) => { 
-        roleApi.edit({
-            ...current,
-            id: (current as any).id,
-            state: e ? 0 : 1
-        }).then(res => {
+        // roleApi.edit({
+        //     ...current,
+        //     id: (current as any).id,
+        //     state: e ? 0 : 1
+        // }).then(res => {
 
-            getList();
-        }).catch((e) => {
-        })
+        //     getList();
+        // }).catch((e) => {
+        // })
     }
 
-    const onResetPassword = (current) => { 
-        Modal.confirm({
-            title: '信息',
-            icon: <ExclamationCircleOutlined />,
-            content: `确定要重置“${current.username}”的登录密码吗？`,
-            okText: '确认',
-            cancelText: '取消',
-            onOk: () => roleApi.resetPassword(current.id).then(res => {
-                message.success("密码重置成功，重置后的密码为：123456")
-            }).catch(() => message.success("重置密码失败"))
-        });
-    }
-
+  
     const columns = [
+     
         {
-            title: '',
-            dataIndex: 'id',
-            key: 'id',
+            title: '标题',
+            dataIndex: 'title',
+            key: 'title',
         },
         {
-            title: '账号',
-            dataIndex: 'account',
-            key: 'account',
+            title: '发件人',
+            dataIndex: 'title',
+            key: 'title',
         },
         {
-            title: '名称',
-            dataIndex: 'username',
-            key: 'username',
-        },
-        {
-            title: '手机号',
-            dataIndex: 'phone',
-            key: 'phone',
-        },
-        {
-            title: '邮箱',
-            dataIndex: 'email',
-            key: 'email',
-        },
-        {
-            title: '状态',
-            dataIndex: 'state',
-            key: 'state',
-            render: (value, current) => {
-                return (
-                    <Switch checkedChildren="正常" unCheckedChildren="锁定" checked={value === 0} onChange={(e) => handleChangeState(e, current)} />
-                )
-            }
-        },
-        {
-            title: '创建时间',
+            title: '发件时间',
             dataIndex: 'createTimeStr',
             key: 'createTimeStr',
         },
@@ -89,9 +54,12 @@ const Index = () => {
             render: (_: any, record: any) => {
                 return (
                     <Space>
-                        <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton>
-                        <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton>
-                        <CustomButton type='warning' onClick={() => onResetPassword(record)}>重置密码</CustomButton>
+                        <PermissionsButton permission={``}>
+                            <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton>
+                        </PermissionsButton>
+                        <PermissionsButton permission={`REmail:Delete`}>
+                            <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton> 
+                        </PermissionsButton>
                     </Space>
                 )
             }
@@ -130,18 +98,7 @@ const Index = () => {
         if (searchKeys.searchDate) {
             newObj.searchDate = `${searchKeys.searchDate[0].format(dateFormat)}-${searchKeys.searchDate[1].format(dateFormat)}`
         }
-        roleApi.getList({
-            page: pagination.current,
-            size: pagination.pageSize,
-            ...newObj
-        }).then((res: any) => { 
-            const { records, total } = res;
-            setDataSource(records)
-            setPagination({
-                ...pagination,
-                total: total
-            })
-        })
+        
     }
 
     useEffect(() => {
@@ -159,24 +116,9 @@ const Index = () => {
         }
         setAddLoading(true);
         if (modalType === 'add') {
-            roleApi.add(values).then(res => {
-                setAddLoading(false);
-                setVisible(false);
-                getList();
-            }).catch((e) => {
-                setAddLoading(false);
-            })
+            
         } else {
-            roleApi.edit({
-                ...values,
-                id: (current as any).id
-            }).then(res => {
-                setAddLoading(false);
-                setVisible(false);
-                getList();
-            }).catch((e) => {
-                setAddLoading(false);
-            })
+            
         }
 
     };
@@ -188,7 +130,7 @@ const Index = () => {
     }
     //删除全部
     const handleDeleteRoles = (deleteIds) => {
-        roleApi.delete(deleteIds).then(res => {
+        roleApi.deleteReceive(deleteIds).then(res => {
             getList();
         })
     }
@@ -200,7 +142,7 @@ const Index = () => {
             content: '确定要删除选中数据吗？',
             okText: '确认',
             cancelText: '取消',
-            onOk: () => roleApi.delete([current.id]).then(res => {
+            onOk: () => roleApi.deleteReceive([current.id]).then(res => {
                 getList();
             })
         });
@@ -268,6 +210,7 @@ const Index = () => {
                     onTableChange={handleTableChange}
                     onAdd={handleShowVisible}
                     onDelete={handleDeleteRoles}
+                    hasAddButton={false}
                     tableTopProps={{
                         search: true,
                         onSearch: handleSearchKeys,
@@ -275,6 +218,7 @@ const Index = () => {
                             {tableTopComponent}
                         </>
                     }}
+                    permissonModule={'REmail'}
                 >
 
                 </CustomTable>

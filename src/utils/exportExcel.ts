@@ -14,10 +14,8 @@ export function exportExcel(dataSource,entozh,type="xlsx",name="全部信息"){
         }  
         return newData
       }, {})
-    });
-
-    // debugger;
-
+    }); 
+    
     const sheet = XLSX.utils.json_to_sheet(json);
 
     openDownloadDialog(sheet2blob(sheet,undefined,type), `${name}.${type}`);

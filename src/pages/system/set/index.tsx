@@ -5,6 +5,7 @@ import CustomImage from '@/components/CustomImage/index';
 import Api from '@/api/system/set';
 import Api2 from '@/api/global/auth';
 import useWindowResize from '@/hooks/useWindowResize';
+import PermissionsButton from '@/components/PermissionsButton';
 import { Card } from 'antd';
 
 import {
@@ -157,9 +158,11 @@ const Index = () => {
                         </Form.Item>
                         <Form.Item label=" " colon={false}>
                             <Space>
-                                <Button type="primary" htmlType="submit" loading={addLoading}>
+                                <PermissionsButton permission={'SiteSet:Update'}>
+                                    <Button type="primary" htmlType="submit" loading={addLoading}>
                                     提交
-                            </Button>
+                                    </Button>
+                            </PermissionsButton>
                                 <Button htmlType="button" >
                                     重置
                             </Button>
@@ -184,9 +187,10 @@ const Index = () => {
                         </Form.Item>
                         <Form.Item label=" " colon={false}>
                             <Space>
+                            <PermissionsButton permission={'SiteSet:Update'}>
                                 <Button type="primary" htmlType="submit" loading={submitLoading}>
                                     提交
-                            </Button>
+                            </Button></PermissionsButton>
                                 <Button htmlType="button" >
                                     重置
                             </Button>

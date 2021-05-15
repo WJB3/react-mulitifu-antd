@@ -25,8 +25,7 @@ const Index = () => {
             key: 'fileName',
             render: (current, record) => {
                 return (
-                    <div style={{ display: 'flex', alignItems: 'center' }} onClick={() => 
-                    history.replace({ pathname: '/fileDetail' })}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}  >
                         <FileTypeImage fileType={record.fileType} />
                         <span>{current}</span>
                     </div>
@@ -197,6 +196,7 @@ const Index = () => {
                         </>
                     }}
                     fileTypeTable
+                    permissonModule={'DRecord'}
                 >
 
                 </CustomTable>

@@ -113,7 +113,7 @@ const MenuCustom: any = (props:any) => {
             <div className="logo">
                 <Link to={{ pathname: '/' }}>
                     <img alt="logo" src={logo} />
-                    {!collapsed && <div style={{ color: 'white' }}>东风标致MEC素材广场</div>}
+                    {!collapsed && <div className={styles.text}>东风标致MEC素材广场</div>}
                 </Link>
             </div>
             <Menu

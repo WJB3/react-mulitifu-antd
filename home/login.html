@@ -60,6 +60,7 @@
         .container_item img {
             height: 100%;
             margin: 0 auto;
+            /* width: 100%; */
         }
 
         .footer {
@@ -88,6 +89,11 @@
         }
 
         .Item:hover {
+            color: #777;
+            cursor: pointer;
+        }
+
+        .Item1:hover {
             color: #777;
             cursor: pointer;
         }
@@ -195,46 +201,48 @@
             </div>
         </div>
         <div class="footer">
-            <a-row>
-                <a-col :lg="{ span: 8 ,push:6}">
-                    <a-card :bordered="false">
-                        <span slot="title">通知公告
-                            <a-icon type="alert" />
-                        </span>
-                        <div class="Item" v-for="(notice,index) in noticeList">
-                            <div class="Item_title">{{notice.title}}</div>
-                            <div class="Item_date">{{notice.createTimeStr}}</div>
-                        </div>
-                    </a-card>
-                </a-col>
-                <a-col :lg="{ span: 4 ,push:6}">
-                    <a-card :bordered="false">
-                        <span slot="title">品牌媒体中心包含：</span>
-                        <ul class="brandCard">
-                            <li>
-                                <div>
-                                    <a-icon type="file-protect"></a-icon><span>常规创意资料下载</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div>
-                                    <a-icon type="windows"></a-icon> 组合式创意下载
-                                </div>
-                            </li>
-                            <li>
-                                <div>
-                                    <a-icon type="download"></a-icon> 指导文件下载
-                                </div>
-                            </li>
-                            <li>
-                                <div>
-                                    <a-icon type="phone"></a-icon> 网站运维：0551-63354088
-                                </div>
-                            </li>
-                        </ul>
-                    </a-card>
-                </a-col>
-            </a-row>
+            <div style="width:1200px;margin:0 auto;">
+                <a-row>
+                    <a-col :lg="{ span: 16 }">
+                        <a-card :bordered="false">
+                            <span slot="title">通知公告
+                                <a-icon type="alert" />
+                            </span>
+                            <div class="Item" v-for="(notice,index) in noticeList">
+                                <div class="Item_title">{{notice.title}}</div>
+                                <div class="Item_date">{{notice.createTimeStr}}</div>
+                            </div>
+                        </a-card>
+                    </a-col>
+                    <a-col :lg="{ span: 8 }">
+                        <a-card :bordered="false">
+                            <span slot="title">品牌媒体中心包含：</span>
+                            <ul class="brandCard">
+                                <li>
+                                    <div class="Item1">
+                                        <a-icon type="file-protect"></a-icon><span>常规创意资料下载</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div  class="Item1">
+                                        <a-icon type="windows"></a-icon> 组合式创意下载
+                                    </div>
+                                </li>
+                                <li>
+                                    <div  class="Item1">
+                                        <a-icon type="download"></a-icon> 指导文件下载
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="Item1">
+                                        <a-icon type="phone"></a-icon> 网站运维：0551-63354088
+                                    </div>
+                                </li>
+                            </ul>
+                        </a-card>
+                    </a-col>
+                </a-row>
+            </div>
         </div>
     </div>
 </body>

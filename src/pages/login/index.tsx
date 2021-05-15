@@ -38,6 +38,17 @@ const LoginForm: FC<Props> = ({
       localStorage.setItem('USERNAME',(res as any).username);
       localStorage.setItem('TOKEN',(res as any).token);
 
+      roleApi.getCurrentFunctionPermission().then(res=>{ 
+        // localStorage.setItem('MENU',JSON.stringify(res)); 
+
+        // history.push('/')
+        console.log("res",res)
+        localStorage.setItem('Functions',JSON.stringify(res))
+      
+      }).catch((e)=>{ 
+        message.error("获取信息失败")
+      })
+
       roleApi.getCurrentPermission().then(res=>{ 
         localStorage.setItem('MENU',JSON.stringify(res)); 
 

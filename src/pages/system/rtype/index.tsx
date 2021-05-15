@@ -11,6 +11,7 @@ import { layout, tailLayout } from '@/utils/layout'
 import { ExclamationCircleOutlined, FolderOutlined, FileOutlined } from '@ant-design/icons';
 import useExpandedKeys from '@/hooks/useExpandedKeys';
 import useWindowResize from '@/hooks/useWindowResize';
+import PermissionsButton from '@/components/PermissionsButton';
 const { Option } = Select;
 
 
@@ -72,8 +73,12 @@ const Index = () => {
             render: (_: any, record: any) => {
                 return (
                     <Space>
-                        <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton>
-                        <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton>
+                        <PermissionsButton permission={"Resource:Update"}>
+                            <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton>
+                        </PermissionsButton>
+                        <PermissionsButton permission={"Resource:Delete"}>
+                            <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton>
+                        </PermissionsButton>
                     </Space>
                 )
             }
@@ -311,7 +316,9 @@ const Index = () => {
                     {
                         y:customHeight
                     }
-                } 
+                }  
+                isRtype
+                permissonModule={'Resource'}
             >
 
             </CustomTable>

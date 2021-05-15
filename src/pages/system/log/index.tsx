@@ -5,6 +5,7 @@ import CustomModal from '@/components/CustomModal';
 import roleApi from '@/api/system/log'
 import { Space, Form, Input, Card, Modal, DatePicker, InputNumber, message, Select } from 'antd';
 import { layout, tailLayout } from '@/utils/layout'
+import PermissionsButton from '@/components/PermissionsButton';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import moment from 'moment';
 const { Option } = Select;
@@ -66,9 +67,12 @@ const Index = () => {
             render: (_: any, record: any) => {
                 return (
                     <Space>
-                        <CustomButton type='default' onClick={() => onViewItem(record)} >查看</CustomButton>
-                        {/* <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton> */}
+                        <PermissionsButton permission={"SystemLog:Get"}>
+                            <CustomButton type='default' onClick={() => onViewItem(record)} >查看</CustomButton>
+                        </PermissionsButton>
+                        <PermissionsButton permission={"SystemLog:Delete"}> 
                         <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton>
+                        </PermissionsButton>
 
                     </Space>
                 )
@@ -260,6 +264,8 @@ const Index = () => {
                             {tableTopComponent}
                         </>
                     }}
+                    permissonModule={'SystemLog'}
+                    title={false}
                 >
 
                 </CustomTable>

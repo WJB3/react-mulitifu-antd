@@ -52,8 +52,7 @@ const TabPanes = (props) => {
 
   // 记录当前打开的tab
   const storeTabs = useCallback(
-    (ps): void => {
-      console.log("ps", ps) 
+    (ps): void => { 
       const pathArr = ps.reduce(
         (prev: CommonObjectType[], next: CommonObjectType) => [
           ...prev,
@@ -74,13 +73,11 @@ const TabPanes = (props) => {
     const initPanes = curTab.filter(item => item !== 'home').reduce(
       (prev: CommonObjectType[], next: string) => {
         const { title, tabKey, component: Content, icon } = getKeyName(next.includes('fileDetail')?'fileDetail':next)
-
-        console.log(getKeyName("fileDetail"));
-        
+ 
         return [
           ...prev,
           {
-            title:title==='文件详情'?next?.match(/fileName=([a-zA-Z0-9\-\.]*)/)?.[1]:title,
+            title:title==='文件详情'?next?.match(/fileName=([a-zA-Z0-9\-\.\u4e00-\u9fa5\_]*)/)?.[1]:title,
             key: title==='文件详情'?next:tabKey,
             content: Content,
             closable: tabKey !== 'home',
@@ -94,18 +91,18 @@ const TabPanes = (props) => {
     const { tabKey } = getKeyName(pathname)
     setPanes([...initPanes])
     setActiveKey(tabKey==='fileDetail'?pathname:tabKey)
+ 
   }, [localStorage.getItem('CURTAB'), pathname])
 
   // 初始化页面
   useEffect(() => {
     resetTabs()
-  }, [resetTabs])
+  }, [])
 
-  useEffect(() => {
+  useEffect(() => { 
 
-
-    const newPath = pathname
-
+    const newPath = pathname+decodeURIComponent(search)
+ 
     // 当前的路由和上一次的一样，return
     if (!panesItem.path || panesItem.path === pathRef.current) return
 
@@ -128,6 +125,7 @@ const TabPanes = (props) => {
     setPanes([...panes])
     setActiveKey(tabActiveKey) 
     storeTabs(panes)
+ 
   }, [panesItem, pathname, search, storeTabs, tabActiveKey]);
 
  // tab点击

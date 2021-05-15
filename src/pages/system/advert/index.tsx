@@ -9,6 +9,7 @@ import { layout, tailLayout } from '@/utils/layout'
 import ResourceUploader from '@/components/ResourceUploader';
 import CarouselImage from '@/components/CarouselImage';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import PermissionsButton from '@/components/PermissionsButton';
 
 const Option=Select.Option;
 
@@ -63,8 +64,12 @@ const Index = () => {
             render: (_: any, record: any) => {
                 return (
                     <Space>
+                        <PermissionsButton permission={"Advert:Update"}>
                         <CustomButton type='default' onClick={() => onEditItem(record)} >修改</CustomButton>
+                        </PermissionsButton>
+                        <PermissionsButton permission={"Advert:Delete"}>
                         <CustomButton type='delete' onClick={() => onDeleteItem(record)}>删除</CustomButton> 
+                        </PermissionsButton>
                     </Space>
                 )
             }
@@ -190,6 +195,7 @@ const Index = () => {
                     onTableChange={handleTableChange}
                     onAdd={handleShowVisible}
                     onDelete={handleDeleteRoles} 
+                    permissonModule={"Advert"}
                 >
 
                 </CustomTable>

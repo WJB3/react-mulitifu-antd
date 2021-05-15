@@ -9,6 +9,7 @@ import { ExclamationCircleOutlined ,CaretRightOutlined,CaretDownOutlined } from 
 import WhiteSpace from '@/components/WhiteSpace'; 
 import ActionButton from '@/components/ActionButton';
 import AliDownload from '@/hooks/AliDownload';
+import PermissionsButton from '@/components/PermissionsButton';
 
 const CustomTable = (props) => {
 
@@ -42,7 +43,10 @@ const CustomTable = (props) => {
         scroll,
         printModule,
         deleteAllText,
-        fileTypeTable
+        fileTypeTable,
+        permissonModule,
+        isMyResource,
+        isRtype
     } = props;
 
     const columns=[...propsColumns];
@@ -59,7 +63,9 @@ const CustomTable = (props) => {
             key: 'download',
             align: 'center',
             render: (current,record) => {
-                return <ActionButton onClick={()=>download(record)} />
+                return <PermissionsButton permission={`${permissonModule}:Download`}>
+                    <ActionButton onClick={()=>download(record)} />
+                </PermissionsButton>
             }
     };
 
@@ -69,7 +75,9 @@ const CustomTable = (props) => {
             key: 'share',
             align: 'center',
             render: () => {
-                return <ActionButton type="copy" />
+                return <PermissionsButton permission={`${permissonModule}:Get`}>
+                    <ActionButton type="copy" />
+                </PermissionsButton>
             }
     } 
 
@@ -150,9 +158,14 @@ const CustomTable = (props) => {
         tableProps.title=()=>{ return showTableToolbar ? <TableToolbar 
             renderLeft={
                 <>
-                    {hasAddButton && <CustomButton type="add" onClick={onAdd} addText={customAddButtonText}></CustomButton>}
-                    {hasShearButton && <CustomButton type="sheer" onClick={onShearSelected}>剪切</CustomButton>}
-                    {hasDeleteButton && <CustomButton type="delete" onClick={onDeleteSelected} deleteText={customDeleteButtonText}></CustomButton>}
+                    {hasAddButton && <PermissionsButton permission={isRtype?`${permissonModule}:Get`:`${permissonModule}:Save`}> 
+                            <CustomButton type="add" onClick={onAdd} addText={customAddButtonText}></CustomButton>
+                    </PermissionsButton>}
+                    {hasShearButton && <CustomButton type="sheer" onClick={onShearSelected} permission={`${permissonModule}:Update`}>剪切</CustomButton>}
+                    {hasDeleteButton && <PermissionsButton permission={isMyResource?`${permissonModule}:Recycle`:`${permissonModule}:Delete`}>
+                        <CustomButton type="delete" onClick={onDeleteSelected} deleteText={customDeleteButtonText}>
+                            </CustomButton>
+                        </PermissionsButton>}
                     {hasSearchButton && <CustomButton type="search" onClick={props?.onLeftSearch}>高级搜索</CustomButton>}
                   
                 </>

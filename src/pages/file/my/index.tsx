@@ -7,6 +7,7 @@ import { Space, Form, Input, Button, Modal, Card } from 'antd';
 import { layout, tailLayout } from '@/utils/layout' 
 import FileTypeImage from '@/components/FileTypeImage'; 
 
+
 const Index = () => {
 
     const [form] = Form.useForm();
