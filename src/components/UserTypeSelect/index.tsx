@@ -32,7 +32,7 @@ const TagSelect = React.forwardRef((props: any, ref: any) => {
 
     return (
         <>
-            <Select defaultValue={undefined} value={value} style={{ width: 120 }} onChange={handleChangeSelect}>
+            <Select defaultValue={undefined} value={value===0?null:value} style={{ width: 120 }} onChange={handleChangeSelect}>
                 <Option value={undefined}>请选择</Option>
                 {
                     roleList.map((item)=>(

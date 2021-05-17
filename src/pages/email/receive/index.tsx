@@ -98,6 +98,18 @@ const Index = () => {
         if (searchKeys.searchDate) {
             newObj.searchDate = `${searchKeys.searchDate[0].format(dateFormat)}-${searchKeys.searchDate[1].format(dateFormat)}`
         }
+        roleApi.getReceive({
+            page: pagination.current,
+            size: pagination.pageSize,
+            ...newObj
+        }).then((res: any) => { 
+            const { records, total } = res;
+            setDataSource(records)
+            setPagination({
+                ...pagination,
+                total: total
+            })
+        })
         
     }
 

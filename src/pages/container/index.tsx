@@ -41,8 +41,7 @@ const Home: FC<Props> = (props) => {
  
 
   useEffect(() => { 
-
-    localStorage.setItem('COLLAPSED',document.body.clientWidth <= 1366?'TRUE':'FALSE') 
+ 
     // 未登录
     if (!localStorage.getItem('TOKEN') && pathname !== '/login') { 
       history.replace({ pathname: '/login' })

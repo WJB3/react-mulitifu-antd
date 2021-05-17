@@ -14,6 +14,33 @@ const Index = () => {
 
     const [form] = Form.useForm();
 
+    //删除单个
+    const onDeleteItem = (current) => { 
+        Modal.confirm({
+            title: '信息',
+            icon: <ExclamationCircleOutlined />,
+            content: '确定要删除选中数据吗？',
+            okText: '确认',
+            cancelText: '取消',
+            onOk: () => roleApi.delete([current.id]).then(res => {
+                getList();
+            })
+        });
+    }
+
+    const onResumeItem = (current) => { 
+        Modal.confirm({
+            title: '信息',
+            icon: <ExclamationCircleOutlined />,
+            content: '确定要恢复选中数据吗？',
+            okText: '确认',
+            cancelText: '取消',
+            onOk: () => roleApi.recycleRe([current.id].join(",")).then(res => {
+                getList();
+            })
+        });
+    }
+
     const columns = [
 
         {
@@ -66,7 +93,20 @@ const Index = () => {
             key: 'createTimeStr',
 
         },
-        
+        {
+            title: '操作',
+            dataIndex: 'operation',
+            render: (_: any, record: any) => {
+                return (
+                    <Space> 
+                        <CustomButton type='default' onClick={() => onResumeItem(record)} >恢复</CustomButton> 
+                     
+                        <CustomButton type='delete' onClick={() => onDeleteItem(record)}>彻底删除</CustomButton> 
+                
+                    </Space>
+                )
+            }
+        }
     ];
 
     const [pagination, setPagination] = useState({
@@ -200,8 +240,8 @@ const Index = () => {
                         children: <>
                             {tableTopComponent}
                         </>
-                    }}
-                    fileTypeTable
+                    }} 
+                    isRecycle
                 >
 
                 </CustomTable>

@@ -46,7 +46,9 @@ const CustomTable = (props) => {
         fileTypeTable,
         permissonModule,
         isMyResource,
-        isRtype
+        isRtype,
+        isRecycle,
+        isMy
     } = props;
 
     const columns=[...propsColumns];
@@ -158,12 +160,13 @@ const CustomTable = (props) => {
         tableProps.title=()=>{ return showTableToolbar ? <TableToolbar 
             renderLeft={
                 <>
-                    {hasAddButton && <PermissionsButton permission={isRtype?`${permissonModule}:Get`:`${permissonModule}:Save`}> 
-                            <CustomButton type="add" onClick={onAdd} addText={customAddButtonText}></CustomButton>
+                    {hasAddButton && customAddButtonText==="上传"? <CustomButton type="add" onClick={onAdd} addText={customAddButtonText}></CustomButton> :<PermissionsButton permission={isRtype?`${permissonModule}:Get`:`${permissonModule}:Save`}> 
+                    <CustomButton type="add" onClick={onAdd} addText={customAddButtonText}></CustomButton>
                     </PermissionsButton>}
                     {hasShearButton && <CustomButton type="sheer" onClick={onShearSelected} permission={`${permissonModule}:Update`}>剪切</CustomButton>}
-                    {hasDeleteButton && <PermissionsButton permission={isMyResource?`${permissonModule}:Recycle`:`${permissonModule}:Delete`}>
-                        <CustomButton type="delete" onClick={onDeleteSelected} deleteText={customDeleteButtonText}>
+                    {hasDeleteButton && (isRecycle || isMy) ?  <CustomButton type="delete" onClick={onDeleteSelected} deleteText={customDeleteButtonText}>
+                            </CustomButton> :<PermissionsButton permission={isMyResource?`${permissonModule}:Recycle`:`${permissonModule}:Delete`}>
+                            <CustomButton type="delete" onClick={onDeleteSelected} deleteText={customDeleteButtonText}>
                             </CustomButton>
                         </PermissionsButton>}
                     {hasSearchButton && <CustomButton type="search" onClick={props?.onLeftSearch}>高级搜索</CustomButton>}

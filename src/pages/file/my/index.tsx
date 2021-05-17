@@ -199,6 +199,7 @@ const Index = () => {
                         </>
                     }}
                     fileTypeTable
+                    isMy
                 >
 
                 </CustomTable>

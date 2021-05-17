@@ -13,24 +13,7 @@ const ResourceTreeSelect = React.forwardRef((props: any, ref: any) => {
         typeApi.tree().then((res) => {
             setRoleList(res)
         })
-    }, []); 
-
-    const findItemById=(id)=>{ 
-        let oneItem;
-        roleList.forEach(item=>{
-            if(item.id===id){
-                oneItem=item; 
-            }
-            if(item.children && item.children.length){
-                item.children.forEach(itemA=>{
-                    if(itemA.id===id){
-                        oneItem=itemA; 
-                    }
-                })
-            }
-        })
-        return oneItem;
-    }
+    }, []);  
 
     const handleChangeSelect=(value,label,extra)=>{  
         setValue(value) 
@@ -60,13 +43,15 @@ const ResourceTreeSelect = React.forwardRef((props: any, ref: any) => {
     }
 
     const renderTreeData = transformTree(roleList);
+
+    console.log("renderTreeData",renderTreeData,value)
  
 
     return (
         <>
              <TreeSelect
                 style={{ width: '100%' }}
-                value={value}
+                value={value===0?null:value}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 treeData={renderTreeData}
                 placeholder="Please select"

@@ -1,11 +1,13 @@
+//@ts-nocheck
+
 import React, { useEffect, useState, useRef } from 'react';
 import CustomTable from '@/components/CustomTable';
 import CustomButton from '@/components/CustomButton';
 import CustomModal from '@/components/CustomModal';
 import UserSelectAboutCompany from '@/components/UserSelectAboutCompany';
-import PermissionTree from '@/components/PermissionTree'; 
+import PermissionTree from '@/components/PermissionTree';
 import roleApi from '@/api/email/index'
-import { Space, Form, Card, Input, Button,DatePicker, Modal, Select } from 'antd';
+import { Space, Form, Card, Input,Row,Col,Tag, Button, DatePicker, Modal, Select } from 'antd';
 import { layout, tailLayout } from '@/utils/layout'
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import PermissionsButton from '@/components/PermissionsButton';
@@ -17,19 +19,34 @@ const dateFormat = 'YYYY-MM-DD';
 const Index = () => {
 
     const [form] = Form.useForm();
- 
+
+    const handleDoubleClick=(current)=>(e)=>{ 
+        setCurrent(current)
+        setShowVisible(true)
+
+        roleApi.getReceivePeople(current.id).then((res)=>{
+            console.log("res",res)
+            setRe(res);
+        }).catch(e=>e)        
+    }
+
     const columns = [
 
         {
             title: '标题',
             dataIndex: 'title',
             key: 'title',
+            render:(current,record)=>{
+                return <div onDoubleClick={handleDoubleClick(record)}>
+                    {current}
+                </div>
+            }
         },
         {
             title: '发件人',
             dataIndex: 'title',
             key: 'title',
-            render:()=>{
+            render: () => {
                 return localStorage.getItem("CURRENTUSER") || 'admin'
             }
         },
@@ -54,6 +71,8 @@ const Index = () => {
         }
     ];
 
+    const [current,setCurrent]:[any,any]=useState({});
+
     const [pagination, setPagination] = useState({
         current: 1,
         pageSize: 10,
@@ -69,17 +88,21 @@ const Index = () => {
 
     const [visible, setVisible] = useState(false);
 
+    const [showVisible, setShowVisible] = useState(false);
+
     const [addLoading, setAddLoading] = useState(false);
 
     const [modalType, setModalType] = useState('add');
 
-    const [permissionVisible, setPermissionVisible] = useState(false); 
+    const [permissionVisible, setPermissionVisible] = useState(false);
+
+    const [re,setRe]=useState([]);
 
     const getList = () => {
         let newObj: any = {}
         if (searchKeys.title) {
             newObj.searchKey = searchKeys.title
-        } 
+        }
         if (searchKeys.searchDate) {
             newObj.searchDate = `${searchKeys.searchDate[0].format(dateFormat)}-${searchKeys.searchDate[1].format(dateFormat)}`
         }
@@ -87,7 +110,7 @@ const Index = () => {
             page: pagination.current,
             size: pagination.pageSize,
             ...newObj
-        }).then((res: any) => { 
+        }).then((res: any) => {
             const { records, total } = res;
             setDataSource(records)
             setPagination({
@@ -106,7 +129,7 @@ const Index = () => {
         setModalType('add')
     }
 
-    const onFinish = (values: any) => { 
+    const onFinish = (values: any) => {
         if (values.receive && values.receive.length) {
             values.receiveIds = values.receive.join(',');
             delete values.receive;
@@ -147,7 +170,7 @@ const Index = () => {
         })
     }
     //删除单个
-    const onDeleteItem = (current) => { 
+    const onDeleteItem = (current) => {
         Modal.confirm({
             title: '信息',
             icon: <ExclamationCircleOutlined />,
@@ -158,7 +181,7 @@ const Index = () => {
                 getList();
             })
         });
-    } 
+    }
 
     const handleChange = (key) => (e) => {
         if (key === 'title') {
@@ -166,7 +189,7 @@ const Index = () => {
                 ...searchKeys,
                 title: e.target.value
             })
-        } else if (key === 'Ranger') { 
+        } else if (key === 'Ranger') {
             setSearchKeys({
                 ...searchKeys,
                 searchDate: e
@@ -222,6 +245,34 @@ const Index = () => {
                 >
 
                 </CustomTable>
+
+                <CustomModal
+                    visible={showVisible}
+                    customTitle={"发送站内信"}
+                    clickCancel={() => setShowVisible(false)}
+                >
+                    <Row style={{ padding: '10px 0' }} gutter={20}>
+                        <Col span={6} style={{ textAlign: 'right' }}>标题:</Col>
+                        <Col span={16} style={{ color: 'grey' }}>{current.title}</Col>
+                    </Row>
+                    <Row style={{ padding: '10px 0' }} gutter={20}>
+                        <Col span={6} style={{ textAlign: 'right' }}>请求内容:</Col>
+                        <Col span={16} style={{ color: 'grey' }}>{current.content}</Col>
+                    </Row>
+                    <Row style={{ padding: '10px 0' }} gutter={20}>
+                        <Col span={6} style={{ textAlign: 'right' }}>发件人:</Col>
+                        <Col span={16} style={{ color: 'grey' }}>{localStorage.getItem("CURRENTUSER") || 'admin'}</Col>
+                    </Row>
+                    <Row style={{ padding: '10px 0' }} gutter={20}>
+                        <Col span={6} style={{ textAlign: 'right' }}>收件人:</Col>
+                        <Col span={16}>{re.map(item=>(<Tag color="success">{item.receiveName}</Tag>))}</Col>
+                    </Row>
+                    <Row style={{ padding: '10px 20px 0' }} gutter={20}>
+                        <Col span={6} style={{ textAlign: 'right' }}>发件时间:</Col>
+                        <Col span={16 } style={{ color: 'grey' }}>{current.createTimeStr}</Col>
+                    </Row>
+                    <div style={{height:60}}></div>
+                </CustomModal>
 
                 <CustomModal
                     visible={visible}

@@ -9,6 +9,9 @@ export default {
   getSend(params){
     return $axios.get(`/email/page/send`,params)
   },
+  getReceivePeople(id){
+    return $axios.get(`/email/receive/list/${id}`)
+  },
   send(params){
     return $axios.post(`/email/?${qs.stringify(params)}`)
   },

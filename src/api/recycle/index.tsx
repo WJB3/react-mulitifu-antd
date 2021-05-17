@@ -15,7 +15,11 @@ export default {
   edit(params){
     return $axios.put(`/resource/?${qs.stringify({...params,isMy:true,fileState:1})}`)
   },
+  recycleRe(ids){
+    return $axios.put(`/resource/recycle-re?${qs.stringify({ids:ids})}`)
+  },
   delete(ids){
     return $axios.delete(`/resource/${ids}`,{isMy:true,fileState:1})
-  }
+  },
+
 }
