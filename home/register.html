@@ -14,6 +14,25 @@
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/ant-design-vue@1.7.5/dist/antd.min.css">
     <title>东风标致MEC素材广场</title>
     <style>
+        .ant-input-number,
+        .ant-select-selection,
+        .ant-select-selection__rendered {
+            height: 44px !important;
+            line-height: 44px;
+        }
+
+        .ant-select {
+            height: 44px !important;
+        }
+
+        input {
+            height: 44px !important;
+        }
+
+        button {
+            height: 38px !important;
+        }
+
         html,
         body,
         #app {
@@ -106,7 +125,7 @@
                 <div class="SignInTitle">
                     用户注册
                 </div>
-                <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 19 }" @submit="handleSubmit">
+                <a-form :form="form" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }" @submit="handleSubmit">
                     <a-form-item label="手机号码">
                         <a-input-number placeholder="手机号码"
                             v-decorator="['phone', { rules: [{ required: true, message:'手机号必填' }] }]"
@@ -116,11 +135,11 @@
                         <a-row :gutter="10">
                             <a-col :span="10">
                                 <a-input placeholder="手机验证码" v-decorator="[
-                                        'code',
+                                        'smscode',
                                         { rules: [{ required: true, message: '手机验证码必填!' }] },
                                     ]" />
                             </a-col>
-                            <a-col :span="14">
+                            <a-col :span="14" style="text-align: right;">
                                 <a-button type="primary" :disabled="sendTime>0" @click="sendCode">
                                     {{sendTime>0?'正在发送验证码'+sendTime+'s':'发送验证码'}}
                                 </a-button>
@@ -129,41 +148,52 @@
                     </a-form-item>
                     <a-form-item label="姓名">
                         <a-input placeholder="姓名"
-                            v-decorator="['name', { rules: [{ required: true, message:'手机号必填' }] }]"
+                            v-decorator="['username', { rules: [{ required: true, message:'手机号必填' }] }]"
                             style="width:100%;" />
                     </a-form-item>
+
                     <a-form-item label="申请类型">
                         <a-select v-decorator="[
-                          'type',
+                          'userTypeId',
                           { rules: [{ required: true, message: '申请类型!' }] },
-                        ]" placeholder="请选择申请类型" >
-                            <a-select-option value="male">
-                                请选择申请类型
-                            </a-select-option>
-                            <a-select-option value="female">
-                                DPAD员工
-                            </a-select-option>
-                            <a-select-option value="female">
-                                经销商
-                            </a-select-option>
-                            <a-select-option value="female">
-                                代理商
+                        ]" placeholder="请选择申请类型">
+                            <a-select-option :value="item.id" v-for="(item,index) in roleList">
+                                {{item.name}}
                             </a-select-option>
                         </a-select>
                     </a-form-item>
+                    <a-form-item label="经销商" v-if="isDealers">
+                        <a-input placeholder="经销商代码"
+                            v-decorator="['code', { rules: [{ required: true, message:'经销商代码必填' }] }]"
+                            style="width:100%;" />
+                    </a-form-item>
+
+                    <a-form-item label="代理商名称" v-if="isAgent">
+                        <a-select v-decorator="[
+                          'company',
+                          { rules: [{ required: true, message: '申请类型!' }] },
+                        ]" placeholder="请选择代理商">
+                            <a-select-option :value="item.id" v-for="(item,index) in agentList">
+                                {{item.name}}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-item>
+
                     <a-form-item label="密码">
                         <a-input placeholder="密码"
                             v-decorator="['password', { rules: [{ required: true, message:'密码必填' }] }]"
                             style="width:100%;" />
                     </a-form-item>
+
                     <a-form-item label="确认密码">
                         <a-input placeholder="确认密码"
-                            v-decorator="['re-password', { rules: [{ required: true, message:'确认密码必填' }] }]"
+                            v-decorator="['rePassword', { rules: [{ required: true, message:'确认密码必填' }] }]"
                             style="width:100%;" />
                     </a-form-item>
-                   
+
                     <a-form-item :wrapper-col="{ span: 19, offset: 5 }">
-                        <a-button type="primary" html-type="submit" style="border-color:#FF5722!important;margin-right: 20px;background-color:#FF5722!important">
+                        <a-button type="primary" html-type="submit"
+                            style="border-color:#FF5722!important;margin-right: 20px;background-color:#FF5722!important">
                             注册账号
                         </a-button>
                         <a-button @click="location.href='http://www.hml-media.net/reso/web/login.html'">
@@ -181,69 +211,81 @@
     let ImgBase = "http://mec.hml-media.net/"
     var vm = new Vue({
         el: '#app',
-        beforeCreate() {
-            this.form = this.$form.createForm(this, { name: 'normal_login' });
-        },
         data() {
+            const self = this;
             return {
                 formLayout: 'horizontal',
-                form: this.$form.createForm(this, { name: 'coordinated' }),
-                sendTime:0
+                form: this.$form.createForm(this, { name: 'coordinated', onFieldsChange: self.handleValuesChange }),
+                sendTime: 0,
+                roleList: [],
+                agentList:[],
+                isDealers: false,
+                isAgent: false
             }
         },
         methods: {
-            sendCode(){
-                const self=this;
-                let phone=this.form.getFieldValue('phone');
-                if(!phone || !/^1[3456789]\d{9}$/.test(phone)){
-                    self.$message.error('请输入正确的手机号!')
-                    return ;
-                }
-                self.sendTime=60;
-                let setTimeOut=setInterval(()=>{
-                    self.sendTime=--self.sendTime;
+            handleValuesChange(value, props) {
+                if (Object.keys(props)[0] === 'userTypeId') {
+                    let changeTypeId = props[Object.keys(props)[0]].value;
+                    let name = this.roleList.find(item => item.id === changeTypeId).name;
 
-                    if(self.sendTime===0){
-                        clearInterval(setTimeOut)
+                    if(name === "经销商"){
+                        this.isAgent=false;
+                        this.isDealers=true;
+                    }else if(name==='代理商'){
+                        this.isAgent=true;
+                        this.isDealers=false;
+                    }else{
+                        this.isAgent=false;
+                        this.isDealers=false;
                     }
-                },1000)
+                     
+                }
+
+            },
+            sendCode() {
+                const self = this;
+                let phone = this.form.getFieldValue('phone');
+                if (!phone || !/^1[3456789]\d{9}$/.test(phone)) {
+                    self.$message.error('请输入正确的手机号!')
+                    return;
+                }
+                axios({
+                    method: 'get',
+                    url: `http://8.131.234.186:8200/res/index/send-sms?phone=${phone}`
+                }).then(res => {
+                    console.log(res);
+                    if (res.data.code === 1200) {
+                        this.$message.success("正在发送验证码，请稍候")
+                    }
+                    self.sendTime = 60;
+                    let setTimeOut = setInterval(() => {
+                        self.sendTime = --self.sendTime;
+
+                        if (self.sendTime === 0) {
+                            clearInterval(setTimeOut)
+                        }
+                    }, 1000)
+                })
+
             },
             handleSubmit(e) {
                 e.preventDefault();
                 this.form.validateFields((err, values) => {
                     if (!err) {
                         console.log('Received values of form: ', values);
-                        // axios({
-                        //     method: 'post',
-                        //     url: `http://8.131.234.186:8200/res/login?username=${values.userName}&password=${values.password}`
-                        // }).then(res => {
-                        //     console.log(res);
-                        //     const { data: { code, t, msg } } = res;
-                        //     if (code !== 1200) {
-                        //         this.$message.error(msg)
-                        //     } else {
-                        //         this.$message.success("您的账号已验证成功，即将登陆");
-
-                        //         localStorage.setItem('USERNAME', t.username);
-                        //         localStorage.setItem('TOKEN', t.token);
-
-                        //         axios({
-                        //             url: `http://8.131.234.186:8200/res/role/user`,
-                        //             headers: {
-                        //                 'Token': t.token
-                        //             },
-                        //             methods: 'GET'
-                        //         }).then(resA => {
-                        //             const { data: { code, t, msg } } = res;
-                        //             if (code !== 1200) {
-                        //                 this.$message.error(msg)
-                        //             } else {
-                        //                 location.href = "http://www.hml-media.net/reso/#/"
-                        //             }
-                        //         })
-
-                        //     }
-                        // })
+                        axios({
+                            method: 'post',
+                            url: `http://8.131.234.186:8200/res/index/register?${Qs.stringify(values)}`
+                        }).then(res => {
+                            console.log("Res", res)
+                            if (res.data.code === 1200) {
+                                this.$message.success('注册成功，即将跳转到登陆页...')
+                                location.href = 'http://www.hml-media.net/reso/web/login.html'
+                            } else {
+                                this.$message.error(res.data.msg)
+                            }
+                        })
                     }
                 });
             },
@@ -254,13 +296,19 @@
         },
         mounted() {
             axios({
-                url: `http://8.131.234.186:8200/res/index/info`,
+                url: `http://8.131.234.186:8200/res/index/role-list`,
+                methods: 'GET'
+            }).then(res => {
+                const { data: { t } } = res; 
+                this.roleList = t;
+            })
+            axios({
+                url: `http://8.131.234.186:8200/res/index/company`,
                 methods: 'GET'
             }).then(res => {
                 const { data: { t } } = res;
                 console.log("Get", t)
-                this.advertList = t.advertList;
-                this.noticeList = t.noticeList;
+                this.agentList = t;
             })
         }
     })

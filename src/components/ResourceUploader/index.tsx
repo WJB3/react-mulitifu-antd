@@ -18,12 +18,13 @@ const ResourceUploader = (props) => {
     const handleSuccessUpload = () => {
         const file = imgLoaderRef.current.fileList[0]; 
         const successUrl = file.successUrl;
-        props?.onChange?.(file)
-        setValue(successUrl)
+        props?.onChange?.(file) 
+        setValue(file.name)
     }
 
     useEffect(()=>{
-        setValue(props.value)
+        console.log("uploader",props)
+        setValue(props.value?.name)
     },[props.value])
 
     return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './index.module.less';
 import TagSelectModal from '@/components/TagSelectModal';
 import { Tag } from 'antd';
@@ -25,6 +25,13 @@ const TagInput = (props) => {
         setVisible(false)
         props?.onChange?.(selectedTags)
     }
+
+    useEffect(()=>{
+        setSelectedTags(
+            (props.value||[])
+        )
+        props?.onChange?.(props.value||[])
+    },[props.value])
 
     return (
         <>

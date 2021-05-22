@@ -239,7 +239,8 @@ const Index = () => {
             phone: current.phone,
             password: current.password,
             email: current.email,
-            userTypeId: current.user_type_id
+            userTypeId: current.user_type_id,
+            code:current.code
         })
     } 
 

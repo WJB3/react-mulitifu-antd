@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react';
+import React, { useState,useRef, useEffect } from 'react';
 import { Image,Space } from 'antd';
 import style from './index.module.less';
 import CustomUploader from '@/components/CustomUploader/index';
@@ -8,7 +8,8 @@ import {
     DeleteOutlined
 } from '@ant-design/icons'; 
 import {
-    visibleToSuccess
+    visibleToSuccess,
+    getImageUrl
 } from '@/utils/getSuccessUrl';
 
 
@@ -34,6 +35,13 @@ const CustomOssUploader = React.forwardRef((props: any, ref: any) => {
         setImgList(imgList.filter(item => item!== current))
         props?.onChange?.(imgList.filter(item => item!== current))
     }
+
+    useEffect(()=>{ 
+        if(props.type!=='add'){
+            console.log("setImgList",props.values)
+            setImgList(props.value.map(item=>getImageUrl(null,item))||[]) 
+        } 
+    },[props.value,props.type]);
 
     return (
         <>

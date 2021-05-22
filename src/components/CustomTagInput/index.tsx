@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import style from './index.module.less';
 import {Tag} from 'antd';
 
@@ -32,6 +32,10 @@ const CustomTagInput = React.forwardRef((props: any, ref: any) => {
         setTags([...tags]);
         props?.onChange([...tags])
     }
+    
+    useEffect(()=>{
+        setTags((props.value||[])); 
+    },[props.value])
 
     return (
         <div className={style.wrapper}>

@@ -13,6 +13,8 @@ import ResourceUploader from '@/components/ResourceUploader';
 import CustomTagInput from '@/components/CustomTagInput';
 import CustomOssUploader from '@/components/CustomOssUploader';
 import ResourceTreeSelect from '@/components/ResourceTreeSelect';
+import editFileType from '@/utils/editFileType'
+import { kbToMd } from '@/utils/tranformSize';
 
 
 const dateFormat = 'YYYY-MM-DD';
@@ -35,8 +37,8 @@ const Index = (props) => {
 
         {
             title: '文件名称',
-            dataIndex: 'fileName',
-            key: 'fileName',
+            dataIndex: 'title',
+            key: 'title',
             render: (current, record) => {
                 return (
                     <div style={{ display: 'flex', alignItems: 'center' }} onClick={handleShowFile(record)}>
@@ -50,6 +52,13 @@ const Index = (props) => {
             title: '文件类型',
             dataIndex: 'fileType',
             key: 'fileType',
+            render: (current, record) => {
+                return (
+                    <div> 
+                        {editFileType(current)}
+                    </div>
+                )
+            }
         },
         {
             title: '文件大小',
@@ -57,7 +66,7 @@ const Index = (props) => {
             key: 'fileSize',
             render: (current, record) => {
                 return (
-                    <span>{(current/1000).toFixed(2)}MB</span>
+                    <span>{kbToMd(current)}</span>
                 )
             }
         },
@@ -87,8 +96,7 @@ const Index = (props) => {
     const [searchKeys, setSearchKeys] = useState({
         name: ""
     })
-
-
+ 
 
     const [dataSource, setDataSource] = useState([]);
 
@@ -141,6 +149,7 @@ const Index = (props) => {
     }
 
     const onFinish = (values: any) => { 
+       
         let newObj: any = {};
         if (values.title) {
             newObj.title = values.title
@@ -156,19 +165,18 @@ const Index = (props) => {
         }
         if (values.youxiaoDate) {
             newObj.periodValidity = values.youxiaoDate.format(dateFormat)
-        }
-        if (values.youxiaoDate) {
-            newObj.periodValidity = values.youxiaoDate.format(dateFormat)
-        }
+        } 
         if (values.file) {
             newObj.fileName = values.file.name;
             newObj.filePath = values.file.successUrl;
-            newObj.fileSize = values.file.size;
+            newObj.fileSize = values.file.size*1024;
             newObj.fileType = values.file.type;
         }
         if (props.foldId) {
             newObj.folderId = props.foldId
         }
+
+       
 
         setAddLoading(true);
         if (modalType === 'add') {
@@ -274,6 +282,15 @@ const Index = (props) => {
         setShearIds(shearIds);
     }
 
+    const handleFieldsChange=(changedFields,allFields)=>{
+        console.log("handleFieldsChange",changedFields)
+        if(changedFields[0]?.name?.[0]==='file'){
+            form.setFieldsValue({ 
+                title:changedFields[0]?.value?.name?.split('.')?.[0]
+            })
+        }
+    }
+
   
     return (
         <div style={{ padding: 20 }}>
@@ -334,6 +351,7 @@ const Index = (props) => {
                 <Form
                     name="basic"
                     onFinish={onFinish2}
+                    onFieldsChange={handleFieldsChange}
                     form={form2}
                     {...layout}
                 >
@@ -359,8 +377,7 @@ const Index = (props) => {
             </CustomModal>
 
             <CustomModal
-                visible={visible}
-                title={'角色'}
+                visible={visible} 
                 customTitle={"上传文件"}
                 type={modalType}
                 size="big"
@@ -370,6 +387,7 @@ const Index = (props) => {
                 <Form
                     name="basic"
                     onFinish={onFinish}
+                    onFieldsChange={handleFieldsChange}
                     form={form}
                     {...layout}
                 >
@@ -410,7 +428,7 @@ const Index = (props) => {
                         label="缩略图"
                         name="imgs"
                     >
-                        <CustomOssUploader />
+                        <CustomOssUploader  type="add" />
                     </Form.Item>
 
 

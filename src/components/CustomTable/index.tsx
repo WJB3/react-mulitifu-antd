@@ -10,6 +10,7 @@ import WhiteSpace from '@/components/WhiteSpace';
 import ActionButton from '@/components/ActionButton';
 import AliDownload from '@/hooks/AliDownload';
 import PermissionsButton from '@/components/PermissionsButton';
+import share from '@/utils/share'
 
 const CustomTable = (props) => {
 
@@ -76,9 +77,9 @@ const CustomTable = (props) => {
             dataIndex: 'share',
             key: 'share',
             align: 'center',
-            render: () => {
+            render: (current,record) => {
                 return <PermissionsButton permission={`${permissonModule}:Get`}>
-                    <ActionButton type="copy" />
+                    <ActionButton type="copy" onClick={()=>share(`/fileDetail?fileId=${record.id}&fileName=${record.fileName}`)}/>
                 </PermissionsButton>
             }
     } 

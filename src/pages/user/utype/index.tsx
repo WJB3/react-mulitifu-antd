@@ -10,13 +10,15 @@ import { Space, Form, Card, Input, Tag, Button, Modal, Switch, InputNumber, mess
 import { layout, tailLayout } from '@/utils/layout'
 import { ExclamationCircleOutlined, FolderOutlined, FileOutlined } from '@ant-design/icons';
 import PermissionsButton from '@/components/PermissionsButton';
-import useExpandedKeys from '@/hooks/useExpandedKeys';
+import useExpandedKeys from '@/hooks/useExpandedKeys'; 
+import useWindowResize from '@/hooks/useWindowResize';
 const { Option } = Select;
-
 
 const Index = () => {
 
     const [form] = Form.useForm(); 
+
+    const [customHeight]=useWindowResize(140);
 
     const columns = [
         {
@@ -282,7 +284,7 @@ const Index = () => {
     }
 
     return (
-        <div>
+        <div style={{height:customHeight,overflow:'auto'}}>
 
             <Card>
 

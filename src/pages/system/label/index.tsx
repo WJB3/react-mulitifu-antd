@@ -10,6 +10,7 @@ import { layout, tailLayout } from '@/utils/layout'
 import { ExclamationCircleOutlined, FolderOutlined, FileOutlined } from '@ant-design/icons';
 import useExpandedKeys from '@/hooks/useExpandedKeys';
 import PermissionsButton from '@/components/PermissionsButton';
+import useWindowResize from '@/hooks/useWindowResize';
 const { Option } = Select;
 
 
@@ -17,7 +18,7 @@ const Index = () => {
 
     const [form] = Form.useForm();
  
-
+    const [customHeight]=useWindowResize(360);
 
     const columns = [
         {
@@ -311,6 +312,11 @@ const Index = () => {
                         </>
                     }}
                     permissonModule={'Label'}
+                    scroll={
+                        {
+                            y:customHeight
+                        }
+                    } 
                 >
 
                 </CustomTable>

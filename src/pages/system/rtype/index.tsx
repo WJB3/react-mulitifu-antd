@@ -18,7 +18,6 @@ const { Option } = Select;
 const Index = () => {
 
     const [form] = Form.useForm();
-
  
 
     const columns = [
