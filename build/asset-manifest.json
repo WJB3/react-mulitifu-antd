@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "./static/css/main.d229bc84.css",
-    "main.js": "./static/js/main.02c4fc4e.js",
-    "vendors~main.css": "./static/css/vendors~main.a0611404.chunk.css",
-    "vendors~main.js": "./static/js/vendors~main.5be66b8d.chunk.js",
+    "main.css": "./static/css/main.130314fc.css",
+    "main.js": "./static/js/main.46e90c24.js",
+    "vendors~main.css": "./static/css/vendors~main.5368feeb.chunk.css",
+    "vendors~main.js": "./static/js/vendors~main.4003042d.chunk.js",
     "index.html": "./index.html",
-    "precache-manifest.0a9bd874a1db9e8eac8b942819396504.js": "./precache-manifest.0a9bd874a1db9e8eac8b942819396504.js",
+    "precache-manifest.eac4571ffc11e68f7ebe380a52ca5e14.js": "./precache-manifest.eac4571ffc11e68f7ebe380a52ca5e14.js",
     "service-worker.js": "./service-worker.js",
     "service-worker.js.gz": "./service-worker.js.gz",
-    "static/css/main.d229bc84.css.gz": "./static/css/main.d229bc84.css.gz",
-    "static/css/vendors~main.a0611404.chunk.css.gz": "./static/css/vendors~main.a0611404.chunk.css.gz",
-    "static/js/main.02c4fc4e.js.gz": "./static/js/main.02c4fc4e.js.gz",
-    "static/js/vendors~main.5be66b8d.chunk.js.gz": "./static/js/vendors~main.5be66b8d.chunk.js.gz",
+    "static/css/main.130314fc.css.gz": "./static/css/main.130314fc.css.gz",
+    "static/css/vendors~main.5368feeb.chunk.css.gz": "./static/css/vendors~main.5368feeb.chunk.css.gz",
+    "static/js/main.46e90c24.js.gz": "./static/js/main.46e90c24.js.gz",
+    "static/js/vendors~main.4003042d.chunk.js.gz": "./static/js/vendors~main.4003042d.chunk.js.gz",
     "static/media/login.less": "./static/media/bg-login.85b2cead.jpeg",
     "static/media/newlogo.png": "./static/media/newlogo.4f91ce71.png"
   },
   "entrypoints": [
-    "static/css/vendors~main.a0611404.chunk.css",
-    "static/js/vendors~main.5be66b8d.chunk.js",
-    "static/css/main.d229bc84.css",
-    "static/js/main.02c4fc4e.js"
+    "static/css/vendors~main.5368feeb.chunk.css",
+    "static/js/vendors~main.4003042d.chunk.js",
+    "static/css/main.130314fc.css",
+    "static/js/main.46e90c24.js"
   ]
 }

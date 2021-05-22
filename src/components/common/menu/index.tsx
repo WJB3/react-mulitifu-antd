@@ -1,13 +1,14 @@
 import React, { useState, useEffect, FC, useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, Layout } from 'antd'
+import { Menu, Layout, message } from 'antd'
 
 import MyIconFont from '@/components/common/myIconfont'
-import { getKeyName } from '@/assets/js/publicFunc' 
+import { getKeyName } from '@/assets/js/publicFunc'
 import logo from '@/assets/img/newlogo.png'
 import { connect } from 'react-redux'
 import * as actions from '@/store/actions'
 import styles from './Menu.module.less'
+import roleApi from '@/api/role'
 import {
   HomeOutlined,
   MacCommandOutlined,
@@ -20,31 +21,31 @@ import {
   SettingOutlined
 } from '@ant-design/icons'
 
-const mapIcon={
-  '文件超市':MacCommandOutlined,
-  '广场中心':HomeOutlined,
-  '个人天地':UsergroupDeleteOutlined,
-  '回收站':DeleteOutlined,
-  '小狮信箱':MailOutlined,
-  '公告看板':DashboardOutlined,
-  '账户管理':TeamOutlined,
-  '权限管理':SafetyCertificateOutlined,
-  '常规管理':SettingOutlined
+const mapIcon = {
+  '文件超市': MacCommandOutlined,
+  '广场中心': HomeOutlined,
+  '个人天地': UsergroupDeleteOutlined,
+  '回收站': DeleteOutlined,
+  '小狮信箱': MailOutlined,
+  '公告看板': DashboardOutlined,
+  '账户管理': TeamOutlined,
+  '权限管理': SafetyCertificateOutlined,
+  '常规管理': SettingOutlined
 }
 
-const { SubMenu } = Menu 
+const { SubMenu } = Menu
 
-interface Props extends ReduxProps {}
+interface Props extends ReduxProps { }
 
 type MenuType = CommonObjectType<string>
 
 const MenuView: FC<Props> = ({ storeData: { theme, userInfo, collapsed } }) => {
   const { pathname } = useLocation()
   const { tabKey: curKey = 'home' } = getKeyName(pathname)
-  const [current, setCurrent] = useState(curKey) 
- 
+  const [current, setCurrent] = useState(curKey)
+
   useEffect(() => {
-    const { tabKey } = getKeyName(pathname)  
+    const { tabKey } = getKeyName(pathname)
     setCurrent(tabKey)
   }, [pathname])
 
@@ -80,8 +81,8 @@ const MenuView: FC<Props> = ({ storeData: { theme, userInfo, collapsed } }) => {
   // 创建可展开的第一级子菜单
   const creatSubMenu = (data: CommonObjectType): JSX.Element => {
     const menuItemList = []
-    data.routes.map((item: MenuType) => { 
-      menuItemList.push(renderMenu(item)) 
+    data.routes.map((item: MenuType) => {
+      menuItemList.push(renderMenu(item))
       return []
     })
 
@@ -97,30 +98,43 @@ const MenuView: FC<Props> = ({ storeData: { theme, userInfo, collapsed } }) => {
     list.map((item) => renderMenu(item))
 
   // 判断是否有子菜单，渲染不同组件
-  function renderMenu(item: MenuType) { 
+  function renderMenu(item: MenuType) {
     return item.type === 'subMenu' ? creatSubMenu(item) : createMenuItem(item)
   }
-  
 
-  const transformMenu=useMemo(()=>{
-    const localMenu=JSON.parse(localStorage.getItem("MENU"));  
-    const newMenu=localMenu?.map(item=>{ 
+  useEffect(() => {
+    if (!localStorage.getItem('MENU')) {
+      roleApi.getCurrentPermission().then(res => {
+        localStorage.setItem('MENU', JSON.stringify(res));
+      }).catch((e) => {
+        message.error("获取信息失败")
+      })
+    } 
+  }, [])
+
+
+
+  const transformMenu = useMemo(() => {
+    const localMenu = JSON.parse(localStorage.getItem("MENU"));
+    const newMenu = localMenu?.map(item => {
       return ({
-        path:item.page,
-        name:item.name,
-        icon:mapIcon[item.name],
-        key:item.page?.substr(1)||Math.random(),
-        type: item.children && item.children.length ?'subMenu':undefined,
-        routes:item.children && item.children.length ? item.children.map(cMenu=>({
-          path:cMenu.page,
-          name:cMenu.name,
-          key:cMenu.page?.substr(1)||Math.random(),
-        })) :[]
+        path: item.page,
+        name: item.name,
+        icon: mapIcon[item.name],
+        key: item.page?.substr(1) || Math.random(),
+        type: item.children && item.children.length ? 'subMenu' : undefined,
+        routes: item.children && item.children.length ? item.children.map(cMenu => ({
+          path: cMenu.page,
+          name: cMenu.name,
+          key: cMenu.page?.substr(1) || Math.random(),
+        })) : []
       })
     })
-    return newMenu||[];
-  },[localStorage.getItem("MENU")]) 
-  
+    return newMenu || [];
+  }, [localStorage.getItem("MENU")])
+
+
+
   return (
     <Layout.Sider
       collapsed={collapsed}
@@ -136,10 +150,10 @@ const MenuView: FC<Props> = ({ storeData: { theme, userInfo, collapsed } }) => {
       <div className="logo">
         <Link to={{ pathname: '/' }}>
           <img alt="logo" src={logo} />
-          {!collapsed && <div style={{color:'black'}}>东风标致MEC素材广场</div>}
+          {!collapsed && <div style={{ color: 'black' }}>东风标致MEC素材广场</div>}
         </Link>
       </div>
-      <Menu 
+      <Menu
         mode="inline"
         onClick={handleClick}
         selectedKeys={[current]}

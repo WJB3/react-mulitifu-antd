@@ -173,7 +173,7 @@
                           'company',
                           { rules: [{ required: true, message: '申请类型!' }] },
                         ]" placeholder="请选择代理商">
-                            <a-select-option :value="item.id" v-for="(item,index) in agentList">
+                            <a-select-option :value="item.name" v-for="(item,index) in agentList">
                                 {{item.name}}
                             </a-select-option>
                         </a-select>

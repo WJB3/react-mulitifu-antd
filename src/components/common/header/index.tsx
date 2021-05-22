@@ -10,6 +10,7 @@ import Api from '@/api/auth/useInfo'
 import CustomModal from '@/components/CustomModal';
 import { layout, tailLayout } from '@/utils/layout'
 import Api2 from '@/api/global/auth';
+import roleApi from '@/api/role'
 
 const Header = (props) => {
   const history = useHistory()
