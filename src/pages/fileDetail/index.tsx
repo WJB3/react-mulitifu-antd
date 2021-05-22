@@ -273,7 +273,7 @@ const FileDetail = (props) => {
             <Button style={{ marginRight: 30 }} onClick={() => setVisible(true)} type="primary" shape="round" icon={<FormOutlined /> } size={'large'}>
                     编辑
             </Button>
-                <Button onClick={() => onDeleteItem(detail)} danger shape="round" icon={<DeleteOutlined />} size={'large'}>
+                <Button type="primary" onClick={() => onDeleteItem(detail)} danger shape="round" icon={<DeleteOutlined />} size={'large'}>
                     删除
             </Button>
             </div>
