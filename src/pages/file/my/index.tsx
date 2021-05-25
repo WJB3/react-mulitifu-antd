@@ -202,6 +202,7 @@ const Index = () => {
                         </>
                     }}
                     fileTypeTable
+                    permissonModule={'Resource'}
                     isMy
                     scroll={
                         {

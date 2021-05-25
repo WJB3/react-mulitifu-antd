@@ -27,9 +27,7 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
         successUploader=()=>{},
         onCancel=()=>{},
         extraAccept=[]
-    } = props;
-
-    const [checkpoint,setCheckPoint]=useState();
+    } = props; 
 
     const [fileList, setFileList] = useState([]);
 
@@ -51,7 +49,14 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
             return false
         }
 
-        const base64Url = await fileToBase64(file); 
+        let base64Url;
+
+        if(file.size<1024 * 1024 * 100){
+            base64Url = await fileToBase64(file); 
+        }else{
+            base64Url=undefined;
+        } 
+ 
 
         setFileList((oldFileList) => {
             const hasFile=oldFileList.filter(item=>item.name===file.name);
@@ -78,6 +83,7 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
                 ]
             }
         })
+     
     }
 
     const uploadProps = {
