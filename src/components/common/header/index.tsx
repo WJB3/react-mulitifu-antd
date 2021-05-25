@@ -9,8 +9,7 @@ import { fullScreen, exitScreen } from '@/utils/screen';
 import Api from '@/api/auth/useInfo'
 import CustomModal from '@/components/CustomModal';
 import { layout, tailLayout } from '@/utils/layout'
-import Api2 from '@/api/global/auth';
-import roleApi from '@/api/role'
+import Api2 from '@/api/global/auth'; 
 
 const Header = (props) => {
   const history = useHistory()
@@ -27,8 +26,12 @@ const Header = (props) => {
   useLayoutEffect(() => {
     Api.getInfo().then(res => {
       setUserInfo(res || {})
+      setUserName(res.username)
+
+      localStorage.setItem("CURRENTTYPEID",res.userTypeId)
+
     })
-  }, []);
+  }, [localStorage.getItem('TOKEN')]);
 
   const [form2] = Form.useForm();
 
@@ -38,7 +41,20 @@ const Header = (props) => {
     localStorage.removeItem("USERNAME");
     localStorage.removeItem('COLLAPSED')
     localStorage.removeItem("CURTAB");
-    history.replace({ pathname: '/login' })
+    localStorage.removeItem("Functions");
+    localStorage.removeItem("CURRENTUSER");
+
+    let is_admin_login=localStorage.getItem('IS_ADMIN_LOGIN');
+
+    if(is_admin_login){
+      localStorage.removeItem('IS_ADMIN_LOGIN');
+      history.replace({ pathname: '/login' })
+    }else{
+      localStorage.removeItem('IS_ADMIN_LOGIN');
+      window.location.href='http://www.hml-media.net/reso/web/login.html'
+    }
+ 
+  
   }
 
   const menu = (
@@ -146,7 +162,7 @@ const Header = (props) => {
         </Row>
         <Row style={{ padding: '10px 0' }}>
           <Col span={6} style={{ textAlign: 'right' }}>手机号：</Col>
-          <Col span={16}>{useInfo.username}</Col>
+          <Col span={16}>{useInfo.phone}</Col>
         </Row>
         <Row style={{ padding: '10px 0' }}>
           <Col span={6} style={{ textAlign: 'right' }}>登录次数：</Col>

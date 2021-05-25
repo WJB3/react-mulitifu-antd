@@ -87,6 +87,8 @@ const Home: FC<Props> = (props) => {
     forceUpdate([])
   }
 
+  console.log("forceUpdateFunc")
+
   return (
     <Layout
       className={styles.container}

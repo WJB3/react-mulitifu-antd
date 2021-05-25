@@ -30,7 +30,7 @@ const ResourceUploader = (props) => {
     return (
         <div style={{ display: 'flex' }}>
 
-            <CustomUploader visible={imgVisible} max={1} size={1000} ref={imgLoaderRef} extraAccept={type==='image'?[]:['pptx','tif','cdr','7z','rar','sql','zip', 'doc', 'docx', 'pdf','video']} successUploader={handleSuccessUpload} onCancel={() => setImgVisible(false)} /> 
+            <CustomUploader   visible={imgVisible} max={1} size={1000} ref={imgLoaderRef} extraAccept={type==='image'?[]:['pptx','tif','cdr','7z','rar','sql','zip', 'doc', 'docx', 'pdf','video']} successUploader={handleSuccessUpload} onCancel={() => setImgVisible(false)} /> 
             
             <Input value={value} />
 

@@ -8,29 +8,31 @@ import style from './index.module.less';
 import CustomTagInput from '@/components/CustomTagInput';
 import { getImageUrl } from '@/utils/getSuccessUrl'
 import CustomOssUploader from '@/components/CustomOssUploader';
-import { FormOutlined,DownloadOutlined, ShareAltOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { FormOutlined, DownloadOutlined, ShareAltOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import AliDownload from '@/hooks/AliDownload';
 import CustomModal from '@/components/CustomModal';
 import TagInput from '@/components/TagInput';
 import { layout, tailLayout } from '@/utils/layout'
 import ResourceUploader from '@/components/ResourceUploader';
+import editFileType from '@/utils/editFileType'
 import roleApi from '@/api/system/label';
 import share from '@/utils/share'
 import moment from 'moment';
+import PermissionsButton from '@/components/PermissionsButton';
 
-function split(flattenLabel,label){
-    let detailLabel=label.split(',');
-    let customLabel=[];
-    let labels=[];
-    flattenLabel.forEach(item=>{
-        detailLabel.forEach(itemB=>{
-            if(item===itemB){
+function split(flattenLabel, label) {
+    let detailLabel = label.split(',');
+    let customLabel = [];
+    let labels = [];
+    flattenLabel.forEach(item => {
+        detailLabel.forEach(itemB => {
+            if (item === itemB) {
                 labels.push(itemB);
-                detailLabel.splice(detailLabel.indexOf(itemB),1)
+                detailLabel.splice(detailLabel.indexOf(itemB), 1)
             }
         })
     })
-    customLabel=detailLabel;
+    customLabel = detailLabel;
     return {
         customLabel,
         labels
@@ -45,7 +47,7 @@ const FileDetail = (props) => {
     const [list, setList] = useState([]);
 
     useEffect(() => {
-        roleApi.tree().then(res => { 
+        roleApi.tree().then(res => {
             setList(res)
         })
     }, [])
@@ -84,15 +86,15 @@ const FileDetail = (props) => {
 
     console.log("fileId", fileId)
 
-    const flattenLabel=list.reduce((total,current,index)=>{
-        if(current.children.length){
-            let newarr=[]
-            current.children.forEach(item=>{
-                newarr.push(item.name) 
+    const flattenLabel = list.reduce((total, current, index) => {
+        if (current.children.length) {
+            let newarr = []
+            current.children.forEach(item => {
+                newarr.push(item.name)
             })
             return total.concat(newarr)
         }
-    },[])
+    }, [])
 
     interface IProps {
         fileName?: string,
@@ -158,7 +160,7 @@ const FileDetail = (props) => {
         }
         if (values.youxiaoDate) {
             newObj.periodValidity = values.youxiaoDate.format(dateFormat)
-        } 
+        }
         if (values.file) {
             newObj.fileName = values.file.name;
             newObj.filePath = values.file.successUrl;
@@ -169,8 +171,8 @@ const FileDetail = (props) => {
             newObj.folderId = detail.foldId
         }
 
-        console.log("newObj",newObj)
-   
+        console.log("newObj", newObj)
+
 
         setAddLoading(true);
 
@@ -197,36 +199,36 @@ const FileDetail = (props) => {
             form.setFieldsValue({
                 title: changedFields[0]?.value?.name?.split('.')?.[0],
                 fileName: changedFields[0]?.value?.name?.split('.')?.[0],
-                
+
             })
         }
     }
 
-  
 
-    useEffect(()=>{
-        if(visible){
-            console.log("fileDetail",detail)
+
+    useEffect(() => {
+        if (visible) {
+            console.log("fileDetail", detail)
             form.setFieldsValue({
-                title:detail.title,
-                file:{
-                    name:detail.fileName,
-                    successUrl:detail.filePath,
-                    size:detail.fileSize,
-                    type:detail.fileType
+                title: detail.title,
+                file: {
+                    name: detail.fileName,
+                    successUrl: detail.filePath,
+                    size: detail.fileSize,
+                    type: detail.fileType
                 },
-                youxiaoDate:moment(detail.periodValidity),
-                desc:detail.fileDesc,
-                imgs:detail.fileCover.split(','),
-                customLabels:split(flattenLabel,detail.fileLabel).customLabel,
-                label:split(flattenLabel,detail.fileLabel).labels
-                
+                youxiaoDate: moment(detail.periodValidity),
+                desc: detail.fileDesc,
+                imgs: detail.fileCover.split(','),
+                customLabels: split(flattenLabel, detail.fileLabel).customLabel,
+                label: split(flattenLabel, detail.fileLabel).labels
+
             })
         }
-    },[visible])
+    }, [visible])
 
-    console.log("flattenLabel",flattenLabel)
- 
+    console.log("flattenLabel", flattenLabel)
+
 
     return (
         <Card className={style.card}>
@@ -236,7 +238,7 @@ const FileDetail = (props) => {
             </div>
             <div className={style.CardItem}>
                 <div>格式：</div>
-                <div> {detail.fileType}</div>
+                <div> {editFileType(detail.fileType)}</div>
             </div>
             <div className={style.CardItem}>
                 <div>大小：</div>
@@ -270,12 +272,14 @@ const FileDetail = (props) => {
                 <Button style={{ marginRight: 30 }} onClick={() => share()} type="primary" shape="round" icon={<ShareAltOutlined />} size={'large'}>
                     分享
             </Button>
-            <Button style={{ marginRight: 30 }} onClick={() => setVisible(true)} type="primary" shape="round" icon={<FormOutlined /> } size={'large'}>
+                {localStorage.getItem('CURRENTTYPEID') != 75 && <PermissionsButton permission={`Resource:Update`} ><Button style={{ marginRight: 30 }} onClick={() => setVisible(true)} type="primary" shape="round" icon={<FormOutlined />} size={'large'}>
+
                     编辑
-            </Button>
-                <Button type="primary" onClick={() => onDeleteItem(detail)} danger shape="round" icon={<DeleteOutlined />} size={'large'}>
+            </Button></PermissionsButton>}
+
+                {localStorage.getItem('CURRENTTYPEID') != 75 && <Button type="primary" onClick={() => onDeleteItem(detail)} danger shape="round" icon={<DeleteOutlined />} size={'large'}>
                     删除
-            </Button>
+            </Button>}
             </div>
 
             <CustomModal

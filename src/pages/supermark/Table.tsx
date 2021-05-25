@@ -1,3 +1,4 @@
+//@ts-nocheck 
 import React, { useEffect, useState, useRef } from 'react';
 import CustomTable from '@/components/CustomTable';
 import TagInput from '@/components/TagInput';
@@ -15,7 +16,7 @@ import CustomOssUploader from '@/components/CustomOssUploader';
 import ResourceTreeSelect from '@/components/ResourceTreeSelect';
 import editFileType from '@/utils/editFileType'
 import { kbToMd } from '@/utils/tranformSize';
-
+import useWindowResize from '@/hooks/useWindowResize';
 
 const dateFormat = 'YYYY-MM-DD';
 
@@ -29,9 +30,11 @@ const Index = (props) => {
     const handleShowFile=(record)=>(e)=>{ 
         history.push({
             pathname:`/fileDetail`,  
-            search:`fileId=${record.id}&fileName=${record.fileName}`
+            search:`fileId=${record.id}&fileName=${record.title}`
         })
     }
+
+    const [customHeight]=useWindowResize(300);
 
     const columns = [
 
@@ -326,11 +329,17 @@ const Index = (props) => {
                 customDeleteButtonText={"删除"}
                 customAddButtonText={"上传"}
                 onShear={handleShowShear}
-                hasShearButton
+                hasAddButton={localStorage.getItem('CURRENTTYPEID')!=75}
+                hasShearButton={localStorage.getItem('CURRENTTYPEID')!=75}
                 hasSearchButton
                 permissonModule={'Resource'}
                 fileTypeTable
                 onLeftSearch={()=>setSelectVisible(true)}
+                scroll={
+                    {
+                        y:customHeight
+                    }
+                } 
                 tableTopProps={{
                     search: true,
                     onSearch: handleSearchKeys,

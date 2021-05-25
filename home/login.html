@@ -289,18 +289,34 @@
                                 axios({
                                     url: `http://8.131.234.186:8200/res/role/user`,
                                     headers: {
-                                        'Token': t.token
+                                        'Token':   localStorage.getItem('TOKEN'),
                                     },
                                     methods: 'GET'
-                                }).then(resA => {
-                                    const { data: { code, t, msg } } = res;
-                                    if (code !== 1200) {
-                                        this.$message.error(msg)
-                                    } else {
-                                        location.href="http://www.hml-media.net/reso/#/"
-                                    }
-                                })
+                                }).then(resA => { 
+                                    const { data: { code, t, msg } } = resA; 
+                                    localStorage.setItem('MENU',JSON.stringify(t)) 
+                                    axios({
+                                        url: `http://8.131.234.186:8200/res/role/user/functions`,
+                                        headers: {
+                                            'Token':  localStorage.getItem('TOKEN'),
+                                        },
+                                        methods: 'GET'
+                                    }).then(resB=>{  
+                                        console.log("res",resB) 
 
+                                        const { data: { code, t, msg } } = resB; 
+                                        localStorage.setItem('Functions',JSON.stringify(t)) 
+                                        if (code !== 1200) {
+                                            this.$message.error(msg)
+                                        } else {
+                                            location.href="http://www.hml-media.net/reso/#/"
+                                            //location.href="http://localhost:10001/#/"
+                                        }
+                                        
+                                    }).catch((e)=>{ 
+                                        this.$message.error("获取信息失败")
+                                    }) 
+                                }) 
                             }
                         })
                     }

@@ -39,7 +39,7 @@ const MenuCustom: any = (props:any) => {
  
     const [current, setCurrent] = useState(); 
 
-    const transformMenu = useMemo(() => {
+    const transformMenu = () => {
         const localMenu = JSON.parse(localStorage.getItem("MENU"));
         const newMenu = localMenu?.map(item => {
             return ({
@@ -56,14 +56,14 @@ const MenuCustom: any = (props:any) => {
             })
         })
         return newMenu || [];
-    }, [localStorage.getItem("MENU")])
+    }
 
     // 菜单点击事件
     const handleClick = ({ key }): void => {
         setCurrent(key)
     }
 
-    const rootSubmenuKeys = transformMenu.filter(item=>item.routes && item.routes.length).map(item=>item.key);
+    const rootSubmenuKeys = transformMenu().filter(item=>item.routes && item.routes.length).map(item=>item.key);
   
 
     const [openKeys, setOpenKeys] = React.useState([]);
@@ -95,6 +95,8 @@ const MenuCustom: any = (props:any) => {
     }, [pathname]);
   
     const collapsed=localStorage.getItem('COLLAPSED')=='TRUE';
+
+    console.log("transformMenuAAA",transformMenu())
     
     return (
         <Layout.Sider
@@ -125,7 +127,7 @@ const MenuCustom: any = (props:any) => {
                 openKeys={openKeys}
             >
                 {
-                    transformMenu.map(menuOne => {
+                    transformMenu().map(menuOne => {
                         if (menuOne.routes && menuOne.routes.length) {
                             return <SubMenu key={menuOne.key} title={menuOne.name} icon={mapIcon[menuOne.name]}>
                                 {

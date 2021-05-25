@@ -6,11 +6,14 @@ import roleApi from '@/api/file/my'
 import { Space, Form, Input, Button, Modal, Card } from 'antd';
 import { layout, tailLayout } from '@/utils/layout' 
 import FileTypeImage from '@/components/FileTypeImage'; 
+import useWindowResize from '@/hooks/useWindowResize';
 
 
 const Index = () => {
 
     const [form] = Form.useForm();
+
+    const [customHeight]=useWindowResize(400);
 
     const columns = [
 
@@ -200,6 +203,11 @@ const Index = () => {
                     }}
                     fileTypeTable
                     isMy
+                    scroll={
+                        {
+                            y:customHeight
+                        }
+                    } 
                 >
 
                 </CustomTable>

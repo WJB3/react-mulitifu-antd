@@ -25,6 +25,7 @@ const Index = () => {
             title: '',
             dataIndex: 'id',
             key: 'id',
+            width:100,
         },
         {
             title: '标签名称',
@@ -45,11 +46,13 @@ const Index = () => {
             title: '排序号',
             dataIndex: 'sort',
             key: 'sort',
+            width:100,
         },
         {
             title: '创建时间',
             dataIndex: 'createTimeStr',
             key: 'createTimeStr',
+            width:150,
         },
         // {
         //     title: '状态',
@@ -69,6 +72,7 @@ const Index = () => {
         {
             title: '操作',
             dataIndex: 'operation',
+            width:150,
             render: (_: any, record: any) => {
                 return (
                     <Space>

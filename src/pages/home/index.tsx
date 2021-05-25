@@ -1,10 +1,11 @@
 import React, { FC, useEffect, useState, useLayoutEffect } from 'react'
-import { Statistic, Card, Row, Col, Typography } from 'antd'
+import { Statistic, Card, Row, Col, Typography, message } from 'antd'
 import CustomTable from '@/components/CustomTable';
 import WhiteSpace from '@/components/WhiteSpace';
 import NoticeApi from '@/api/notice'
 import EmailApi from '@/api/email'
 import Api from '@/api/auth/useInfo'
+import { useHistory } from 'react-router-dom'
 
 const { Title, Paragraph, Text, Link } = Typography;
  
@@ -37,13 +38,16 @@ const Home: FC = () => {
     })
   },[]);
 
+
+  const history = useHistory()  
+
   const columns1 = [
     {
       title: '标题',
       dataIndex: 'title',
       key: 'title',
       render:(current,record)=>{
-        return <a>{current}</a>
+        return <a onClick={()=>handleShowFile(record)}>{current}</a>
       }
     }
   ];
@@ -60,6 +64,22 @@ const Home: FC = () => {
       key: 'fileType',
     }
   ]
+
+  const handleShowFile=(record)=>{ 
+    console.log("handleShowFile",record);
+    if(!record.resourceId || !record.resourceTitle){
+      message.error("数据异常！")
+      return ;
+    }
+
+    history.push({
+        pathname:`/fileDetail`,  
+        search:`fileId=${record.resourceId}&fileName=${record.resourceTitle}`
+    })
+}
+
+
+  console.log("data1",data1)
 
   return (
     <div className="home">

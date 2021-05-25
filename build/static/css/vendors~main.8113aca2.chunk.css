@@ -11453,6 +11453,102 @@ a.ant-btn-sm {
 /* stylelint-disable no-duplicate-selectors */
 /* stylelint-disable */
 /* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+.ant-message {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: tnum, "tnum";
+  position: fixed;
+  top: 8px;
+  left: 0;
+  z-index: 1010;
+  width: 100%;
+  pointer-events: none;
+}
+.ant-message-notice {
+  padding: 8px;
+  text-align: center;
+}
+.ant-message-notice-content {
+  display: inline-block;
+  padding: 10px 16px;
+  background: #1f1f1f;
+  border-radius: 2px;
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.48), 0 6px 16px 0 rgba(0, 0, 0, 0.32), 0 9px 28px 8px rgba(0, 0, 0, 0.2);
+  pointer-events: all;
+}
+.ant-message-success .anticon {
+  color: #49aa19;
+}
+.ant-message-error .anticon {
+  color: #a61d24;
+}
+.ant-message-warning .anticon {
+  color: #d89614;
+}
+.ant-message-info .anticon,
+.ant-message-loading .anticon {
+  color: #6e41ff;
+}
+.ant-message .anticon {
+  position: relative;
+  top: 1px;
+  margin-right: 8px;
+  font-size: 16px;
+}
+.ant-message-notice.move-up-leave.move-up-leave-active {
+  -webkit-animation-name: MessageMoveOut;
+          animation-name: MessageMoveOut;
+  -webkit-animation-duration: 0.3s;
+          animation-duration: 0.3s;
+}
+@-webkit-keyframes MessageMoveOut {
+  0% {
+    max-height: 150px;
+    padding: 8px;
+    opacity: 1;
+  }
+  100% {
+    max-height: 0;
+    padding: 0;
+    opacity: 0;
+  }
+}
+@keyframes MessageMoveOut {
+  0% {
+    max-height: 150px;
+    padding: 8px;
+    opacity: 1;
+  }
+  100% {
+    max-height: 0;
+    padding: 0;
+    opacity: 0;
+  }
+}
+.ant-message-rtl {
+  direction: rtl;
+}
+.ant-message-rtl span {
+  direction: rtl;
+}
+.ant-message-rtl .anticon {
+  margin-right: 0;
+  margin-left: 8px;
+}
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
 .ant-typography {
   color: rgba(255, 255, 255, 0.85);
   overflow-wrap: break-word;
@@ -15798,102 +15894,6 @@ textarea.ant-pagination-options-quick-jumper input {
 .ant-select-rtl.ant-select-single.ant-select-sm:not(.ant-select-customize-input).ant-select-show-arrow .ant-select-selection-placeholder {
   padding-right: 0;
   padding-left: 21px;
-}
-/* stylelint-disable no-duplicate-selectors */
-/* stylelint-disable */
-/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
-
-/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
-/* stylelint-disable no-duplicate-selectors */
-/* stylelint-disable */
-/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
-.ant-message {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 14px;
-  font-variant: tabular-nums;
-  line-height: 1.5715;
-  list-style: none;
-  font-feature-settings: tnum, "tnum";
-  position: fixed;
-  top: 8px;
-  left: 0;
-  z-index: 1010;
-  width: 100%;
-  pointer-events: none;
-}
-.ant-message-notice {
-  padding: 8px;
-  text-align: center;
-}
-.ant-message-notice-content {
-  display: inline-block;
-  padding: 10px 16px;
-  background: #1f1f1f;
-  border-radius: 2px;
-  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.48), 0 6px 16px 0 rgba(0, 0, 0, 0.32), 0 9px 28px 8px rgba(0, 0, 0, 0.2);
-  pointer-events: all;
-}
-.ant-message-success .anticon {
-  color: #49aa19;
-}
-.ant-message-error .anticon {
-  color: #a61d24;
-}
-.ant-message-warning .anticon {
-  color: #d89614;
-}
-.ant-message-info .anticon,
-.ant-message-loading .anticon {
-  color: #6e41ff;
-}
-.ant-message .anticon {
-  position: relative;
-  top: 1px;
-  margin-right: 8px;
-  font-size: 16px;
-}
-.ant-message-notice.move-up-leave.move-up-leave-active {
-  -webkit-animation-name: MessageMoveOut;
-          animation-name: MessageMoveOut;
-  -webkit-animation-duration: 0.3s;
-          animation-duration: 0.3s;
-}
-@-webkit-keyframes MessageMoveOut {
-  0% {
-    max-height: 150px;
-    padding: 8px;
-    opacity: 1;
-  }
-  100% {
-    max-height: 0;
-    padding: 0;
-    opacity: 0;
-  }
-}
-@keyframes MessageMoveOut {
-  0% {
-    max-height: 150px;
-    padding: 8px;
-    opacity: 1;
-  }
-  100% {
-    max-height: 0;
-    padding: 0;
-    opacity: 0;
-  }
-}
-.ant-message-rtl {
-  direction: rtl;
-}
-.ant-message-rtl span {
-  direction: rtl;
-}
-.ant-message-rtl .anticon {
-  margin-right: 0;
-  margin-left: 8px;
 }
 /* stylelint-disable no-duplicate-selectors */
 /* stylelint-disable */

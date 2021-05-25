@@ -10,12 +10,15 @@ import { Space, Card, Form, Input, Button, Modal, Switch, InputNumber, message, 
 import { layout, tailLayout } from '@/utils/layout'
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import PermissionsButton from '@/components/PermissionsButton';
+import useWindowResize from '@/hooks/useWindowResize';
 const { Option } = Select;
 
 
 const Index = () => {
 
     const [form] = Form.useForm();
+
+    const [customHeight]=useWindowResize(380);
 
     const handleChangeState = (e, current) => { 
         roleApi.edit({ 
@@ -339,6 +342,11 @@ const Index = () => {
                         </>
                     }}
                     permissonModule={"User"}
+                    scroll={
+                        {
+                            y:customHeight
+                        }
+                    } 
                 >
 
                 </CustomTable>

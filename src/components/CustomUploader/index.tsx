@@ -43,7 +43,9 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
 
         const isType = accept.concat(extraAccept).some((item: string) => file.type.includes(item)||file.name.includes(item))
        
-        const isSize = file.size / 1024 / 1024 < size  
+        const isSize = file.size / 1024 / 1024 /1024 < size  
+
+        console.log("isSize",file.size,isSize)
         if (!isType || !isSize) {
             message.error('请上传正确文件')
             return false

@@ -94,27 +94,19 @@ const MenuView: FC<Props> = ({ storeData: { theme, userInfo, collapsed } }) => {
   }
 
   // 创建菜单树
-  const renderMenuMap = (list: CommonObjectType): JSX.Element[] =>
-    list.map((item) => renderMenu(item))
+  const renderMenuMap = (list: CommonObjectType): JSX.Element[] =>{
+    console.log("renderMenuMap",list)
+    return list.map((item) => renderMenu(item))
+  }
 
   // 判断是否有子菜单，渲染不同组件
   function renderMenu(item: MenuType) {
     return item.type === 'subMenu' ? creatSubMenu(item) : createMenuItem(item)
   }
 
-  useEffect(() => {
-    if (!localStorage.getItem('MENU')) {
-      roleApi.getCurrentPermission().then(res => {
-        localStorage.setItem('MENU', JSON.stringify(res));
-      }).catch((e) => {
-        message.error("获取信息失败")
-      })
-    } 
-  }, [])
 
-
-
-  const transformMenu = useMemo(() => {
+  const transformMenu = () => {
+    console.log("transformMenu")
     const localMenu = JSON.parse(localStorage.getItem("MENU"));
     const newMenu = localMenu?.map(item => {
       return ({
@@ -131,7 +123,7 @@ const MenuView: FC<Props> = ({ storeData: { theme, userInfo, collapsed } }) => {
       })
     })
     return newMenu || [];
-  }, [localStorage.getItem("MENU")])
+  }
 
 
 
@@ -159,7 +151,7 @@ const MenuView: FC<Props> = ({ storeData: { theme, userInfo, collapsed } }) => {
         selectedKeys={[current]}
         theme={theme === 'default' ? 'light' : 'dark'}
       >
-        {renderMenuMap(transformMenu)}
+        {renderMenuMap(transformMenu())}
       </Menu>
     </Layout.Sider>
   )

@@ -38,6 +38,9 @@ const LoginForm: FC<Props> = ({
       localStorage.setItem('USERNAME',(res as any).username);
       localStorage.setItem('TOKEN',(res as any).token);
 
+      //记录是否是admin登陆
+      localStorage.setItem('IS_ADMIN_LOGIN',"1");
+
       roleApi.getCurrentFunctionPermission().then(res=>{ 
         // localStorage.setItem('MENU',JSON.stringify(res)); 
 
