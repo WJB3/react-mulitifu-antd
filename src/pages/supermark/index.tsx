@@ -1,7 +1,8 @@
-import React ,{useState}from 'react';
+import React ,{useState,useEffect}from 'react';
 import { Row ,Col } from 'antd'; 
 import Tree from './Tree';
 import Table from './Table';
+import Api from '@/api/system/rtype'
 import useWindowResize from '@/hooks/useWindowResize';
 
 
@@ -10,6 +11,18 @@ const Supermark=()=>{
     const [customHeight]=useWindowResize(140);
     
     const [foldId,setFoldId]=useState(1);
+
+    const getList=()=>{
+        Api.tree().then(res=>{ 
+            if(res && res.length){
+                setFoldId(res[0].id)
+            }
+        });
+    }
+
+    useEffect(()=>{
+        getList()
+    },[]);
 
     const handleSelect=(e)=>{ 
         if(e.length){

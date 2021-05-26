@@ -11,6 +11,8 @@ import { layout, tailLayout } from '@/utils/layout'
 import UserTypeSelect from '@/components/UserTypeSelect';
 import PermissionsButton from '@/components/PermissionsButton';
 
+const aaa=[];
+
 const TreePage=(props)=>{
 
     const [treeList,setTreeList]=useState([]);
@@ -48,7 +50,7 @@ const TreePage=(props)=>{
 
     const renderTreeData = transformTree(treeList); 
 
-    const [expandedKeys, setExpandedKeys] = useExpandedKeys(treeList); 
+    const [expandedKeys, setExpandedKeys] = useExpandedKeys(aaa); 
 
     const [visible, setVisible] = useState(false);
 
@@ -175,7 +177,7 @@ const TreePage=(props)=>{
                     <Form.Item
                         label="可见组"
                         name="seeType"
-                        rules={[{ required: true, message: '可见组必填!' }]}
+                        rules={[{ required: false, message: '可见组必填!' }]}
                     >
                         <UserTypeSelect />
                     </Form.Item>

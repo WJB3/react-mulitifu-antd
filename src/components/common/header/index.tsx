@@ -51,7 +51,7 @@ const Header = (props) => {
       history.replace({ pathname: '/login' })
     }else{
       localStorage.removeItem('IS_ADMIN_LOGIN');
-      window.location.href='http://www.hml-media.net/reso/web/login.html'
+      window.location.href='http://mec-peugeot.haiminglan.cn/'
     }
  
   

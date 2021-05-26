@@ -76,7 +76,7 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
                         filename,
                         base64Url,
                         file: file,
-                        size: file.size / 1024,
+                        size: file.size,
                         type:file.type||type,
                         uploadProgress: 0
                     }

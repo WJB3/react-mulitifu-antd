@@ -217,9 +217,9 @@ const FileDetail = (props) => {
                     size: detail.fileSize,
                     type: detail.fileType
                 },
-                youxiaoDate: moment(detail.periodValidity),
+                youxiaoDate: detail.periodValidity?moment(detail.periodValidity):moment(),
                 desc: detail.fileDesc,
-                imgs: detail.fileCover.split(','),
+                imgs: detail.fileCover?detail.fileCover.split(','):[],
                 customLabels: split(flattenLabel, detail.fileLabel).customLabel,
                 label: split(flattenLabel, detail.fileLabel).labels
 

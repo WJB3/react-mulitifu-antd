@@ -58,7 +58,7 @@ const Index = (props) => {
             render: (current, record) => {
                 return (
                     <div> 
-                        {editFileType(current)}
+                        {editFileType(current,record)}
                     </div>
                 )
             }
@@ -172,7 +172,7 @@ const Index = (props) => {
         if (values.file) {
             newObj.fileName = values.file.name;
             newObj.filePath = values.file.successUrl;
-            newObj.fileSize = values.file.size*1024;
+            newObj.fileSize = values.file.size;
             newObj.fileType = values.file.type;
         }
         if (props.foldId) {

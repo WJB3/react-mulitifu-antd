@@ -196,7 +196,7 @@
                             style="border-color:#FF5722!important;margin-right: 20px;background-color:#FF5722!important">
                             注册账号
                         </a-button>
-                        <a-button @click="location.href='http://www.hml-media.net/reso/web/login.html'">
+                        <a-button @click="location.href='http://mec-peugeot.haiminglan.cn/'">
                             取消
                         </a-button>
                     </a-form-item>
@@ -281,7 +281,7 @@
                             console.log("Res", res)
                             if (res.data.code === 1200) {
                                 this.$message.success('注册成功，即将跳转到登陆页...')
-                                location.href = 'http://www.hml-media.net/reso/web/login.html'
+                                location.href = 'http://mec-peugeot.haiminglan.cn/'
                             } else {
                                 this.$message.error(res.data.msg)
                             }

@@ -76,8 +76,7 @@ const LoginForm: FC<Props> = ({
       </Form.Item>
       <Form.Item
         name="password"
-        rules={[{ required: true, message: '请输入密码' }]}
-        extra="用户名：admin 密码：123456"
+        rules={[{ required: true, message: '请输入密码' }]} 
       >
         <Input.Password
           placeholder="密码"

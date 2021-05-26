@@ -21,7 +21,12 @@ export default function useExpandedKeys(treeData){
 
     useEffect(()=>{ 
 
-        setExpandedKeys(transformTree(treeData))
+        if(treeData && treeData.length==0){
+            setExpandedKeys(treeData)
+        }else{
+            setExpandedKeys(transformTree(treeData))
+        }
+       
 
     },[treeData]);
 

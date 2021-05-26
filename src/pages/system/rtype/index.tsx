@@ -369,7 +369,7 @@ const Index = () => {
                     <Form.Item
                         label="可见组"
                         name="seeType"
-                        rules={[{ required: true, message: '可见组必填!' }]}
+                        rules={[{ required: false, message: '可见组必填!' }]}
                     >
                         <UserTypeSelect />
                     </Form.Item>
