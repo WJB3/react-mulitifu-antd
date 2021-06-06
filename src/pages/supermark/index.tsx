@@ -8,7 +8,7 @@ import useWindowResize from '@/hooks/useWindowResize';
 
 const Supermark=()=>{
 
-    const [customHeight]=useWindowResize(140);
+    const [customHeight]=useWindowResize(180);
     
     const [foldId,setFoldId]=useState(1);
 

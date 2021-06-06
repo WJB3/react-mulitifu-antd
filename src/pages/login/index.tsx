@@ -35,25 +35,25 @@ const LoginForm: FC<Props> = ({
       username:userName,
       password:password
     }).then(res=>{ 
-      localStorage.setItem('USERNAME',(res as any).username);
-      localStorage.setItem('TOKEN',(res as any).token);
+      sessionStorage.setItem('USERNAME',(res as any).username);
+      sessionStorage.setItem('TOKEN',(res as any).token);
 
       //记录是否是admin登陆
-      localStorage.setItem('IS_ADMIN_LOGIN',"1");
+      sessionStorage.setItem('IS_ADMIN_LOGIN',"1");
 
       roleApi.getCurrentFunctionPermission().then(res=>{ 
-        // localStorage.setItem('MENU',JSON.stringify(res)); 
+        // sessionStorage.setItem('MENU',JSON.stringify(res)); 
 
         // history.push('/')
         console.log("res",res)
-        localStorage.setItem('Functions',JSON.stringify(res))
+        sessionStorage.setItem('Functions',JSON.stringify(res))
       
       }).catch((e)=>{ 
         message.error("获取信息失败")
       })
 
       roleApi.getCurrentPermission().then(res=>{ 
-        localStorage.setItem('MENU',JSON.stringify(res)); 
+        sessionStorage.setItem('MENU',JSON.stringify(res)); 
 
         history.push('/')
       

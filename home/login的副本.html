@@ -290,33 +290,33 @@
                             } else {
                                 this.$message.success("您的账号已验证成功，即将登陆");
 
-                                sessionStorage.setItem('USERNAME', t.username);
-                                sessionStorage.setItem('TOKEN', t.token);
+                                localStorage.setItem('USERNAME', t.username);
+                                localStorage.setItem('TOKEN', t.token);
 
                                 axios({
                                     url: `http://8.131.234.186:8200/res/role/user`,
                                     headers: {
-                                        'Token': sessionStorage.getItem('TOKEN'),
+                                        'Token': localStorage.getItem('TOKEN'),
                                     },
                                     methods: 'GET'
                                 }).then(resA => {
                                     const { data: { code, t, msg } } = resA;
-                                    sessionStorage.setItem('MENU', JSON.stringify(t))
+                                    localStorage.setItem('MENU', JSON.stringify(t))
                                     axios({
                                         url: `http://8.131.234.186:8200/res/role/user/functions`,
                                         headers: {
-                                            'Token': sessionStorage.getItem('TOKEN'),
+                                            'Token': localStorage.getItem('TOKEN'),
                                         },
                                         methods: 'GET'
                                     }).then(resB => {
                                         console.log("res", resB)
 
                                         const { data: { code, t, msg } } = resB;
-                                        sessionStorage.setItem('Functions', JSON.stringify(t))
+                                        localStorage.setItem('Functions', JSON.stringify(t))
                                         if (code !== 1200) {
                                             this.$message.error(msg)
                                         } else {
-                                            location.href = "http://mec-peugeot.haiminglan.cn/reso/"
+                                            location.href = "http://mec-peugeot.haiminglan.cn/"
                                             //location.href="http://localhost:10001/#/"
                                         }
 

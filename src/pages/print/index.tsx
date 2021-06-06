@@ -12,10 +12,10 @@ export default function Print() {
     const [columns,setColumns]=useState([]);
 
     useEffect(() => {  
-        const module=localStorage.getItem('PRINTMODULE');
-        const columns=JSON.parse(localStorage.getItem('PRINTCOLUMNS'));
-        const pageCurrent=localStorage.getItem('PRINTCURRENT');
-        const pageSize=localStorage.getItem('PRINTSIZE');
+        const module=sessionStorage.getItem('PRINTMODULE');
+        const columns=JSON.parse(sessionStorage.getItem('PRINTCOLUMNS'));
+        const pageCurrent=sessionStorage.getItem('PRINTCURRENT');
+        const pageSize=sessionStorage.getItem('PRINTSIZE');
 
         setColumns(columns)
 

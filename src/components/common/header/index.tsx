@@ -28,29 +28,29 @@ const Header = (props) => {
       setUserInfo(res || {})
       setUserName(res.username)
 
-      localStorage.setItem("CURRENTTYPEID",res.userTypeId)
+      sessionStorage.setItem("CURRENTTYPEID",res.userTypeId)
 
     })
-  }, [localStorage.getItem('TOKEN')]);
+  }, [sessionStorage.getItem('TOKEN')]);
 
   const [form2] = Form.useForm();
 
   const logout = async () => {
-    localStorage.removeItem("MENU");
-    localStorage.removeItem("TOKEN");
-    localStorage.removeItem("USERNAME");
-    localStorage.removeItem('COLLAPSED')
-    localStorage.removeItem("CURTAB");
-    localStorage.removeItem("Functions");
-    localStorage.removeItem("CURRENTUSER");
+    sessionStorage.removeItem("MENU");
+    sessionStorage.removeItem("TOKEN");
+    sessionStorage.removeItem("USERNAME");
+    sessionStorage.removeItem('COLLAPSED')
+    sessionStorage.removeItem("CURTAB");
+    sessionStorage.removeItem("Functions");
+    sessionStorage.removeItem("CURRENTUSER");
 
-    let is_admin_login=localStorage.getItem('IS_ADMIN_LOGIN');
+    let is_admin_login=sessionStorage.getItem('IS_ADMIN_LOGIN');
 
     if(is_admin_login){
-      localStorage.removeItem('IS_ADMIN_LOGIN');
+      sessionStorage.removeItem('IS_ADMIN_LOGIN');
       history.replace({ pathname: '/login' })
     }else{
-      localStorage.removeItem('IS_ADMIN_LOGIN');
+      sessionStorage.removeItem('IS_ADMIN_LOGIN');
       window.location.href='http://mec-peugeot.haiminglan.cn/'
     }
  
@@ -72,31 +72,31 @@ const Header = (props) => {
   )
 
   useEffect(() => {
-    if (localStorage.getItem('USERNAME')) {
-      setUserName(localStorage.getItem('USERNAME'))
+    if (sessionStorage.getItem('USERNAME')) {
+      setUserName(sessionStorage.getItem('USERNAME'))
     }
 
-  }, [localStorage.getItem('USERNAME')]);
+  }, [sessionStorage.getItem('USERNAME')]);
 
 
   const toggle = (): void => {
-    let toggleCollapsed = localStorage.getItem('COLLAPSED') === 'TRUE' ? 'FALSE' : 'TRUE'
-    localStorage.setItem('COLLAPSED', toggleCollapsed)
+    let toggleCollapsed = sessionStorage.getItem('COLLAPSED') === 'TRUE' ? 'FALSE' : 'TRUE'
+    sessionStorage.setItem('COLLAPSED', toggleCollapsed)
 
     props?.forceUpdate()
   }
 
   // 更换主题
   useEffect(() => {
-    const script = document.createElement('script')
-    script.id = 'themeJs'
-    script.src = '/less.min.js'
-    document.body.appendChild(script)
+    // const script = document.createElement('script')
+    // script.id = 'themeJs'
+    // script.src = '/less.min.js'
+    // document.body.appendChild(script)
 
-    setTimeout(() => {
-      const themeStyle = document.getElementById('less:color')
-      if (themeStyle) localStorage.setItem('themeStyle', themeStyle.innerText)
-    }, 500)
+    // setTimeout(() => {
+    //   const themeStyle = document.getElementById('less:color')
+    //   if (themeStyle) sessionStorage.setItem('themeStyle', themeStyle.innerText)
+    // }, 500)
 
   }, [])
 
@@ -114,7 +114,7 @@ const Header = (props) => {
     }
   }
 
-  const collapsed = localStorage.getItem('COLLAPSED') == 'TRUE';
+  const collapsed = sessionStorage.getItem('COLLAPSED') == 'TRUE';
 
 
   const handleSubmit = (values) => { 

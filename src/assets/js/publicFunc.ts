@@ -207,7 +207,7 @@ export const getVideoUrl = (html?: string) => {
 /**
  * 获取本地存储中的权限
  */
-export const getPermission = () => localStorage.getItem('permissions') || []
+export const getPermission = () => sessionStorage.getItem('permissions') || []
 
 /**
  * 根据权限判断是否有权限
@@ -303,7 +303,7 @@ export const setUserInfo = (
     ],
     []
   )
-  localStorage.setItem('permissions', permissionArray)
+  sessionStorage.setItem('permissions', permissionArray)
 
   const result = {
     userName,

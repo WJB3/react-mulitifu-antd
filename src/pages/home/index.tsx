@@ -21,7 +21,7 @@ const Home: FC = () => {
 
   useLayoutEffect(() => {
     Api.getInfo().then(res => { 
-      localStorage.setItem("CURRENTUSER",res.username)
+      sessionStorage.setItem("CURRENTUSER",res.username)
       setUser(res||{})
     })
   }, []); 

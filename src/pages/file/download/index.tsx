@@ -6,9 +6,9 @@ import PermissionTree from '@/components/PermissionTree';
 import roleApi from '@/api/file/download'
 import { Space, Form, Input, Button, Modal, Card } from 'antd';
 import { layout, tailLayout } from '@/utils/layout'
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import editFileType from '@/utils/editFileType'
 import FileTypeImage from '@/components/FileTypeImage';
-import ActionButton from '@/components/ActionButton';
+import { kbToMd } from '@/utils/tranformSize';
 import { useHistory, useLocation } from 'react-router-dom'
 
 const Index = () => {
@@ -27,7 +27,7 @@ const Index = () => {
                 return (
                     <div style={{ display: 'flex', alignItems: 'center' }}  >
                         <FileTypeImage fileType={record.fileType} />
-                        <span>{current}</span>
+                        <span style={{wordBreak: 'break-all'}}>{current}</span>
                     </div>
                 )
             }
@@ -36,6 +36,13 @@ const Index = () => {
             title: '文件名称',
             dataIndex: 'fileType',
             key: 'fileType',
+            render: (current, record) => {
+                return (
+                    <div> 
+                        {editFileType(current,record)}
+                    </div>
+                )
+            }
         },
         {
             title: '文件大小',
@@ -43,7 +50,7 @@ const Index = () => {
             key: 'fileSize',
             render: (current, record) => {
                 return (
-                    <span>{current}MB</span>
+                    <span>{kbToMd(current)}</span>
                 )
             }
         },

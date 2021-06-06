@@ -43,12 +43,12 @@ const Home: FC<Props> = (props) => {
   useEffect(() => { 
  
     // 未登录
-    if (!localStorage.getItem('TOKEN') && pathname !== '/login') { 
+    if (!sessionStorage.getItem('TOKEN') && pathname !== '/login') { 
       history.replace({ pathname: '/login' })
       return
     }
 
-    if (localStorage.getItem('TOKEN') && pathname === '/print') {
+    if (sessionStorage.getItem('TOKEN') && pathname === '/print') {
       history.push({ pathname: '/print' })
       return
     }
@@ -79,7 +79,7 @@ const Home: FC<Props> = (props) => {
 
   }, [history, pathname, search])
  
-  const collapsed=localStorage.getItem('COLLAPSED')=='TRUE';
+  const collapsed=sessionStorage.getItem('COLLAPSED')=='TRUE';
 
   const [data,forceUpdate]=useState([]);
 

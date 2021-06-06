@@ -47,7 +47,7 @@ const Index = () => {
             dataIndex: 'title',
             key: 'title',
             render: () => {
-                return localStorage.getItem("CURRENTUSER") || 'admin'
+                return sessionStorage.getItem("CURRENTUSER") || 'admin'
             }
         },
         {
@@ -261,7 +261,7 @@ const Index = () => {
                     </Row>
                     <Row style={{ padding: '10px 0' }} gutter={20}>
                         <Col span={6} style={{ textAlign: 'right' }}>发件人:</Col>
-                        <Col span={16} style={{ color: 'grey' }}>{localStorage.getItem("CURRENTUSER") || 'admin'}</Col>
+                        <Col span={16} style={{ color: 'grey' }}>{sessionStorage.getItem("CURRENTUSER") || 'admin'}</Col>
                     </Row>
                     <Row style={{ padding: '10px 0' }} gutter={20}>
                         <Col span={6} style={{ textAlign: 'right' }}>收件人:</Col>

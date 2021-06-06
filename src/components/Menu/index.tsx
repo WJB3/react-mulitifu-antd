@@ -40,7 +40,7 @@ const MenuCustom: any = (props:any) => {
     const [current, setCurrent] = useState(); 
 
     const transformMenu = () => {
-        const localMenu = JSON.parse(localStorage.getItem("MENU"));
+        const localMenu = JSON.parse(sessionStorage.getItem("MENU"));
         const newMenu = localMenu?.map(item => {
             return ({
                 path: item.page,
@@ -94,7 +94,7 @@ const MenuCustom: any = (props:any) => {
            
     }, [pathname]);
   
-    const collapsed=localStorage.getItem('COLLAPSED')=='TRUE';
+    const collapsed=sessionStorage.getItem('COLLAPSED')=='TRUE';
 
     console.log("transformMenuAAA",transformMenu())
     

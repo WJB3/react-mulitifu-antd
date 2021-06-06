@@ -207,7 +207,7 @@ const Index = () => {
             pid: current.pid,
             name: current.name, 
             readonly: current.readonly, 
-            seeType:current.seeType,
+            seeType:current.seeType||0,
             folderDesc:current.folderDesc
         })
     }
@@ -367,7 +367,7 @@ const Index = () => {
                     </Form.Item>
 
                     <Form.Item
-                        label="可见组"
+                        label="不可见组"
                         name="seeType"
                         rules={[{ required: false, message: '可见组必填!' }]}
                     >

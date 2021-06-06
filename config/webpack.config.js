@@ -1,5 +1,5 @@
 //用于修改webpack默认配置
-const { override, addWebpackAlias, fixBabelImports, addLessLoader, addBabelPlugin } = require('customize-cra')
+const { override, addWebpackAlias,addBabelPlugins,useBabelRc, fixBabelImports, addLessLoader } = require('customize-cra')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin
@@ -7,13 +7,12 @@ const webpack = require('webpack')
 const path = require('path')
 const darkThemeVars = require('antd/dist/dark-theme');
 
-// 分析打包大小
+ // 分析打包大小
 const addAnalyze = () => (config) => {
   let plugins = [new BundleAnalyzerPlugin({ analyzerPort: 7777 })]
   config.plugins = [...config.plugins, ...plugins]
   return config
 }
-
 // 打包体积优化
 const addOptimization = () => (config) => {
   if (process.env.NODE_ENV === 'production') {
@@ -62,6 +61,10 @@ module.exports = override(
   addWebpackAlias({
     '@': path.resolve('src')
   }),
+  addBabelPlugins(
+    ['syntax-dynamic-import', { legacy: true }],
+  ),
+  useBabelRc(),
   addOptimization(),
   // 针对antd 实现按需打包：根据import来打包 (使用babel-plugin-import)
   fixBabelImports('import',{
@@ -74,8 +77,9 @@ module.exports = override(
     javascriptEnabled: true,
 		modifyVars:{
       'hack': `true;@import "${require.resolve('antd/lib/style/color/colorPalette.less')}";`,
-      ...darkThemeVars,
-      '@primary-color':'#6e41ff',
+      //...darkThemeVars,
+      '@primary-color':'#1890ff',
+      '@component-background':'#fff'
     },
 		localIdentName: '[local]--[hash:base64:5]' // use less-modules
   })

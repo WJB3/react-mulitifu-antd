@@ -269,6 +269,7 @@ const Index = () => {
                     <Option value="username">姓名</Option> 
                     <Option value="phone">手机号</Option>
                     <Option value="company">公司名称</Option>
+                    <Option value="code">经销商编码</Option>
                 </Select>
             </div>
             <div>
@@ -310,9 +311,10 @@ const Index = () => {
     const [isVisibleCode, setVisibleCode] = useState(false);
 
     const handleValueChange = (value, record) => { 
-        if (record?.userTypeId?.isLevelOne) {
+        console.log("record",record)
+        if (record?.userTypeId?.id===75) {
             setVisibleCode(true)
-        } else if (!record?.userTypeId?.isLevelOne) {
+        } else {
             setVisibleCode(false)
         }
     }

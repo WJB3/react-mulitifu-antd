@@ -24,7 +24,7 @@ export default function editFiletype(name,file:IProps){
     if(name==='video/x-flv'){
         return 'flv';
     }
-    if(name==='postscript'){
+    if(name==='application/postscript'){
         return 'ai';
     }
     if(name==='application/vnd.ms-powerpoint'){

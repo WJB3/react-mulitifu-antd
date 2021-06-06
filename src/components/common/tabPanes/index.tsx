@@ -60,7 +60,7 @@ const TabPanes = (props) => {
         ],
         []
       )  
-      localStorage.setItem('CURTAB', JSON.stringify(pathArr))
+      sessionStorage.setItem('CURTAB', JSON.stringify(pathArr))
     },
     []
   )
@@ -68,7 +68,7 @@ const TabPanes = (props) => {
   // 从本地存储中恢复已打开的tab列表
   const resetTabs = useCallback((): void => {
 
-    const curTab = JSON.parse(localStorage.getItem('CURTAB')||"[]");
+    const curTab = JSON.parse(sessionStorage.getItem('CURTAB')||"[]");
  
     const initPanes = curTab.filter(item => item !== 'home').reduce(
       (prev: CommonObjectType[], next: string) => {
@@ -92,7 +92,7 @@ const TabPanes = (props) => {
     setPanes([...initPanes])
     setActiveKey(tabKey==='fileDetail'?pathname:tabKey)
  
-  }, [localStorage.getItem('CURTAB'), pathname])
+  }, [sessionStorage.getItem('CURTAB'), pathname])
 
   // 初始化页面
   useEffect(() => {
@@ -144,7 +144,7 @@ const TabPanes = (props) => {
 
     // 移除tab
     const remove = (targetKey: string): void => {
-      const curTab = JSON.parse(localStorage.getItem('CURTAB')||"[]");
+      const curTab = JSON.parse(sessionStorage.getItem('CURTAB')||"[]");
       
       const delIndex = panes.findIndex(
         (item: CommonObjectType) => item.key === targetKey

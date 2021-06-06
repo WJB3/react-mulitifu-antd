@@ -6,6 +6,8 @@ import roleApi from '@/api/file/my'
 import { Space, Form, Input, Button, Modal, Card } from 'antd';
 import { layout, tailLayout } from '@/utils/layout' 
 import FileTypeImage from '@/components/FileTypeImage'; 
+import editFileType from '@/utils/editFileType'
+import { kbToMd } from '@/utils/tranformSize';
 import useWindowResize from '@/hooks/useWindowResize';
 
 
@@ -20,12 +22,12 @@ const Index = () => {
         {
             title: '文件名称',
             dataIndex: 'fileName',
-            key: 'fileName',
+            key: 'fileName', 
             render: (current, record) => {
                 return (
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <FileTypeImage fileType={record.fileType} />
-                        <span>{current}</span>
+                        <span style={{wordBreak: 'break-all'}}>{current}</span>
                     </div>
                 )
             }
@@ -34,6 +36,13 @@ const Index = () => {
             title: '文件类型',
             dataIndex: 'fileType',
             key: 'fileType',
+            render: (current, record) => {
+                return (
+                    <div> 
+                        {editFileType(current,record)}
+                    </div>
+                )
+            }
         },
         {
             title: '文件大小',
@@ -41,7 +50,7 @@ const Index = () => {
             key: 'fileSize',
             render: (current, record) => {
                 return (
-                    <span>{current}MB</span>
+                    <span>{kbToMd(current)}</span>
                 )
             }
         },

@@ -5,7 +5,7 @@ import TagInput from '@/components/TagInput';
 import CustomModal from '@/components/CustomModal';
 import PermissionTree from '@/components/PermissionTree';
 import roleApi from '@/api/resource/index'
-import { Space, Form, Input, Button, Modal, DatePicker } from 'antd';
+import { Space, Form, Input, Button, Typography,Tooltip, DatePicker } from 'antd';
 import { useHistory } from 'react-router-dom'
 import { layout, tailLayout } from '@/utils/layout'
 import TagSelectModal from '@/components/TagSelectModal';
@@ -17,6 +17,9 @@ import ResourceTreeSelect from '@/components/ResourceTreeSelect';
 import editFileType from '@/utils/editFileType'
 import { kbToMd } from '@/utils/tranformSize';
 import useWindowResize from '@/hooks/useWindowResize';
+import styles from './index.module.less';
+
+const { Paragraph } = Typography;
 
 const dateFormat = 'YYYY-MM-DD';
 
@@ -34,19 +37,23 @@ const Index = (props) => {
         })
     }
 
-    const [customHeight]=useWindowResize(300);
+    const [customHeight]=useWindowResize(360);
 
     const columns = [
 
         {
             title: '文件名称',
             dataIndex: 'title',
-            key: 'title',
+            key: 'title', 
             render: (current, record) => {
                 return (
-                    <div style={{ display: 'flex', alignItems: 'center' }} onClick={handleShowFile(record)}>
+                    <div style={{ display: 'flex', alignItems: 'center' }} onDoubleClick={handleShowFile(record)}>
                         <FileTypeImage fileType={record.fileType} />
-                        <span>{current}</span>
+                        <div style={{whiteSpace:'nowrap',textOverflow:'ellipsis',overflow:'hidden'}}>
+                            <Tooltip title={current}>
+                                {current} 
+                            </Tooltip>
+                        </div>  
                     </div>
                 )
             }
@@ -86,7 +93,7 @@ const Index = (props) => {
         {
             title: '上传日期',
             dataIndex: 'createTimeStr',
-            key: 'createTimeStr', 
+            key: 'createTimeStr',  
         } 
     ];
 
@@ -296,7 +303,7 @@ const Index = (props) => {
 
   
     return (
-        <div style={{ padding: 20 }}>
+        <div style={{ padding: 20 }} className={styles.table}>
 
 
             <TagSelectModal
@@ -329,8 +336,8 @@ const Index = (props) => {
                 customDeleteButtonText={"删除"}
                 customAddButtonText={"上传"}
                 onShear={handleShowShear}
-                hasAddButton={localStorage.getItem('CURRENTTYPEID')!=75}
-                hasShearButton={localStorage.getItem('CURRENTTYPEID')!=75}
+                hasAddButton={sessionStorage.getItem('CURRENTTYPEID')!=75}
+                hasShearButton={sessionStorage.getItem('CURRENTTYPEID')!=75}
                 hasSearchButton
                 permissonModule={'Resource'}
                 fileTypeTable

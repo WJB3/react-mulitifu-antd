@@ -35,8 +35,8 @@ const clearAll = () => {
 // 请求前拦截
 axios.interceptors.request.use(
   (req) => { 
-    if (localStorage.getItem("TOKEN")) {
-      req.headers.Token = localStorage.getItem("TOKEN")
+    if (sessionStorage.getItem("TOKEN")) {
+      req.headers.Token = sessionStorage.getItem("TOKEN")
     }
     return req
   },

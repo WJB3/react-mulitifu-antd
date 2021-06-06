@@ -19,6 +19,7 @@ import roleApi from '@/api/system/label';
 import share from '@/utils/share'
 import moment from 'moment';
 import PermissionsButton from '@/components/PermissionsButton';
+import useWindowResize from '@/hooks/useWindowResize';
 
 function split(flattenLabel, label) {
     let detailLabel = label.split(',');
@@ -45,6 +46,8 @@ const dateFormat = 'YYYY-MM-DD';
 const FileDetail = (props) => {
 
     const [list, setList] = useState([]);
+
+    const [customHeight]=useWindowResize(180);
 
     useEffect(() => {
         roleApi.tree().then(res => {
@@ -231,7 +234,7 @@ const FileDetail = (props) => {
 
 
     return (
-        <Card className={style.card}>
+        <Card className={style.card} style={{height:customHeight,overflow:'auto'}}>
             <div className={style.CardItem}>
                 <div>名称：</div>
                 <div>{detail.fileName}</div>
@@ -272,12 +275,12 @@ const FileDetail = (props) => {
                 <Button style={{ marginRight: 30 }} onClick={() => share()} type="primary" shape="round" icon={<ShareAltOutlined />} size={'large'}>
                     分享
             </Button>
-                {localStorage.getItem('CURRENTTYPEID') != 75 && <PermissionsButton permission={`Resource:Update`} ><Button style={{ marginRight: 30 }} onClick={() => setVisible(true)} type="primary" shape="round" icon={<FormOutlined />} size={'large'}>
+                {sessionStorage.getItem('CURRENTTYPEID') != 75 && <PermissionsButton permission={`Resource:Update`} ><Button style={{ marginRight: 30 }} onClick={() => setVisible(true)} type="primary" shape="round" icon={<FormOutlined />} size={'large'}>
 
                     编辑
             </Button></PermissionsButton>}
 
-                {localStorage.getItem('CURRENTTYPEID') != 75 && <Button type="primary" onClick={() => onDeleteItem(detail)} danger shape="round" icon={<DeleteOutlined />} size={'large'}>
+                {sessionStorage.getItem('CURRENTTYPEID') != 75 && <Button type="primary" onClick={() => onDeleteItem(detail)} danger shape="round" icon={<DeleteOutlined />} size={'large'}>
                     删除
             </Button>}
             </div>

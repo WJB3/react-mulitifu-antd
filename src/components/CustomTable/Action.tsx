@@ -124,10 +124,10 @@ const Action = (props) => {
 
   const navigateToPrint = () => {  
     const filterColumns2=filterColumns.filter(item=>item.name!=='下载'&&item.name!=='分享')
-    localStorage.setItem('PRINTMODULE',printModule);
-    localStorage.setItem('PRINTCOLUMNS',JSON.stringify(filterColumns2));
-    localStorage.setItem('PRINTCURRENT',pagination.current);
-    localStorage.setItem('PRINTSIZE',pagination.pageSize);
+    sessionStorage.setItem('PRINTMODULE',printModule);
+    sessionStorage.setItem('PRINTCOLUMNS',JSON.stringify(filterColumns2));
+    sessionStorage.setItem('PRINTCURRENT',pagination.current);
+    sessionStorage.setItem('PRINTSIZE',pagination.pageSize);
     window.open(`#/print?printModule=${printModule}`);
   }
 

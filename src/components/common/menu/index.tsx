@@ -107,7 +107,7 @@ const MenuView: FC<Props> = ({ storeData: { theme, userInfo, collapsed } }) => {
 
   const transformMenu = () => {
     console.log("transformMenu")
-    const localMenu = JSON.parse(localStorage.getItem("MENU"));
+    const localMenu = JSON.parse(sessionStorage.getItem("MENU"));
     const newMenu = localMenu?.map(item => {
       return ({
         path: item.page,
