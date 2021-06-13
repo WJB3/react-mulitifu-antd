@@ -45,9 +45,14 @@ const Index = () => {
 
     const columns = [
         {
-            title: '',
-            dataIndex: 'id',
-            key: 'id',
+            title: '序号',
+            dataIndex: 'sort',
+            key: 'sort',
+            render:(text,record)=>{
+ 
+
+                return <div>{text}</div>
+            }
         },
         {
             title: '手机号',
@@ -158,7 +163,10 @@ const Index = () => {
             ...newObj
         }).then((res: any) => { 
             const { records, total } = res;
-            setDataSource(records)
+            setDataSource(records.map((item,index)=>({
+                ...item,
+                sort:(pagination.current-1)*(pagination.pageSize)+index+1
+            })))
             setPagination({
                 ...pagination,
                 total: total

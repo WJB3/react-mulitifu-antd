@@ -190,7 +190,7 @@ const CustomUploader = React.forwardRef((props:any,ref) => {
  
 
     return (
-        <Modal title="上传" visible={visible}   footer={null} width={800} className={style.cardStyle} onCancel={onCancel}>
+        <Modal title="上传" visible={visible} maskClosable={false}  footer={null} width={800} className={style.cardStyle} onCancel={onCancel}>
             {!fileList.length && <Dragger {...uploadProps} className={style.draggerStyle}>
                 <div className={style.placeholder}></div>
                 <div>

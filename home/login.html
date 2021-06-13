@@ -276,7 +276,8 @@
                         required: true,
                         message: '手机号必填！'
                     }]
-                }]
+                }],
+                string:''
             };
         },
         methods: {
@@ -328,7 +329,7 @@
                                         if (code !== 1200) {
                                             self.$message.error(msg);
                                         } else {
-                                            location.href = "http://mec-peugeot.haiminglan.cn/reso/"; //location.href="http://localhost:10001/#/"
+                                            location.href = `http://mec-peugeot.haiminglan.cn/reso/#/${self.string}`; //location.href="http://localhost:10001/#/"
                                         }
                                     }).catch(function (e) {
                                         self.$message.error("获取信息失败");
@@ -356,6 +357,10 @@
                 self.advertList = t.advertList;
                 self.noticeList = t.noticeList;
             });
+            let startIndex=window.location.href.indexOf('fileDetail')
+            let string=window.location.href.substr(startIndex)
+
+            this.string=string;
         }
     });
 </script>

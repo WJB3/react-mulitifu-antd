@@ -529,7 +529,12 @@
   width: 100%;
 }
 .login-layout .logo-box {
-  margin: 200px auto 40px;
+  margin-top: 200px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+          justify-content: center;
+  margin-bottom: 10px;
 }
 .login-layout .logo {
   height: 55px;

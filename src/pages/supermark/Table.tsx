@@ -45,6 +45,7 @@ const Index = (props) => {
             title: '文件名称',
             dataIndex: 'title',
             key: 'title', 
+            width:'30%',
             render: (current, record) => {
                 return (
                     <div style={{ display: 'flex', alignItems: 'center' }} onDoubleClick={handleShowFile(record)}>
@@ -94,6 +95,7 @@ const Index = (props) => {
             title: '上传日期',
             dataIndex: 'createTimeStr',
             key: 'createTimeStr',  
+            width:'15%',
         } 
     ];
 

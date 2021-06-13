@@ -43,6 +43,8 @@ const CustomOssUploader = React.forwardRef((props: any, ref: any) => {
         } 
     },[props.value,props.type]);
 
+    // debugger;
+
     return (
         <>
             <CustomUploader visible={imgVisible} max={1} ref={imgLoaderRef} successUploader={handleSuccessUpload} onCancel={() => setImgVisible(false)} />

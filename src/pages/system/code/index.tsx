@@ -4,8 +4,9 @@ import CustomButton from '@/components/CustomButton';
 import CustomModal from '@/components/CustomModal';
 import PermissionTree from '@/components/PermissionTree'; 
 import roleApi from '@/api/system/code'
-import { Space, Form, Card, Input, Button, Modal, Switch, InputNumber, message, Select } from 'antd';
+import { Space, Form, Card, Input, Button, Modal, Switch, Select } from 'antd';
 import { layout, tailLayout } from '@/utils/layout'
+import useWindowResize from '@/hooks/useWindowResize';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import PermissionsButton from '@/components/PermissionsButton';
 const { Option } = Select;
@@ -14,6 +15,8 @@ const { Option } = Select;
 const Index = () => {
 
     const [form] = Form.useForm();
+
+    const [customHeight]=useWindowResize(400);
 
     const handleChangeState = (e, current) => { 
         roleApi.edit({ 
@@ -300,6 +303,11 @@ const Index = () => {
                     onTableChange={handleTableChange}
                     onAdd={handleShowVisible}
                     onDelete={handleDeleteRoles}
+                    scroll={
+                        {
+                            y:customHeight
+                        }
+                    } 
                     tableTopProps={{
                         search: true,
                         onSearch: handleSearchKeys,

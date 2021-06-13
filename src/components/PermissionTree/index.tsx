@@ -59,6 +59,7 @@ const PermissionTree = React.forwardRef((props: any, ref: any) => {
                 title={title}
                 width={size === 'small' ? 400 : 520}
                 onCancel={clickCancel}
+                maskClosable={false}
             >
                 <Tree
                     checkable

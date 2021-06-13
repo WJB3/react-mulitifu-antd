@@ -41,6 +41,17 @@ const Home: FC<Props> = (props) => {
  
 
   useEffect(() => { 
+
+    console.log("pathname",pathname)
+
+    let startIndex=window.location.href.indexOf('fileDetail')
+    let string=window.location.href.substr(startIndex)
+     // 未登录
+     if (!sessionStorage.getItem('TOKEN') && pathname !== '/login' && pathname.includes('fileDetail')) { 
+      //window.location.href='http://mec-peugeot.haiminglan.cn/'
+      window.location.href=`http://127.0.0.1:5500/home/login.html?${string}`
+      return
+    }
  
     // 未登录
     if (!sessionStorage.getItem('TOKEN') && pathname !== '/login') { 

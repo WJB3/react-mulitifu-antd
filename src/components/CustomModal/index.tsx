@@ -17,6 +17,7 @@ const CustomModal = React.forwardRef((props: any, ref: any) => {
                 onCancel={clickCancel}
                 destroyOnClose
                 afterClose={props?.afterClose}
+                maskClosable={false}
             >
                 {children}
             </Modal>

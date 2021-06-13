@@ -1,53 +1,82 @@
 import React, { FC, useEffect, useState, useLayoutEffect } from 'react'
-import { Statistic, Card, Row, Col, Typography, message } from 'antd'
+import { Card, Row, Col, Typography, message } from 'antd'
 import CustomTable from '@/components/CustomTable';
 import WhiteSpace from '@/components/WhiteSpace';
 import NoticeApi from '@/api/notice'
 import EmailApi from '@/api/email'
 import Api from '@/api/auth/useInfo'
+import useWindowResize from '@/hooks/useWindowResize';
 import { useHistory } from 'react-router-dom'
 
-const { Title, Paragraph, Text, Link } = Typography;
- 
+const { Paragraph, Text } = Typography;
+
 const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30 // Moment is also OK
 
 const Home: FC = () => {
 
   const [user, setUser] = useState<any>({});
 
-  const [data1,setData1]=useState([]);
+  const [data1, setData1] = useState([]);
 
-  const [data2,setData2]=useState([]);
+  const [tableLoading, setTableLoading] = useState(false);
+
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 0
+  });
+
+  useEffect(() => {
+    getList()
+  }, [pagination.current, pagination.pageSize]);
+
+  const [data2, setData2] = useState([]);
+
+  const [customHeight] = useWindowResize(560);
 
   useLayoutEffect(() => {
-    Api.getInfo().then(res => { 
-      sessionStorage.setItem("CURRENTUSER",res.username)
-      setUser(res||{})
+    Api.getInfo().then(res => {
+      sessionStorage.setItem("CURRENTUSER", res.username)
+      setUser(res || {})
     })
-  }, []); 
+  }, []);
 
-  useEffect(()=>{
-    NoticeApi.getList({page:1,size:15}).then(res=>{ 
-      setData1(res.records);
+  const getList = () => {
+    let newObj: any = {}
+    setTableLoading(true)
+    NoticeApi.getList({
+      page: pagination.current,
+      size: pagination.pageSize,
+      ...newObj
+    }).then((res: any) => {
+      setTableLoading(false)
+      const { records, total } = res;
+      setData1(records)
+      setPagination({
+        ...pagination,
+        total: total
+      })
+    }).catch(e => {
+      setTableLoading(false)
     })
-  },[]);
+  }
 
-  useEffect(()=>{
-    EmailApi.getReceive({page:1,size:15}).then(res=>{ 
+  useEffect(() => {
+    EmailApi.getReceive({ page: 1, size: 15 }).then(res => {
       setData2(res.records);
     })
-  },[]);
+  }, []);
 
 
-  const history = useHistory()  
+  const history = useHistory()
 
   const columns1 = [
     {
       title: '标题',
       dataIndex: 'title',
       key: 'title',
-      render:(current,record)=>{
-        return <a onClick={()=>handleShowFile(record)}>{current}</a>
+      render: (current, record) => {
+        return <a onClick={() => handleShowFile(record)}>{current}</a>
       }
     }
   ];
@@ -65,21 +94,24 @@ const Home: FC = () => {
     }
   ]
 
-  const handleShowFile=(record)=>{ 
-    console.log("handleShowFile",record);
-    if(!record.resourceId || !record.resourceTitle){
+  const handleShowFile = (record) => {
+    console.log("handleShowFile", record);
+    if (!record.resourceId || !record.resourceTitle) {
       message.error("数据异常！")
-      return ;
+      return;
     }
 
     history.push({
-        pathname:`/fileDetail`,  
-        search:`fileId=${record.resourceId}&fileName=${record.resourceTitle}`
+      pathname: `/fileDetail`,
+      search: `fileId=${record.resourceId}&fileName=${record.resourceTitle}`
+    })
+  }
+
+  const handleTableChange = (pagination) => {
+    setPagination({
+        ...pagination
     })
 }
-
-
-  console.log("data1",data1)
 
   return (
     <div className="home">
@@ -107,27 +139,34 @@ const Home: FC = () => {
           <Card title="资源公告">
             <CustomTable
               dataSource={data1}
+              loading={tableLoading}
               columns={columns1}
               renderRight={false}
               showTableTop={false}
-              showWhiteSpace={false} 
+              showWhiteSpace={false}
               title={false}
               noselection
-              pagination={false}
+              pagination={pagination}
+              onTableChange={handleTableChange}
+              scroll={
+                {
+                  y: customHeight
+                }
+              } 
             />
           </Card>
         </Col>
         <Col span={12}>
           <Card title="站内信">
-            <CustomTable 
-                dataSource={data2}
-                columns={columns2}
-                renderRight={false}
-                showTableTop={false}
-                showWhiteSpace={false}
-                title={false}
-                noselection
-                pagination={false}
+            <CustomTable
+              dataSource={data2}
+              columns={columns2}
+              renderRight={false}
+              showTableTop={false}
+              showWhiteSpace={false}
+              title={false}
+              noselection
+              pagination={false}
             />
           </Card>
         </Col>
