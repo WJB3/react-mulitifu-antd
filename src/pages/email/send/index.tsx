@@ -24,8 +24,7 @@ const Index = () => {
         setCurrent(current)
         setShowVisible(true)
 
-        roleApi.getReceivePeople(current.id).then((res)=>{
-            console.log("res",res)
+        roleApi.getReceivePeople(current.id).then((res)=>{ 
             setRe(res);
         }).catch(e=>e)        
     }

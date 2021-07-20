@@ -282,8 +282,7 @@ const Index = () => {
         setVisible(true);
         setModalType('edit')
         setCurrent(current)
-
-        console.log("current",current)
+ 
 
         form.setFieldsValue({
             username: current.username,

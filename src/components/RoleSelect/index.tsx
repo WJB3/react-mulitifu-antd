@@ -34,8 +34,7 @@ const RoleSelect = React.forwardRef((props: any, ref: any) => {
 
     useEffect(()=>{  
         const isAllNumber=!props?.value?.find(item=>typeof(item)!=="number"); 
-        if(isAllNumber && roleList.length){
-            console.log("roleList",roleList,props.value)
+        if(isAllNumber && roleList.length){ 
             setValue(props.value)  
             const roles=props.value && props.value.map(item=>{
                 return {

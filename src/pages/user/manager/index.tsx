@@ -48,9 +48,7 @@ const Index = () => {
             title: '序号',
             dataIndex: 'sort',
             key: 'sort',
-            render:(text,record)=>{
- 
-
+            render:(text,record)=>{  
                 return <div>{text}</div>
             }
         },
@@ -165,7 +163,8 @@ const Index = () => {
             const { records, total } = res;
             setDataSource(records.map((item,index)=>({
                 ...item,
-                sort:(pagination.current-1)*(pagination.pageSize)+index+1
+               //sort:(pagination.current-1)*(pagination.pageSize)+index+1
+               sort:total-(pagination.current-1)*(pagination.pageSize)-index
             })))
             setPagination({
                 ...pagination,
@@ -318,8 +317,7 @@ const Index = () => {
 
     const [isVisibleCode, setVisibleCode] = useState(false);
 
-    const handleValueChange = (value, record) => { 
-        console.log("record",record)
+    const handleValueChange = (value, record) => {  
         if (record?.userTypeId?.id===75) {
             setVisibleCode(true)
         } else {

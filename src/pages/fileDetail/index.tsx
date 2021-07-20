@@ -85,9 +85,7 @@ const FileDetail = (props) => {
         } catch (e) {
             return undefined;
         }
-    }, [location.pathname, location.search])
-
-    console.log("fileId", fileId)
+    }, [location.pathname, location.search]) 
 
     const flattenLabel = list.reduce((total, current, index) => {
         if (current.children.length) {
@@ -138,16 +136,13 @@ const FileDetail = (props) => {
         window.open(url);
     }
 
-    const [form] = Form.useForm();
-
-    console.log("detail", detail)
+    const [form] = Form.useForm(); 
 
     const [visible, setVisible] = useState(false);
 
     const [addLoading, setAddLoading] = useState(false);
 
-    const onFinish = (values: any) => {
-        console.log(values);
+    const onFinish = (values: any) => { 
         let newObj: any = {};
         if (values.title) {
             newObj.title = values.title
@@ -172,9 +167,7 @@ const FileDetail = (props) => {
         }
         if (props.foldId) {
             newObj.folderId = detail.foldId
-        }
-
-        console.log("newObj", newObj)
+        } 
 
 
         setAddLoading(true);
@@ -196,8 +189,7 @@ const FileDetail = (props) => {
 
     };
 
-    const handleFieldsChange = (changedFields, allFields) => {
-        console.log("handleFieldsChange", changedFields)
+    const handleFieldsChange = (changedFields, allFields) => { 
         if (changedFields[0]?.name?.[0] === 'file') {
             form.setFieldsValue({
                 title: changedFields[0]?.value?.name?.split('.')?.[0],
@@ -210,8 +202,7 @@ const FileDetail = (props) => {
 
 
     useEffect(() => {
-        if (visible) {
-            console.log("fileDetail", detail)
+        if (visible) { 
             form.setFieldsValue({
                 title: detail.title,
                 file: {
@@ -228,9 +219,7 @@ const FileDetail = (props) => {
 
             })
         }
-    }, [visible])
-
-    console.log("flattenLabel", flattenLabel)
+    }, [visible]) 
 
 
     return (

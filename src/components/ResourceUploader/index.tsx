@@ -22,8 +22,7 @@ const ResourceUploader = (props) => {
         setValue(file.name)
     }
 
-    useEffect(()=>{
-        console.log("uploader",props)
+    useEffect(()=>{ 
         setValue(props.value?.name)
     },[props.value])
 

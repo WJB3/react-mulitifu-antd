@@ -44,8 +44,7 @@ const LoginForm: FC<Props> = ({
       roleApi.getCurrentFunctionPermission().then(res=>{ 
         // sessionStorage.setItem('MENU',JSON.stringify(res)); 
 
-        // history.push('/')
-        console.log("res",res)
+        // history.push('/') 
         sessionStorage.setItem('Functions',JSON.stringify(res))
       
       }).catch((e)=>{ 

@@ -94,8 +94,7 @@ const MenuView: FC<Props> = ({ storeData: { theme, userInfo, collapsed } }) => {
   }
 
   // 创建菜单树
-  const renderMenuMap = (list: CommonObjectType): JSX.Element[] =>{
-    console.log("renderMenuMap",list)
+  const renderMenuMap = (list: CommonObjectType): JSX.Element[] =>{ 
     return list.map((item) => renderMenu(item))
   }
 
@@ -105,8 +104,7 @@ const MenuView: FC<Props> = ({ storeData: { theme, userInfo, collapsed } }) => {
   }
 
 
-  const transformMenu = () => {
-    console.log("transformMenu")
+  const transformMenu = () => { 
     const localMenu = JSON.parse(sessionStorage.getItem("MENU"));
     const newMenu = localMenu?.map(item => {
       return ({

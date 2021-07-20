@@ -294,8 +294,7 @@ const Index = (props) => {
         setShearIds(shearIds);
     }
 
-    const handleFieldsChange=(changedFields,allFields)=>{
-        console.log("handleFieldsChange",changedFields)
+    const handleFieldsChange=(changedFields,allFields)=>{ 
         if(changedFields[0]?.name?.[0]==='file'){
             form.setFieldsValue({ 
                 title:changedFields[0]?.value?.name?.split('.')?.[0]

@@ -80,6 +80,11 @@
   width: 100%;
   height: calc(100% - 40px);
 }
+.treeList--q8xCk .ant-tree-title {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 .table--3hKmq .ant-typography {
   margin-bottom: 0;
 }
@@ -435,7 +440,7 @@
 }
 .tabs--2eZ24 .ant-tabs-nav {
   margin-top: 3px;
-  margin-bottom: 0px;
+  margin-bottom: -38px;
   top: 62px;
 }
 .tabs--2eZ24 .ant-tabs-tab .anticon {

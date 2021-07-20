@@ -23,8 +23,14 @@ const CustomOssUploader = React.forwardRef((props: any, ref: any) => {
     const imgLoaderRef=useRef(null); 
 
     const handleSuccessUpload=()=>{ 
+
+      
+
         const successUrl = imgLoaderRef.current.fileList[0].visibleUrl;
         imgList.push(successUrl)
+
+        console.log("handleSuccessUpload",imgList)
+
         setImgList([...imgList])
         props?.onChange?.(imgList.map(item=>visibleToSuccess(item)))
     }
@@ -37,13 +43,14 @@ const CustomOssUploader = React.forwardRef((props: any, ref: any) => {
     }
 
     useEffect(()=>{ 
-        if(props.type!=='add'){
-            console.log("setImgList",props.values)
+        if(props.type!=='add'){ 
             setImgList(props.value.map(item=>getImageUrl(null,item))||[]) 
         } 
     },[props.value,props.type]);
 
-    // debugger;
+  
+
+    // debugger; 
 
     return (
         <>

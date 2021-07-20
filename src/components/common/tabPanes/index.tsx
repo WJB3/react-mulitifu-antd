@@ -180,8 +180,7 @@ const TabPanes = (props) => {
   // tab新增删除操作
   const onEdit = (targetKey: string | any, action: string) =>
   action === 'remove' && remove(targetKey)
-
-  console.log("panes", panes,activeKey)
+ 
  
 
   return (

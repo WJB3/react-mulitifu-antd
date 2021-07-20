@@ -94,8 +94,7 @@ const Home: FC = () => {
     }
   ]
 
-  const handleShowFile = (record) => {
-    console.log("handleShowFile", record);
+  const handleShowFile = (record) => { 
     if (!record.resourceId || !record.resourceTitle) {
       message.error("数据异常！")
       return;

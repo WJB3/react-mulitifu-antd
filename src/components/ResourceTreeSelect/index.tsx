@@ -43,8 +43,7 @@ const ResourceTreeSelect = React.forwardRef((props: any, ref: any) => {
     }
 
     const renderTreeData = transformTree(roleList);
-
-    console.log("renderTreeData",renderTreeData,value)
+ 
  
 
     return (

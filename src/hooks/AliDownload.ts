@@ -7,8 +7,7 @@ const Url="http://yxs-zygl.oss-cn-beijing.aliyuncs.com";
 
 export default async function AliDownload(  
     file?:any
-) {
-    console.log("file",file)
+) { 
     const aliOssClient = await AliOss(); 
     
     const filename=await API.download({id:file.id}) 
